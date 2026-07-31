@@ -22,9 +22,9 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   defaultNumFilter: "qr",
   lockNumFilter: true,
 
-  publicPortfolioUrl: "https://erickcarela58-star.github.io/carela-compufoto/portafolio.html",
-  publicCatalogUrl: "https://erickcarela58-star.github.io/carela-compufoto/combos.html",
-  publicGalleryUrl: "https://erickcarela58-star.github.io/carela-compufoto/portafolio.html",
+  publicPortfolioUrl: "https://dcarelacompufoto.com/portafolio.html",
+  publicCatalogUrl: "https://dcarelacompufoto.com/combos.html",
+  publicGalleryUrl: "https://dcarelacompufoto.com/portafolio.html",
 
   metaPixelId: "1377359270081777",
   privateCombosMessage: "Te comparto los combos por aqui. Antes de confirmar disponibilidad necesito saber categoria, fecha tentativa y nombre.",
