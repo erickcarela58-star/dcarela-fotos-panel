@@ -8,10 +8,10 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   appTitle: "D'Carela · Fotos (2do número)",
   subtitle: "Panel de sesiones fotográficas · 2do número (WhatsApp Web)",
   logoText: "DC",
-  logoUrl: "",
+  logoUrl: "https://dcarelacompufoto.com/img/logo.webp",
   // Color distinto (morado/rosado) para que se vea CLARAMENTE que es el otro panel.
-  accent: "#a855f7",
-  accent2: "#ec4899",
+  accent: "#3b82f6",
+  accent2: "#06b6d4",
 
   supabaseUrl: "https://rdmhyhsrewvrpqygtufa.supabase.co",
   supabaseAnonKey: "sb_publishable_XgucPR_5tPklv6sdUFAhDQ_6NbSf8fQ",
