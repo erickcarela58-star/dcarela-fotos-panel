@@ -4,14 +4,14 @@
 // defaultNumFilter/lockNumFilter hacen que este panel solo atienda ese número.
 window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   brandName: "D'Carela Compufoto",
-  productName: "Sesiones Fotográficas",
-  appTitle: "D'Carela · Fotos (2do número)",
-  subtitle: "Panel de sesiones fotográficas · 2do número (WhatsApp Web)",
+  productName: "CRM WhatsApp Web",
+  appTitle: "D'Carela · CRM WhatsApp Web",
+  subtitle: "Panel separado · sesiones fotográficas · 2do número",
   logoText: "DC",
   logoUrl: "https://dcarelacompufoto.com/img/logo.webp",
-  // Color distinto (morado/rosado) para que se vea CLARAMENTE que es el otro panel.
-  accent: "#3b82f6",
-  accent2: "#06b6d4",
+  // Misma estética monocromática del CRM; la cinta de canal identifica esta réplica.
+  accent: "#fafafa",
+  accent2: "#737373",
 
   supabaseUrl: "https://rdmhyhsrewvrpqygtufa.supabase.co",
   supabaseAnonKey: "sb_publishable_XgucPR_5tPklv6sdUFAhDQ_6NbSf8fQ",
@@ -21,6 +21,10 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   // arranca y se queda FIJO en el 2do número: solo atiende esos clientes
   defaultNumFilter: "qr",
   lockNumFilter: true,
+  // Opcional: completar cuando se vincule el número físico. Mientras esté vacío,
+  // la agenda lo infiere de la primera conversación recibida por el puente.
+  bridgeBusinessNumber: "",
+  bridgeBusinessDisplayNumber: "",
 
   publicPortfolioUrl: "https://dcarelacompufoto.com/portafolio.html",
   publicCatalogUrl: "https://dcarelacompufoto.com/combos.html",
