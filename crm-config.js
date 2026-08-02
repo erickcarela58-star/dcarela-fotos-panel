@@ -21,6 +21,9 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   // arranca y se queda FIJO en el 2do número: solo atiende esos clientes
   defaultNumFilter: "qr",
   lockNumFilter: true,
+  showBridgeSetup: true,
+  bridgePairingMode: "phone_code",
+  appVersionUrl: "./app-version.json",
   // Opcional: completar cuando se vincule el número físico. Mientras esté vacío,
   // la agenda lo infiere de la primera conversación recibida por el puente.
   bridgeBusinessNumber: "",
