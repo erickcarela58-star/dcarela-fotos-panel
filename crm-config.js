@@ -40,5 +40,20 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   mapsUrl: "https://maps.app.goo.gl/WcmjureAxNySXza59",
 
   businessNumber: "18495245620",
-  businessDisplayNumber: "849-524-5620"
+  businessDisplayNumber: "849-524-5620",
+  showAllViews: true,
+  enabledViews: [
+    "dashboard",
+    "planning",
+    "conversations",
+    "bridge",
+    "funnel",
+    "prospecting",
+    "satisfaccion",
+    "plantillas",
+    "estados",
+    "reminders",
+    "manual",
+    "config"
+  ]
 };
