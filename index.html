@@ -1515,54 +1515,63 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--ink)}
 .bridge-code-enabled .sb-item[data-bridge-only]:not(.role-hidden){display:flex!important}
 .bridge-code-enabled .sb-item[data-bridge-only].role-hidden{display:none!important}
 .bridge-code-enabled .sb-sep[data-bridge-only]{display:block!important}
-.bridge-wrap{max-width:1120px;margin:0 auto;padding:26px;display:grid;gap:18px}
+.bridge-wrap{max-width:1120px;margin:0 auto;padding:26px;display:grid;gap:18px;width:100%;min-width:0}
 .bridge-hero,.bridge-card{border:1px solid var(--line);background:linear-gradient(160deg,var(--card),var(--panel));border-radius:22px;box-shadow:var(--shadow)}
-.bridge-hero{padding:28px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:22px;overflow:hidden;position:relative}
+.bridge-hero{padding:28px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:22px;overflow:hidden;position:relative;min-width:0}
 .bridge-hero::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-110px;top:-130px;background:radial-gradient(circle,rgba(127,127,127,.18),transparent 68%);pointer-events:none}
 .bridge-kicker{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:900;color:var(--mut);margin-bottom:7px}
 .bridge-hero h2{font-size:clamp(22px,3vw,36px);letter-spacing:-1.2px;margin:0;color:var(--ink)}
 .bridge-hero p{max-width:700px;margin:9px 0 0;color:var(--mut);font-size:13px;line-height:1.65}
-.bridge-state{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(127,127,127,.09);border-radius:999px;padding:10px 14px;font-size:11px;font-weight:850;white-space:nowrap;position:relative;z-index:1}
-.bridge-state-dot{width:9px;height:9px;border-radius:50%;background:var(--mut);box-shadow:0 0 0 5px rgba(127,127,127,.12)}
+.bridge-state{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(127,127,127,.14);color:var(--ink);border-radius:999px;padding:10px 14px;font-size:11px;font-weight:850;max-width:min(100%,360px);white-space:normal;line-height:1.35;position:relative;z-index:1}
+.bridge-state-dot{width:9px;height:9px;border-radius:50%;background:var(--mut);box-shadow:0 0 0 5px rgba(127,127,127,.12);flex:0 0 auto}
 .bridge-state[data-state="connected"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .bridge-state[data-state="connected"] .bridge-state-dot{background:var(--bg);box-shadow:0 0 0 5px rgba(127,127,127,.22)}
-.bridge-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px}
-.bridge-card{padding:22px}
+.bridge-state[data-state="code_ready"],.bridge-state[data-state="connecting"],.bridge-state[data-state="generating"],.bridge-state[data-state="requested"]{background:rgba(255,255,255,.10);border-color:var(--line2)}
+.bridge-state[data-state="code_ready"] .bridge-state-dot,.bridge-state[data-state="connecting"] .bridge-state-dot,.bridge-state[data-state="generating"] .bridge-state-dot,.bridge-state[data-state="requested"] .bridge-state-dot{background:var(--ink)}
+.bridge-state[data-state="offline"],.bridge-state[data-state="disconnected"],.bridge-state[data-state="expired"],.bridge-state[data-state="error"],.bridge-state[data-state="canceled"]{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.32)}
+.bridge-state[data-state="offline"] .bridge-state-dot,.bridge-state[data-state="disconnected"] .bridge-state-dot,.bridge-state[data-state="expired"] .bridge-state-dot,.bridge-state[data-state="error"] .bridge-state-dot,.bridge-state[data-state="canceled"] .bridge-state-dot{background:var(--danger);box-shadow:0 0 0 5px rgba(239,68,68,.10)}
+.bridge-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px;align-items:start;min-width:0}
+.bridge-card{padding:22px;min-width:0}
 .bridge-card h3{font-size:14px;margin:0 0 7px;color:var(--ink)}
 .bridge-card>p{font-size:11.5px;line-height:1.55;color:var(--mut);margin:0 0 16px}
-.bridge-phone-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
+.bridge-phone-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;min-width:0}
 .bridge-phone-row input{width:100%;min-width:0;border:1px solid var(--line2);background:var(--input);color:var(--ink);border-radius:12px;padding:12px 13px;font:750 14px/1.2 inherit;outline:none}
 .bridge-phone-row input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(127,127,127,.15)}
 .bridge-phone-row .cfg-btn{min-height:44px}
-.bridge-hint{font-size:10.5px;color:var(--mut);line-height:1.5;margin-top:9px}
-.bridge-code-panel{margin-top:16px;border:1px solid var(--line2);background:rgba(127,127,127,.075);border-radius:16px;padding:18px;display:none}
+.bridge-hint{font-size:10.5px;color:var(--mut);line-height:1.55;margin-top:9px}
+.bridge-code-panel{margin-top:16px;border:1px solid var(--line2);background:rgba(127,127,127,.075);border-radius:16px;padding:18px;display:none;min-width:0}
 .bridge-code-panel.on{display:block;animation:fadeUp .25s ease both}
 .bridge-code-label{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--mut);font-weight:900;text-align:center}
-.bridge-code{font:900 clamp(28px,6vw,48px)/1.05 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:clamp(3px,1vw,8px);text-align:center;color:var(--ink);padding:14px 0 9px;overflow-wrap:anywhere}
-.bridge-code-meta{text-align:center;color:var(--mut);font-size:10.5px}
+.bridge-code{font:900 clamp(28px,6vw,48px)/1.05 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:clamp(3px,1vw,8px);text-align:center;color:var(--ink);padding:14px 0 9px;overflow-wrap:anywhere;word-break:break-word}
+.bridge-code-meta{text-align:center;color:var(--mut);font-size:10.5px;line-height:1.5;overflow-wrap:anywhere}
 .bridge-code-actions{display:flex;justify-content:center;gap:8px;margin-top:13px;flex-wrap:wrap}
-.bridge-error{min-height:18px;margin-top:10px;font-size:11px;line-height:1.45;color:var(--ink)}
+.bridge-error{min-height:0;margin-top:10px;font-size:11px;line-height:1.55;color:var(--ink);border:1px solid var(--line);background:rgba(127,127,127,.08);border-radius:14px;padding:12px 13px;overflow-wrap:anywhere}
+.bridge-error[data-state="connected"]{background:rgba(127,127,127,.14);border-color:var(--line2)}
+.bridge-error[data-state="offline"],.bridge-error[data-state="disconnected"],.bridge-error[data-state="expired"],.bridge-error[data-state="error"],.bridge-error[data-state="canceled"]{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.28)}
 .bridge-steps{counter-reset:bridge-step;display:grid;gap:10px;margin-top:14px}
 .bridge-step{counter-increment:bridge-step;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);background:rgba(127,127,127,.045);border-radius:13px;padding:11px}
 .bridge-step::before{content:counter(bridge-step);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-size:11px;font-weight:900}
 .bridge-step b{font-size:11.5px;color:var(--ink);display:block;margin-bottom:2px}.bridge-step span{font-size:10.5px;color:var(--mut);line-height:1.45}
 .bridge-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:15px;border-top:1px solid var(--line)}
-.bridge-update{display:grid;gap:12px}
-.bridge-version-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:13px;padding:12px;background:rgba(127,127,127,.045)}
-.bridge-version-row span{font-size:10.5px;color:var(--mut)}.bridge-version-row code{font-size:10px;color:var(--ink);word-break:break-all;text-align:right}
-.bridge-update-state{font-size:11px;color:var(--mut);line-height:1.45}
+.bridge-update{display:grid;gap:12px;min-width:0}
+.bridge-version-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:13px;padding:12px;background:rgba(127,127,127,.045);min-width:0}
+.bridge-version-row span{font-size:10.5px;color:var(--mut);flex:1 1 120px}.bridge-version-row code{font-size:10px;color:var(--ink);word-break:break-all;text-align:right;max-width:100%;flex:1 1 220px}
+.bridge-update-state{font-size:11px;color:var(--mut);line-height:1.55;overflow-wrap:anywhere}
 .bridge-update .cfg-btn{width:100%;justify-content:center}
 :root[data-theme="light"] .bridge-hero,:root[data-theme="light"] .bridge-card{background:linear-gradient(160deg,#fff,#f2f2f2);box-shadow:0 22px 60px rgba(0,0,0,.11),inset 0 1px #fff}
 @media(max-width:760px){
  .bridge-wrap{padding:14px;gap:13px}
  .bridge-hero{grid-template-columns:1fr;padding:20px;border-radius:18px}
- .bridge-state{justify-self:start}
+ .bridge-state{justify-self:stretch;max-width:none}
  .bridge-grid{grid-template-columns:1fr}
  .bridge-card{padding:17px;border-radius:18px}
  .bridge-phone-row{grid-template-columns:1fr}
  .bridge-phone-row .cfg-btn{width:100%;justify-content:center}
  .bridge-code{font-size:clamp(27px,11vw,42px);letter-spacing:4px}
- .bridge-controls .cfg-btn{flex:1;min-width:130px}
+ .bridge-code-actions,.bridge-controls{flex-direction:column}
+ .bridge-code-actions .cfg-btn,.bridge-controls .cfg-btn{width:100%;min-width:0;justify-content:center}
+ .bridge-version-row{flex-direction:column;align-items:flex-start}
+ .bridge-version-row code{text-align:left;flex:1 1 auto}
 }
 @media(max-width:560px){
  #agenda{padding:8px;align-items:flex-start}
@@ -1642,11 +1651,11 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--ink)}
    <span>Conversaciones</span>
    <span class="sb-badge" id="sbConvCnt" style="display:none">0</span>
    </button>
-   <div class="sb-sep" data-bridge-only>ConexiÃ³n</div>
+   <div class="sb-sep" data-bridge-only>Conexión</div>
    <button class="sb-item" data-view="bridge" data-bridge-only data-permission="manage_settings">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 12a5 5 0 017-4.58M17 12a5 5 0 01-7 4.58"/><path d="M14 5l.5 3.5L18 8M10 19l-.5-3.5L6 16"/><rect x="8" y="2" width="8" height="20" rx="3"/></svg>
     <span>Vincular WhatsApp</span>
-    <span class="sb-badge" id="sbBridgeState">â€”</span>
+    <span class="sb-badge" id="sbBridgeState">—</span>
    </button>
    <button class="sb-item" data-view="funnel">
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3H2l8 9.5V19l4 2v-8.5L22 3z"/></svg>
@@ -2634,6 +2643,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const CRM_CONFIG = window.CRM_CONFIG || window.DCARELA_CRM_CONFIG || {};
 const SUPABASE_URL = CRM_CONFIG.supabaseUrl || '';
 const SUPABASE_KEY = CRM_CONFIG.supabaseAnonKey || '';
+const ALL_KNOWN_VIEWS = ['dashboard','planning','conversations','bridge','funnel','prospecting','satisfaccion','plantillas','estados','reminders','manual','config'];
 const CONFIG_ERRORS = [];
 if (!SUPABASE_URL || !SUPABASE_KEY) CONFIG_ERRORS.push('Falta configurar supabaseUrl y supabaseAnonKey en crm-config.js.');
 const sb = createClient(SUPABASE_URL || 'https://example.invalid', SUPABASE_KEY || 'missing');
@@ -2758,11 +2768,49 @@ async function loadPanelAccess() {
   PANEL_ACCESS = { user:result.user, role:result.user.role, permissions:result.permissions || {} };
   applyPanelAccess();
 }
+function applyViewPolicy() {
+  document.querySelectorAll('[data-view]').forEach(el => {
+    const allowed = viewAllowedByConfig(el.dataset.view);
+    el.classList.toggle('view-policy-hidden', !allowed);
+    el.hidden = !allowed;
+  });
+  document.querySelectorAll('.view[id]').forEach(el => {
+    const match = /^view([A-Z].+)$/.exec(el.id || '');
+    if (!match) return;
+    const map = {
+      Dashboard:'dashboard',
+      Planning:'planning',
+      Conversations:'conversations',
+      Bridge:'bridge',
+      Funnel:'funnel',
+      Prospecting:'prospecting',
+      Satisfaccion:'satisfaccion',
+      Plantillas:'plantillas',
+      Estados:'estados',
+      Reminders:'reminders',
+      Manual:'manual',
+      Config:'config',
+    };
+    const key = map[match[1]];
+    if (!key) return;
+    const allowed = viewAllowedByConfig(key);
+    el.dataset.viewKey = key;
+    el.classList.toggle('view-policy-hidden', !allowed);
+    el.hidden = !allowed;
+  });
+  document.querySelectorAll('[data-official-only]').forEach(el => {
+    el.hidden = LOCK_NUMFILTER;
+  });
+  document.querySelectorAll('[data-bridge-only]').forEach(el => {
+    el.hidden = !BRIDGE_SETUP_ENABLED;
+  });
+}
 function applyPanelAccess() {
   const role = PANEL_ACCESS.role || 'viewer';
   document.body.classList.remove('role-admin','role-supervisor','role-agent','role-viewer');
   document.body.classList.add('role-' + role);
   const roleEl = $('sbUserRole'); if (roleEl) roleEl.textContent = ROLE_LABELS[role] || role;
+  applyViewPolicy();
   document.querySelectorAll('[data-permission]').forEach(el => {
     el.classList.toggle('role-hidden', !hasPermission(el.dataset.permission));
   });
@@ -2787,7 +2835,6 @@ try { const _s = localStorage.getItem(NUMFILTER_KEY); if (_s !== null && !LOCK_N
 if (LOCK_NUMFILTER) inboxNumFilter = CRM_CONFIG.defaultNumFilter || 'qr';
 if (LOCK_NUMFILTER) {
   document.body.classList.add('channel-qr-locked');
-  document.querySelectorAll('[data-official-only]').forEach(el => { el.hidden = true; });
 }
 if (BRIDGE_SETUP_ENABLED) document.body.classList.add('bridge-code-enabled');
 // El mismo index.html sirve a los dos paneles. Donde no hay puente configurado
@@ -2818,6 +2865,31 @@ function initials(name) {
 function normalizePhoneClient(value) {
   return String(value || '').replace(/[^\d]/g, '');
 }
+function realViewKeys() {
+  return [...new Set(
+    Array.from(document.querySelectorAll('[data-view]'))
+      .map(el => String(el.dataset.view || '').trim())
+      .filter(Boolean)
+  )];
+}
+function normalizedViewPolicy() {
+  const real = realViewKeys();
+  const realSet = new Set(real);
+  const enabledRaw = Array.isArray(CRM_CONFIG.enabledViews)
+    ? CRM_CONFIG.enabledViews.map(v => String(v || '').trim()).filter(Boolean)
+    : null;
+  const enabled = enabledRaw ? [...new Set(enabledRaw.filter(v => realSet.has(v)))] : null;
+  const allowAll = CRM_CONFIG.showAllViews === true;
+  if (allowAll) return new Set(real);
+  if (enabled && enabled.length) return new Set(enabled);
+  return null;
+}
+const CONFIGURED_VIEW_POLICY = normalizedViewPolicy();
+function viewAllowedByConfig(view) {
+  if (!view) return false;
+  if (!CONFIGURED_VIEW_POLICY) return true;
+  return CONFIGURED_VIEW_POLICY.has(String(view));
+}
 const PANEL_BUSINESS_NUMBER = normalizePhoneClient(cfg('businessNumber', ''));
 let bridgeRuntimeBusinessNumber = '';
 function qrChannelActive() {
@@ -2844,14 +2916,14 @@ function bridgeStatusLabel(status) {
     offline: 'Puente apagado',
     idle: 'Listo para vincular',
     requested: 'Solicitud recibida',
-    generating: 'Generando codigo',
-    code_ready: 'Esperando el telefono',
+    generating: 'Generando código',
+    code_ready: 'Esperando el teléfono',
     connecting: 'Conectando',
     connected: 'WhatsApp conectado',
     disconnected: 'WhatsApp desconectado',
-    canceled: 'Vinculacion cancelada',
-    expired: 'Codigo vencido',
-    error: 'Requiere atencion',
+    canceled: 'Vinculación cancelada',
+    expired: 'Código vencido',
+    error: 'Requiere atención',
   })[status] || 'Estado desconocido';
 }
 
@@ -2923,7 +2995,10 @@ function renderBridgeControlState(state, explicitError = '') {
     ? Date.parse(bridgeControlState.pairing_code_expires_at)
     : 0;
   const codePanel = $('bridgeCodePanel');
-  if (codePanel) codePanel.classList.toggle('on', !!code || active);
+  if (codePanel) {
+    codePanel.classList.toggle('on', !!code || active);
+    codePanel.dataset.state = status;
+  }
   if ($('bridgePairCode')) $('bridgePairCode').textContent = code || '--';
   if ($('bridgeCopyCode')) $('bridgeCopyCode').disabled = !code;
   if ($('bridgeCancelPair')) $('bridgeCancelPair').disabled = !active;
@@ -2937,11 +3012,17 @@ function renderBridgeControlState(state, explicitError = '') {
   const errorText = explicitError ||
     bridgeControlState.last_error ||
     (!bridgeControlState.host_online
-      ? 'El proceso local o VPS esta apagado. Inicia el puente para poder generar el codigo.'
+      ? 'El proceso local o VPS está apagado. Inicia el puente para poder generar el código.'
       : (status === 'connected'
-        ? `Conectado${connectedPhone ? ` con el numero terminado en ${connectedPhone.slice(-4)}` : ''}.`
-        : 'El puente esta en linea y listo.'));
-  if ($('bridgeError')) $('bridgeError').textContent = errorText;
+        ? `Conectado${connectedPhone ? ` con el número terminado en ${connectedPhone.slice(-4)}` : ''}.`
+        : (status === 'code_ready'
+          ? 'Código listo. Escríbelo en el teléfono antes de que venza.'
+          : 'El puente está en línea y listo.')));
+  const bridgeError = $('bridgeError');
+  if (bridgeError) {
+    bridgeError.dataset.state = status;
+    bridgeError.textContent = errorText;
+  }
   updateBridgeCountdown();
 }
 
@@ -3158,9 +3239,20 @@ function trackPixel(event, params) {
 
 // ===== Sidebar + view switcher (rediseño Fixora) =====
 let currentView = 'planning';
+function firstAllowedView(preferred) {
+  if (preferred && viewAllowedByConfig(preferred)) return preferred;
+  const candidates = ['planning','dashboard','conversations','bridge','funnel','prospecting','satisfaccion','plantillas','estados','reminders','manual','config'];
+  for (const key of candidates) {
+    if (key === 'bridge' && (!BRIDGE_SETUP_ENABLED || !hasPermission('manage_settings'))) continue;
+    if (viewAllowedByConfig(key)) return key;
+  }
+  return 'planning';
+}
 function setView(view) {
+  const fallbackView = firstAllowedView('planning');
+  if (!viewAllowedByConfig(view)) view = fallbackView;
   if (view === 'bridge' && (!BRIDGE_SETUP_ENABLED || !hasPermission('manage_settings'))) {
-    view = 'planning';
+    view = fallbackView;
   }
   const map = {
     bridge:       {eyebrow:'Conexion',   h1:'Vincular WhatsApp',  el:'viewBridge'},
@@ -3176,7 +3268,7 @@ function setView(view) {
     config:       {eyebrow:'Sistema',    h1:'Configuración',      el:'viewConfig'},
     manual:       {eyebrow:'Ayuda',      h1:'Manual de uso',      el:'viewManual'},
   };
-  const v = map[view] || map.dashboard;
+  const v = map[view] || map[fallbackView];
   currentView = view;
   ['viewDashboard','viewPlanning','viewConversations','viewFunnel','viewProspecting','viewSatisfaccion','viewPlantillas','viewEstados','viewReminders','viewBridge','viewConfig'].forEach(id => {
     const e = document.getElementById(id);
@@ -3227,8 +3319,9 @@ async function loadProspects(force = false) {
   if (prospectsLoaded && !force) { renderProspecting(); return; }
   const wrap = $('prosTableWrap');
   if (wrap) wrap.innerHTML = '<div class="pros-empty"><div class="ico">⌖</div><h3>Cargando prospectos...</h3><p>Consultando la base comercial con los permisos de tu cuenta.</p></div>';
+  const prospectQuery = sb.from('crm_prospects').select('id,business_name,category,description,address,sector,city,province,phone_primary,phone_secondary,whatsapp_possible,email_public,website,instagram,facebook,tiktok,maps_url,rating,review_count,status,source,assigned_to,tags,first_found_at,updated_at,qualification_score,qualification_tier,priority,estimated_value_centavos,preferred_service,notes,next_action_type,next_action_at,last_contacted_at,contact_attempts,last_prepared_message,last_playbook,converted_conversation_id').order('updated_at',{ascending:false}).limit(1000);
   const [prospectsResult, campaignsResult, blockedResult] = await Promise.all([
-    sb.from('crm_prospects').select('id,business_name,category,description,address,sector,city,province,phone_primary,phone_secondary,whatsapp_possible,email_public,website,instagram,facebook,tiktok,maps_url,rating,review_count,status,source,assigned_to,tags,first_found_at,updated_at,qualification_score,qualification_tier,priority,estimated_value_centavos,preferred_service,notes,next_action_type,next_action_at,last_contacted_at,contact_attempts,last_prepared_message,last_playbook,converted_conversation_id').order('updated_at',{ascending:false}).limit(1000),
+    prospectQuery,
     sb.from('crm_prospect_campaigns').select('id',{count:'exact',head:true}),
     sb.from('crm_do_not_contact').select('id',{count:'exact',head:true}).eq('active',true),
   ]);
@@ -8442,7 +8535,10 @@ function defaultSurveyMsg(name){
 function survStars(n){ n = Math.max(0, Math.min(5, Math.round(n||0))); return '★★★★★'.slice(0,n) + '☆☆☆☆☆'.slice(0,5-n); }
 
 async function loadTeamConfig(){
-  try { const { data } = await sb.from('collaborators').select('*').order('created_at', { ascending:true }); collaborators = data || []; }
+  try {
+    const { data } = await sb.from('collaborators').select('*').order('created_at', { ascending:true });
+    collaborators = data || [];
+  }
   catch(e){ collaborators = []; }
   try { const { data:s } = await sb.from('settings').select('value').eq('key','reviews_auto_on_close').maybeSingle();
         reviewsAutoOnClose = !!(s && (s.value === true || s.value === 'true')); }
@@ -8466,7 +8562,7 @@ function renderCollabBox(){
 async function addCollab(){
   const nm = ($('collabName').value||'').trim(), rl = ($('collabRole').value||'').trim();
   if (!nm){ $('collabName').focus(); return; }
-  const { error } = await sb.from('collaborators').insert({ name:nm, role:rl||null, business_number: PANEL_BUSINESS_NUMBER||null, active:true });
+  const { error } = await sb.from('collaborators').insert({ name:nm, role:rl||null, active:true });
   if (error){ alert('No se pudo agregar: ' + error.message); return; }
   $('collabName').value=''; $('collabRole').value=''; await loadTeamConfig();
 }
@@ -8565,7 +8661,15 @@ async function maybeAutoSurvey(conv){
 async function renderSatisfaccion(){
   await loadTeamConfig();
   let reviews = [];
-  try { const { data } = await sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(500); reviews = data || []; }
+  try {
+    let q = sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(500);
+    if (LOCK_NUMFILTER) {
+      const bn = agendaChannelBusinessNumber() || PANEL_BUSINESS_NUMBER;
+      if (bn) q = q.eq('business_number', bn);
+    }
+    const { data } = await q;
+    reviews = data || [];
+  }
   catch(e){ reviews = []; }
   const submitted = reviews.filter(r => r.status==='submitted');
   const sent = reviews.filter(r => r.status==='sent' || r.status==='submitted');
