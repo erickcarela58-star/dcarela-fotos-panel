@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-01-crm-superpowers-v2",
+  "version": "2026-08-05-panel-fotos-p02-local-validado",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-01T00:00:00Z",
-  "summary": "Vinculacion por codigo de telefono, estado del puente y actualizacion movil."
+  "released_at": "2026-08-05T00:00:00Z",
+  "summary": "P02 queda cerrada solo en local: politica de vistas separada de permisos, fallback seguro en setView, data-official-only y data-bridge-only conservan su semantica, lockNumFilter sigue fijo en qr, deploy_fotos_panel publica index+encuesta+config+version, y satisfaccion filtra reviews por business_number solo donde el esquema demostrado lo soporta. Sin despliegue ni cambios remotos."
 }
