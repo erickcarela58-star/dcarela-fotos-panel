@@ -1147,7 +1147,13 @@ body.role-viewer #agnSave,body.role-viewer .ag-row button{pointer-events:none!im
 .man-tip{padding:11px 13px;border-left:3px solid var(--acc,#3b82f6);border-radius:0 8px 8px 0;background:rgba(127,127,127,.09);font-size:13px}
 .man-code{padding:11px 13px;border-radius:9px;background:rgba(127,127,127,.13);font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
 .man-sec code{padding:1px 5px;border-radius:5px;background:rgba(127,127,127,.15);font-family:ui-monospace,Consolas,monospace;font-size:12px}
-@media(max-width:640px){.man-sec{padding:15px 16px}.man-head h1{font-size:20px}}
+.man-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.man-visual{appearance:none;text-align:left;border:1px solid var(--line2);border-radius:14px;background:var(--card);color:var(--ink);padding:0;overflow:hidden;cursor:pointer;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease}
+.man-visual:hover,.man-visual:focus-visible{transform:translateY(-3px);border-color:var(--ink);box-shadow:0 14px 35px rgba(0,0,0,.14);outline:none}
+.man-visual svg{display:block;width:100%;height:auto;background:rgba(127,127,127,.08)}
+.man-visual span{display:block;padding:11px 12px;font-size:11px;line-height:1.4;color:var(--mut)}
+.man-visual b{display:block;color:var(--ink);font-size:12px;margin-bottom:2px}
+@media(max-width:640px){.man-sec{padding:15px 16px}.man-head h1{font-size:20px}.man-gallery{grid-template-columns:1fr}}
 .est-wrap{max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:16px;padding:4px 2px 40px}
 .est-note{background:rgba(192,57,43,.10);border:1px solid rgba(192,57,43,.32);border-radius:12px;
  padding:13px 15px;font-size:12.5px;line-height:1.55;color:var(--txt)}
@@ -1515,67 +1521,63 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--ink)}
 .bridge-code-enabled .sb-item[data-bridge-only]:not(.role-hidden){display:flex!important}
 .bridge-code-enabled .sb-item[data-bridge-only].role-hidden{display:none!important}
 .bridge-code-enabled .sb-sep[data-bridge-only]{display:block!important}
-.bridge-wrap{max-width:1120px;margin:0 auto;padding:26px;display:grid;gap:18px;width:100%;min-width:0}
+.bridge-wrap{max-width:1120px;margin:0 auto;padding:26px;display:grid;gap:18px}
 .bridge-hero,.bridge-card{border:1px solid var(--line);background:linear-gradient(160deg,var(--card),var(--panel));border-radius:22px;box-shadow:var(--shadow)}
-.bridge-hero{padding:28px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:22px;overflow:hidden;position:relative;min-width:0}
+.bridge-hero{padding:28px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:22px;overflow:hidden;position:relative}
 .bridge-hero::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;right:-110px;top:-130px;background:radial-gradient(circle,rgba(127,127,127,.18),transparent 68%);pointer-events:none}
 .bridge-kicker{font-size:10px;letter-spacing:1.6px;text-transform:uppercase;font-weight:900;color:var(--mut);margin-bottom:7px}
 .bridge-hero h2{font-size:clamp(22px,3vw,36px);letter-spacing:-1.2px;margin:0;color:var(--ink)}
 .bridge-hero p{max-width:700px;margin:9px 0 0;color:var(--mut);font-size:13px;line-height:1.65}
-.bridge-state{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(127,127,127,.14);color:var(--ink);border-radius:999px;padding:10px 14px;font-size:11px;font-weight:850;max-width:min(100%,360px);white-space:normal;line-height:1.35;position:relative;z-index:1}
-.bridge-state-dot{width:9px;height:9px;border-radius:50%;background:var(--mut);box-shadow:0 0 0 5px rgba(127,127,127,.12);flex:0 0 auto}
+.bridge-state{display:flex;align-items:center;gap:9px;border:1px solid var(--line2);background:rgba(127,127,127,.09);border-radius:999px;padding:10px 14px;font-size:11px;font-weight:850;white-space:nowrap;position:relative;z-index:1}
+.bridge-state-dot{width:9px;height:9px;border-radius:50%;background:var(--mut);box-shadow:0 0 0 5px rgba(127,127,127,.12)}
 .bridge-state[data-state="connected"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
 .bridge-state[data-state="connected"] .bridge-state-dot{background:var(--bg);box-shadow:0 0 0 5px rgba(127,127,127,.22)}
-.bridge-state[data-state="code_ready"],.bridge-state[data-state="connecting"],.bridge-state[data-state="generating"],.bridge-state[data-state="requested"]{background:rgba(255,255,255,.10);border-color:var(--line2)}
-.bridge-state[data-state="code_ready"] .bridge-state-dot,.bridge-state[data-state="connecting"] .bridge-state-dot,.bridge-state[data-state="generating"] .bridge-state-dot,.bridge-state[data-state="requested"] .bridge-state-dot{background:var(--ink)}
-.bridge-state[data-state="offline"],.bridge-state[data-state="disconnected"],.bridge-state[data-state="expired"],.bridge-state[data-state="error"],.bridge-state[data-state="canceled"]{background:rgba(239,68,68,.10);border-color:rgba(239,68,68,.32)}
-.bridge-state[data-state="offline"] .bridge-state-dot,.bridge-state[data-state="disconnected"] .bridge-state-dot,.bridge-state[data-state="expired"] .bridge-state-dot,.bridge-state[data-state="error"] .bridge-state-dot,.bridge-state[data-state="canceled"] .bridge-state-dot{background:var(--danger);box-shadow:0 0 0 5px rgba(239,68,68,.10)}
-.bridge-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px;align-items:start;min-width:0}
-.bridge-card{padding:22px;min-width:0}
+.bridge-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:18px}
+.bridge-card{padding:22px}
 .bridge-card h3{font-size:14px;margin:0 0 7px;color:var(--ink)}
 .bridge-card>p{font-size:11.5px;line-height:1.55;color:var(--mut);margin:0 0 16px}
-.bridge-phone-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;min-width:0}
+.bridge-phone-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px}
 .bridge-phone-row input{width:100%;min-width:0;border:1px solid var(--line2);background:var(--input);color:var(--ink);border-radius:12px;padding:12px 13px;font:750 14px/1.2 inherit;outline:none}
 .bridge-phone-row input:focus{border-color:var(--ink);box-shadow:0 0 0 3px rgba(127,127,127,.15)}
 .bridge-phone-row .cfg-btn{min-height:44px}
-.bridge-hint{font-size:10.5px;color:var(--mut);line-height:1.55;margin-top:9px}
-.bridge-code-panel{margin-top:16px;border:1px solid var(--line2);background:rgba(127,127,127,.075);border-radius:16px;padding:18px;display:none;min-width:0}
+.bridge-hint{font-size:10.5px;color:var(--mut);line-height:1.5;margin-top:9px}
+.bridge-code-panel{margin-top:16px;border:1px solid var(--line2);background:rgba(127,127,127,.075);border-radius:16px;padding:18px;display:none}
 .bridge-code-panel.on{display:block;animation:fadeUp .25s ease both}
 .bridge-code-label{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--mut);font-weight:900;text-align:center}
-.bridge-code{font:900 clamp(28px,6vw,48px)/1.05 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:clamp(3px,1vw,8px);text-align:center;color:var(--ink);padding:14px 0 9px;overflow-wrap:anywhere;word-break:break-word}
-.bridge-code-meta{text-align:center;color:var(--mut);font-size:10.5px;line-height:1.5;overflow-wrap:anywhere}
+.bridge-code{font:900 clamp(28px,6vw,48px)/1.05 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:clamp(3px,1vw,8px);text-align:center;color:var(--ink);padding:14px 0 9px;overflow-wrap:anywhere}
+.bridge-code-meta{text-align:center;color:var(--mut);font-size:10.5px}
 .bridge-code-actions{display:flex;justify-content:center;gap:8px;margin-top:13px;flex-wrap:wrap}
-.bridge-error{min-height:0;margin-top:10px;font-size:11px;line-height:1.55;color:var(--ink);border:1px solid var(--line);background:rgba(127,127,127,.08);border-radius:14px;padding:12px 13px;overflow-wrap:anywhere}
-.bridge-error[data-state="connected"]{background:rgba(127,127,127,.14);border-color:var(--line2)}
-.bridge-error[data-state="offline"],.bridge-error[data-state="disconnected"],.bridge-error[data-state="expired"],.bridge-error[data-state="error"],.bridge-error[data-state="canceled"]{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.28)}
+.bridge-error{min-height:18px;margin-top:10px;font-size:11px;line-height:1.45;color:var(--ink)}
 .bridge-steps{counter-reset:bridge-step;display:grid;gap:10px;margin-top:14px}
 .bridge-step{counter-increment:bridge-step;display:grid;grid-template-columns:30px minmax(0,1fr);gap:10px;align-items:start;border:1px solid var(--line);background:rgba(127,127,127,.045);border-radius:13px;padding:11px}
 .bridge-step::before{content:counter(bridge-step);width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-size:11px;font-weight:900}
 .bridge-step b{font-size:11.5px;color:var(--ink);display:block;margin-bottom:2px}.bridge-step span{font-size:10.5px;color:var(--mut);line-height:1.45}
 .bridge-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:15px;border-top:1px solid var(--line)}
-.bridge-update{display:grid;gap:12px;min-width:0}
-.bridge-version-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap;border:1px solid var(--line);border-radius:13px;padding:12px;background:rgba(127,127,127,.045);min-width:0}
-.bridge-version-row span{font-size:10.5px;color:var(--mut);flex:1 1 120px}.bridge-version-row code{font-size:10px;color:var(--ink);word-break:break-all;text-align:right;max-width:100%;flex:1 1 220px}
-.bridge-update-state{font-size:11px;color:var(--mut);line-height:1.55;overflow-wrap:anywhere}
+.bridge-update{display:grid;gap:12px}
+.bridge-version-row{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line);border-radius:13px;padding:12px;background:rgba(127,127,127,.045)}
+.bridge-version-row span{font-size:10.5px;color:var(--mut)}.bridge-version-row code{font-size:10px;color:var(--ink);word-break:break-all;text-align:right}
+.bridge-update-state{font-size:11px;color:var(--mut);line-height:1.45}
 .bridge-update .cfg-btn{width:100%;justify-content:center}
 .bridge-history{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center}
 .bridge-history-state{font-size:11px;color:var(--mut);line-height:1.55;margin-top:7px}
 .bridge-history .cfg-btn{min-width:210px;justify-content:center}
+.bridge-official{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center}
+.bridge-official-mark{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:var(--ink);color:var(--bg);font-size:22px;font-weight:950}
+.bridge-official h3{margin-bottom:4px}.bridge-official p{margin:0;font-size:11px;line-height:1.55;color:var(--mut)}
+.bridge-official .cfg-btn{text-decoration:none;white-space:nowrap;justify-content:center}
 :root[data-theme="light"] .bridge-hero,:root[data-theme="light"] .bridge-card{background:linear-gradient(160deg,#fff,#f2f2f2);box-shadow:0 22px 60px rgba(0,0,0,.11),inset 0 1px #fff}
 @media(max-width:760px){
  .bridge-wrap{padding:14px;gap:13px}
  .bridge-hero{grid-template-columns:1fr;padding:20px;border-radius:18px}
- .bridge-state{justify-self:stretch;max-width:none}
+ .bridge-state{justify-self:start}
  .bridge-grid{grid-template-columns:1fr}
  .bridge-card{padding:17px;border-radius:18px}
  .bridge-history{grid-template-columns:1fr}.bridge-history .cfg-btn{width:100%}
+ .bridge-official{grid-template-columns:auto minmax(0,1fr)}.bridge-official .cfg-btn{grid-column:1/-1;width:100%}
  .bridge-phone-row{grid-template-columns:1fr}
  .bridge-phone-row .cfg-btn{width:100%;justify-content:center}
  .bridge-code{font-size:clamp(27px,11vw,42px);letter-spacing:4px}
- .bridge-code-actions,.bridge-controls{flex-direction:column}
- .bridge-code-actions .cfg-btn,.bridge-controls .cfg-btn{width:100%;min-width:0;justify-content:center}
- .bridge-version-row{flex-direction:column;align-items:flex-start}
- .bridge-version-row code{text-align:left;flex:1 1 auto}
+ .bridge-controls .cfg-btn{flex:1;min-width:130px}
 }
 @media(max-width:560px){
  #agenda{padding:8px;align-items:flex-start}
@@ -2134,6 +2136,15 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--ink)}
      </div>
     </div>
 
+    <div class="bridge-card bridge-official">
+     <div class="bridge-official-mark" aria-hidden="true">W</div>
+     <div>
+      <h3>WhatsApp Web oficial</h3>
+      <p>Abre la página oficial en otra pestaña para revisar los dispositivos vinculados. El CRM refleja chats, mensajes y archivos mediante el puente cuando el estado indique <b>WhatsApp conectado</b>; ninguna página externa puede leer directamente otra pestaña de WhatsApp por seguridad.</p>
+     </div>
+     <a class="cfg-btn primary" href="https://web.whatsapp.com/" target="_blank" rel="noopener noreferrer">Abrir WhatsApp Web</a>
+    </div>
+
     <div class="bridge-card bridge-history">
      <div>
       <h3>Historial de conversaciones</h3>
@@ -2170,8 +2181,23 @@ input[type="checkbox"],input[type="radio"]{accent-color:var(--ink)}
     <div class="man-wrap">
      <header class="man-head">
       <h1>Manual de uso</h1>
-      <p>Qué hace cada parte del panel y cómo usarla. Si algo aquí no coincide con lo que ves, manda aviso: el manual está mal, no tú.</p>
+     <p>Qué hace cada parte del panel y cómo usarla. Si algo aquí no coincide con lo que ves, manda aviso: el manual está mal, no tú.</p>
      </header>
+
+     <div class="man-gallery" aria-label="Guías visuales interactivas">
+      <button class="man-visual" data-man-jump="conversations" type="button" title="Abrir conversaciones">
+       <svg viewBox="0 0 320 180" role="img" aria-label="Vista del inbox con lista de clientes e historial"><rect x="0" y="0" width="320" height="180" fill="currentColor" opacity=".04"/><rect x="10" y="10" width="62" height="160" rx="8" fill="currentColor" opacity=".18"/><rect x="82" y="10" width="88" height="160" rx="8" fill="currentColor" opacity=".10"/><rect x="180" y="10" width="130" height="160" rx="8" fill="currentColor" opacity=".07"/><circle cx="96" cy="35" r="8" fill="currentColor" opacity=".55"/><path d="M111 31h44M111 39h31M91 66h64M91 82h53M91 98h64" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".35"/><rect x="194" y="28" width="75" height="23" rx="11" fill="currentColor" opacity=".18"/><rect x="222" y="62" width="73" height="25" rx="12" fill="currentColor" opacity=".35"/><rect x="194" y="99" width="86" height="28" rx="13" fill="currentColor" opacity=".18"/><path d="M193 151h98" stroke="currentColor" stroke-width="9" stroke-linecap="round" opacity=".16"/></svg>
+       <span><b>1. Recuperar conversaciones</b>Abre el inbox completo, busca un cliente y revisa todo su historial.</span>
+      </button>
+      <button class="man-visual" data-man-jump="bridge" data-bridge-only type="button" title="Abrir vinculación">
+       <svg viewBox="0 0 320 180" role="img" aria-label="Proceso de vinculación por teléfono"><rect x="0" y="0" width="320" height="180" fill="currentColor" opacity=".04"/><rect x="30" y="22" width="96" height="136" rx="18" fill="none" stroke="currentColor" stroke-width="7" opacity=".35"/><circle cx="78" cy="138" r="7" fill="currentColor" opacity=".5"/><rect x="48" y="43" width="60" height="55" rx="8" fill="currentColor" opacity=".13"/><path d="M151 55h126M151 76h95" stroke="currentColor" stroke-width="8" stroke-linecap="round" opacity=".22"/><rect x="151" y="101" width="126" height="39" rx="12" fill="currentColor" opacity=".28"/><text x="214" y="126" text-anchor="middle" font-size="18" font-weight="900" fill="currentColor" opacity=".7">AB12-CD34</text></svg>
+       <span><b>2. Vincular sin falso error</b>Genera el código, introdúcelo en el teléfono y espera la comprobación estable.</span>
+      </button>
+      <button class="man-visual" data-man-jump="planning" type="button" title="Abrir herramientas">
+       <svg viewBox="0 0 320 180" role="img" aria-label="Herramientas de planificación, agenda y embudo"><rect x="0" y="0" width="320" height="180" fill="currentColor" opacity=".04"/><rect x="18" y="18" width="284" height="42" rx="12" fill="currentColor" opacity=".13"/><rect x="18" y="72" width="88" height="90" rx="12" fill="currentColor" opacity=".20"/><rect x="116" y="72" width="88" height="90" rx="12" fill="currentColor" opacity=".12"/><rect x="214" y="72" width="88" height="90" rx="12" fill="currentColor" opacity=".25"/><path d="M32 38h98M32 48h61M34 94h51M34 112h60M132 94h52M132 112h38M230 94h52M230 112h44" stroke="currentColor" stroke-width="5" stroke-linecap="round" opacity=".38"/></svg>
+       <span><b>3. Usar todas las herramientas</b>Planificación, agenda, embudo, estados, plantillas y configuración desde un solo centro.</span>
+      </button>
+     </div>
 
      <article class="man-sec">
       <h2>Conversaciones</h2>
@@ -2658,7 +2684,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const CRM_CONFIG = window.CRM_CONFIG || window.DCARELA_CRM_CONFIG || {};
 const SUPABASE_URL = CRM_CONFIG.supabaseUrl || '';
 const SUPABASE_KEY = CRM_CONFIG.supabaseAnonKey || '';
-const ALL_KNOWN_VIEWS = ['dashboard','planning','conversations','bridge','funnel','prospecting','satisfaccion','plantillas','estados','reminders','manual','config'];
 const CONFIG_ERRORS = [];
 if (!SUPABASE_URL || !SUPABASE_KEY) CONFIG_ERRORS.push('Falta configurar supabaseUrl y supabaseAnonKey en crm-config.js.');
 const sb = createClient(SUPABASE_URL || 'https://example.invalid', SUPABASE_KEY || 'missing');
@@ -2667,7 +2692,7 @@ const $ = (id) => document.getElementById(id);
 // Sello de versión: si el panel "no hace nada", casi siempre es caché vieja del
 // navegador. Este sello permite confirmar de un vistazo qué versión está corriendo
 // (compárala con la fecha del último deploy). Actualízalo en cada publicación.
-const BUILD = '2026-08-09-panel-fotos-logout-control';
+const BUILD = '2026-08-09-crm-history-stable-v8';
 // PDFs de venta por categoría (generados de las tarjetas aprobadas; hosteados en el catálogo).
 // Se regeneran con dcarela-catalogo/scripts/build_combo_pdfs.py + push del catálogo.
 const COMBO_PDF_BASE = 'https://erickcarela58-star.github.io/carela-compufoto/pdf/';
@@ -2783,49 +2808,11 @@ async function loadPanelAccess() {
   PANEL_ACCESS = { user:result.user, role:result.user.role, permissions:result.permissions || {} };
   applyPanelAccess();
 }
-function applyViewPolicy() {
-  document.querySelectorAll('[data-view]').forEach(el => {
-    const allowed = viewAllowedByConfig(el.dataset.view);
-    el.classList.toggle('view-policy-hidden', !allowed);
-    el.hidden = !allowed;
-  });
-  document.querySelectorAll('.view[id]').forEach(el => {
-    const match = /^view([A-Z].+)$/.exec(el.id || '');
-    if (!match) return;
-    const map = {
-      Dashboard:'dashboard',
-      Planning:'planning',
-      Conversations:'conversations',
-      Bridge:'bridge',
-      Funnel:'funnel',
-      Prospecting:'prospecting',
-      Satisfaccion:'satisfaccion',
-      Plantillas:'plantillas',
-      Estados:'estados',
-      Reminders:'reminders',
-      Manual:'manual',
-      Config:'config',
-    };
-    const key = map[match[1]];
-    if (!key) return;
-    const allowed = viewAllowedByConfig(key);
-    el.dataset.viewKey = key;
-    el.classList.toggle('view-policy-hidden', !allowed);
-    el.hidden = !allowed;
-  });
-  document.querySelectorAll('[data-official-only]').forEach(el => {
-    el.hidden = LOCK_NUMFILTER;
-  });
-  document.querySelectorAll('[data-bridge-only]').forEach(el => {
-    el.hidden = !BRIDGE_SETUP_ENABLED;
-  });
-}
 function applyPanelAccess() {
   const role = PANEL_ACCESS.role || 'viewer';
   document.body.classList.remove('role-admin','role-supervisor','role-agent','role-viewer');
   document.body.classList.add('role-' + role);
   const roleEl = $('sbUserRole'); if (roleEl) roleEl.textContent = ROLE_LABELS[role] || role;
-  applyViewPolicy();
   document.querySelectorAll('[data-permission]').forEach(el => {
     el.classList.toggle('role-hidden', !hasPermission(el.dataset.permission));
   });
@@ -2850,6 +2837,7 @@ try { const _s = localStorage.getItem(NUMFILTER_KEY); if (_s !== null && !LOCK_N
 if (LOCK_NUMFILTER) inboxNumFilter = CRM_CONFIG.defaultNumFilter || 'qr';
 if (LOCK_NUMFILTER) {
   document.body.classList.add('channel-qr-locked');
+  document.querySelectorAll('[data-official-only]').forEach(el => { el.hidden = true; });
 }
 if (BRIDGE_SETUP_ENABLED) document.body.classList.add('bridge-code-enabled');
 // El mismo index.html sirve a los dos paneles. Donde no hay puente configurado
@@ -2880,31 +2868,6 @@ function initials(name) {
 function normalizePhoneClient(value) {
   return String(value || '').replace(/[^\d]/g, '');
 }
-function realViewKeys() {
-  return [...new Set(
-    Array.from(document.querySelectorAll('[data-view]'))
-      .map(el => String(el.dataset.view || '').trim())
-      .filter(Boolean)
-  )];
-}
-function normalizedViewPolicy() {
-  const real = realViewKeys();
-  const realSet = new Set(real);
-  const enabledRaw = Array.isArray(CRM_CONFIG.enabledViews)
-    ? CRM_CONFIG.enabledViews.map(v => String(v || '').trim()).filter(Boolean)
-    : null;
-  const enabled = enabledRaw ? [...new Set(enabledRaw.filter(v => realSet.has(v)))] : null;
-  const allowAll = CRM_CONFIG.showAllViews === true;
-  if (allowAll) return new Set(real);
-  if (enabled && enabled.length) return new Set(enabled);
-  return null;
-}
-const CONFIGURED_VIEW_POLICY = normalizedViewPolicy();
-function viewAllowedByConfig(view) {
-  if (!view) return false;
-  if (!CONFIGURED_VIEW_POLICY) return true;
-  return CONFIGURED_VIEW_POLICY.has(String(view));
-}
 const PANEL_BUSINESS_NUMBER = normalizePhoneClient(cfg('businessNumber', ''));
 let bridgeRuntimeBusinessNumber = '';
 function qrChannelActive() {
@@ -2931,14 +2894,14 @@ function bridgeStatusLabel(status) {
     offline: 'Puente apagado',
     idle: 'Listo para vincular',
     requested: 'Solicitud recibida',
-    generating: 'Generando código',
-    code_ready: 'Esperando el teléfono',
-    connecting: 'Conectando',
+    generating: 'Generando codigo',
+    code_ready: 'Esperando el telefono',
+    connecting: 'Finalizando vinculación',
     connected: 'WhatsApp conectado',
     disconnected: 'WhatsApp desconectado',
-    canceled: 'Vinculación cancelada',
-    expired: 'Código vencido',
-    error: 'Requiere atención',
+    canceled: 'Vinculacion cancelada',
+    expired: 'Codigo vencido',
+    error: 'Requiere atencion',
   })[status] || 'Estado desconocido';
 }
 
@@ -3011,10 +2974,7 @@ function renderBridgeControlState(state, explicitError = '') {
     ? Date.parse(bridgeControlState.pairing_code_expires_at)
     : 0;
   const codePanel = $('bridgeCodePanel');
-  if (codePanel) {
-    codePanel.classList.toggle('on', !!code || active);
-    codePanel.dataset.state = status;
-  }
+  if (codePanel) codePanel.classList.toggle('on', !!code || active);
   if ($('bridgePairCode')) $('bridgePairCode').textContent = code || '--';
   if ($('bridgeCopyCode')) $('bridgeCopyCode').disabled = !code;
   if ($('bridgeCancelPair')) $('bridgeCancelPair').disabled = !active;
@@ -3025,18 +2985,18 @@ function renderBridgeControlState(state, explicitError = '') {
     pauseButton.disabled = !bridgeControlState.host_online && !bridgeControlState.paused;
   }
 
+  const logoutButton = $('bridgeLogoutBtn');
+  if (logoutButton) {
+    logoutButton.disabled = logoutPending || (!connectedPhone && !['connected','disconnected','error'].includes(status));
+    logoutButton.textContent = logoutPending ? 'Cerrando sesión...' : 'Cerrar sesión de WhatsApp';
+  }
+
   const historyStatus = String(bridgeControlState.history_sync_status || 'idle');
   const historyActive = ['requested','running','waiting'].includes(historyStatus);
   const historyButton = $('bridgeHistoryBtn');
   if (historyButton) {
     historyButton.disabled = status !== 'connected' || !bridgeControlState.host_online || historyActive;
     historyButton.textContent = historyActive ? 'Sincronizando...' : 'Sincronizar historial';
-  }
-
-  const logoutButton = $('bridgeLogoutBtn');
-  if (logoutButton) {
-    logoutButton.disabled = logoutPending || (!connectedPhone && !['connected','disconnected','error'].includes(status));
-    logoutButton.textContent = logoutPending ? 'Cerrando sesión...' : 'Cerrar sesión de WhatsApp';
   }
   const historyState = $('bridgeHistoryState');
   if (historyState) {
@@ -3059,20 +3019,15 @@ function renderBridgeControlState(state, explicitError = '') {
     historyState.textContent = labels[historyStatus] || 'Estado de historial desconocido.';
   }
 
+  const stablePending = status === 'connecting' && !code;
   const errorText = explicitError ||
-    bridgeControlState.last_error ||
+    (stablePending ? 'El teléfono aceptó el dispositivo. Estamos comprobando que la sesión quede estable; no cierres esta pantalla.' : bridgeControlState.last_error) ||
     (!bridgeControlState.host_online
-      ? 'El proceso local o VPS está apagado. Inicia el puente para poder generar el código.'
+      ? 'El proceso local o VPS esta apagado. Inicia el puente para poder generar el codigo.'
       : (status === 'connected'
-        ? `Conectado${connectedPhone ? ` con el número terminado en ${connectedPhone.slice(-4)}` : ''}.`
-        : (status === 'code_ready'
-          ? 'Código listo. Escríbelo en el teléfono antes de que venza.'
-          : 'El puente está en línea y listo.')));
-  const bridgeError = $('bridgeError');
-  if (bridgeError) {
-    bridgeError.dataset.state = status;
-    bridgeError.textContent = errorText;
-  }
+        ? `Conectado${connectedPhone ? ` con el numero terminado en ${connectedPhone.slice(-4)}` : ''}.`
+        : 'El puente esta en linea y listo.'));
+  if ($('bridgeError')) $('bridgeError').textContent = errorText;
   updateBridgeCountdown();
 }
 
@@ -3143,15 +3098,6 @@ async function toggleBridgePause() {
   else if ($('bridgeError')) $('bridgeError').textContent = result.error || 'No se pudo cambiar la pausa.';
 }
 
-async function requestBridgeHistorySync() {
-  if (!requirePermission('manage_settings')) return;
-  const button = $('bridgeHistoryBtn');
-  if (button) { button.disabled = true; button.textContent = 'Solicitando...'; }
-  const result = await callBridgeControl('sync_history');
-  if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
-  else if ($('bridgeHistoryState')) $('bridgeHistoryState').textContent = result.error || 'No se pudo solicitar el historial.';
-}
-
 async function logoutBridgeWhatsApp() {
   if (!requirePermission('manage_settings')) return;
   const confirmed = window.confirm(
@@ -3164,6 +3110,15 @@ async function logoutBridgeWhatsApp() {
   if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
   else if ($('bridgeError')) $('bridgeError').textContent = result.error || 'No se pudo cerrar la sesión.';
   if (result.ok) setTimeout(() => void refreshBridgeStatus(false), 900);
+}
+
+async function requestBridgeHistorySync() {
+  if (!requirePermission('manage_settings')) return;
+  const button = $('bridgeHistoryBtn');
+  if (button) { button.disabled = true; button.textContent = 'Solicitando...'; }
+  const result = await callBridgeControl('sync_history');
+  if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
+  else if ($('bridgeHistoryState')) $('bridgeHistoryState').textContent = result.error || 'No se pudo solicitar el historial.';
 }
 
 async function copyBridgePairingCode() {
@@ -3313,21 +3268,10 @@ function trackPixel(event, params) {
 }
 
 // ===== Sidebar + view switcher (rediseño Fixora) =====
-let currentView = 'planning';
-function firstAllowedView(preferred) {
-  if (preferred && viewAllowedByConfig(preferred)) return preferred;
-  const candidates = ['planning','dashboard','conversations','bridge','funnel','prospecting','satisfaccion','plantillas','estados','reminders','manual','config'];
-  for (const key of candidates) {
-    if (key === 'bridge' && (!BRIDGE_SETUP_ENABLED || !hasPermission('manage_settings'))) continue;
-    if (viewAllowedByConfig(key)) return key;
-  }
-  return 'planning';
-}
+let currentView = 'conversations';
 function setView(view) {
-  const fallbackView = firstAllowedView('planning');
-  if (!viewAllowedByConfig(view)) view = fallbackView;
   if (view === 'bridge' && (!BRIDGE_SETUP_ENABLED || !hasPermission('manage_settings'))) {
-    view = fallbackView;
+    view = 'planning';
   }
   const map = {
     bridge:       {eyebrow:'Conexion',   h1:'Vincular WhatsApp',  el:'viewBridge'},
@@ -3343,9 +3287,9 @@ function setView(view) {
     config:       {eyebrow:'Sistema',    h1:'Configuración',      el:'viewConfig'},
     manual:       {eyebrow:'Ayuda',      h1:'Manual de uso',      el:'viewManual'},
   };
-  const v = map[view] || map[fallbackView];
+  const v = map[view] || map.dashboard;
   currentView = view;
-  ['viewDashboard','viewPlanning','viewConversations','viewFunnel','viewProspecting','viewSatisfaccion','viewPlantillas','viewEstados','viewReminders','viewBridge','viewConfig'].forEach(id => {
+  ['viewDashboard','viewPlanning','viewConversations','viewFunnel','viewProspecting','viewSatisfaccion','viewPlantillas','viewEstados','viewReminders','viewBridge','viewConfig','viewManual'].forEach(id => {
     const e = document.getElementById(id);
     if (e) e.style.display = (id === v.el) ? '' : 'none';
   });
@@ -3376,6 +3320,10 @@ function setView(view) {
   }, 40);
 }
 
+document.querySelectorAll('[data-man-jump]').forEach(button => {
+  button.addEventListener('click', () => setView(button.dataset.manJump || 'conversations'));
+});
+
 // ===== Campaña re-consent (marketing opt-in masivo) =====
 // ===== PROSPECCION COMERCIAL - centro operativo =====
 const PROSPECT_STATUS_LABELS = {
@@ -3394,9 +3342,8 @@ async function loadProspects(force = false) {
   if (prospectsLoaded && !force) { renderProspecting(); return; }
   const wrap = $('prosTableWrap');
   if (wrap) wrap.innerHTML = '<div class="pros-empty"><div class="ico">⌖</div><h3>Cargando prospectos...</h3><p>Consultando la base comercial con los permisos de tu cuenta.</p></div>';
-  const prospectQuery = sb.from('crm_prospects').select('id,business_name,category,description,address,sector,city,province,phone_primary,phone_secondary,whatsapp_possible,email_public,website,instagram,facebook,tiktok,maps_url,rating,review_count,status,source,assigned_to,tags,first_found_at,updated_at,qualification_score,qualification_tier,priority,estimated_value_centavos,preferred_service,notes,next_action_type,next_action_at,last_contacted_at,contact_attempts,last_prepared_message,last_playbook,converted_conversation_id').order('updated_at',{ascending:false}).limit(1000);
   const [prospectsResult, campaignsResult, blockedResult] = await Promise.all([
-    prospectQuery,
+    sb.from('crm_prospects').select('id,business_name,category,description,address,sector,city,province,phone_primary,phone_secondary,whatsapp_possible,email_public,website,instagram,facebook,tiktok,maps_url,rating,review_count,status,source,assigned_to,tags,first_found_at,updated_at,qualification_score,qualification_tier,priority,estimated_value_centavos,preferred_service,notes,next_action_type,next_action_at,last_contacted_at,contact_attempts,last_prepared_message,last_playbook,converted_conversation_id').order('updated_at',{ascending:false}).limit(1000),
     sb.from('crm_prospect_campaigns').select('id',{count:'exact',head:true}),
     sb.from('crm_do_not_contact').select('id',{count:'exact',head:true}).eq('active',true),
   ]);
@@ -4259,7 +4206,7 @@ async function showApp(session) {
   $('who').textContent = `${displayName} · ${ROLE_LABELS[PANEL_ACCESS.role] || PANEL_ACCESS.role}`;
   setSidebarUser(session.user.email);
   applyPanelAccess();
-  setView('planning');
+  setView(CRM_CONFIG.defaultView || 'conversations');
   try { if ('Notification' in window && Notification.permission === 'default') Notification.requestPermission(); } catch (e) {}
   loadQuickReplies();
   if (!LOCK_NUMFILTER) loadApprovedTemplates();
@@ -4411,18 +4358,34 @@ if ($('numFilter')) $('numFilter').onchange = function () {
 };
 
 // ---- conversaciones ----
+let conversationsLoadError = '';
+async function fetchConversationRows() {
+  const all = [];
+  const pageSize = 500;
+  for (let page = 0; page < 10; page++) {
+    const from = page * pageSize;
+    let query = sb.from('conversations').select('*')
+      .order('last_message_at', { ascending: false })
+      .range(from, from + pageSize - 1);
+    if (inboxNumFilter === 'qr') query = query.eq('source', 'whatsapp_qr');
+    else if (inboxNumFilter !== 'all') query = query.or('source.is.null,source.neq.whatsapp_qr');
+    const { data, error } = await query;
+    if (error) return { data:null, error };
+    all.push(...(data || []));
+    if (!data || data.length < pageSize) break;
+  }
+  return { data:all, error:null };
+}
+
 async function loadConvs() {
   if (Date.now() - _waHealthLast > 30000) { _waHealthLast = Date.now(); checkWaHealth(); }
-  let q = sb.from('conversations').select('*')
-    .order('last_message_at', { ascending: false }).limit(200);
-  if (inboxNumFilter === 'qr') q = q.eq('source', 'whatsapp_qr');
-  else if (inboxNumFilter === 'all') { /* sin filtro: todos los números */ }
-  else {
-    q = q.or('source.is.null,source.neq.whatsapp_qr');
-    if (PANEL_BUSINESS_NUMBER) q = q.eq('business_number', PANEL_BUSINESS_NUMBER);
-  }
-  const { data } = await q;
+  const { data, error } = await fetchConversationRows();
+  conversationsLoadError = error ? String(error.message || error) : '';
   maybeShowNumFilter();
+  if (error) {
+    renderConvs();
+    return;
+  }
   convs = data || [];
   const totalUnread = convs.reduce((s, c) => s + (c.unread || 0), 0);
   if (prevUnread !== null && totalUnread > prevUnread) {
@@ -4477,7 +4440,12 @@ function renderConvs() {
       (c.wa_phone || '').includes(q) ||
       (c.selected_combo_name || '').toLowerCase().includes(q))
   );
-  if (!list.length) { box.innerHTML = '<div class="empty">Sin conversaciones.</div>'; return; }
+  if (!list.length) {
+    box.innerHTML = conversationsLoadError
+      ? `<div class="empty"><b>No se pudo leer el historial.</b><br>${esc(conversationsLoadError)}<br><button class="cfg-btn" style="margin-top:12px" onclick="loadConvs()">Reintentar</button></div>`
+      : '<div class="empty">Sin conversaciones para este filtro.</div>';
+    return;
+  }
   for (const c of list) {
     const name = c.customer_name || c.contact_name || c.wa_phone;
     const stage = c.lifecycle_stage || 'nuevo';
@@ -4618,13 +4586,38 @@ function buildMsgEl(m) {
 // render INCREMENTAL: el poll cada 3.5s NO destruye el DOM -> el audio que se está
 // reproduciendo no se corta. Solo anexa mensajes nuevos y re-renderiza los que
 // cambian (si no tienen media sonando).
+async function fetchConversationMessages(conversationId, fresh) {
+  if (!fresh) {
+    const { data, error } = await sb.from('messages').select('*')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: false })
+      .limit(500);
+    return { data:(data || []).reverse(), error };
+  }
+  const all = [];
+  const pageSize = 500;
+  for (let page = 0; page < 20; page++) {
+    const from = page * pageSize;
+    const { data, error } = await sb.from('messages').select('*')
+      .eq('conversation_id', conversationId)
+      .order('created_at', { ascending: true })
+      .range(from, from + pageSize - 1);
+    if (error) return { data:null, error };
+    all.push(...(data || []));
+    if (!data || data.length < pageSize) break;
+  }
+  return { data:all, error:null };
+}
+
 async function loadMsgs(fresh) {
   if (!sel) return;
   const box = $('msgs');
   if (fresh) { box.innerHTML = ''; renderedSig.clear(); msgById.clear(); lastDay = ''; }
-  const { data, error } = await sb.from('messages').select('*')
-    .eq('conversation_id', sel.id).order('created_at', { ascending: true }).limit(400);
-  if (error || !data) return;
+  const { data, error } = await fetchConversationMessages(sel.id, !!fresh);
+  if (error || !data) {
+    if (fresh) box.innerHTML = `<div class="empty"><b>No se pudo cargar el historial.</b><br>${esc(error?.message || 'Error desconocido')}</div>`;
+    return;
+  }
   const atBottom = box.scrollHeight - box.scrollTop - box.clientHeight < 90;
   let appended = false;
   for (const m of data) {
@@ -8610,10 +8603,7 @@ function defaultSurveyMsg(name){
 function survStars(n){ n = Math.max(0, Math.min(5, Math.round(n||0))); return '★★★★★'.slice(0,n) + '☆☆☆☆☆'.slice(0,5-n); }
 
 async function loadTeamConfig(){
-  try {
-    const { data } = await sb.from('collaborators').select('*').order('created_at', { ascending:true });
-    collaborators = data || [];
-  }
+  try { const { data } = await sb.from('collaborators').select('*').order('created_at', { ascending:true }); collaborators = data || []; }
   catch(e){ collaborators = []; }
   try { const { data:s } = await sb.from('settings').select('value').eq('key','reviews_auto_on_close').maybeSingle();
         reviewsAutoOnClose = !!(s && (s.value === true || s.value === 'true')); }
@@ -8637,7 +8627,7 @@ function renderCollabBox(){
 async function addCollab(){
   const nm = ($('collabName').value||'').trim(), rl = ($('collabRole').value||'').trim();
   if (!nm){ $('collabName').focus(); return; }
-  const { error } = await sb.from('collaborators').insert({ name:nm, role:rl||null, active:true });
+  const { error } = await sb.from('collaborators').insert({ name:nm, role:rl||null, business_number: PANEL_BUSINESS_NUMBER||null, active:true });
   if (error){ alert('No se pudo agregar: ' + error.message); return; }
   $('collabName').value=''; $('collabRole').value=''; await loadTeamConfig();
 }
@@ -8736,15 +8726,7 @@ async function maybeAutoSurvey(conv){
 async function renderSatisfaccion(){
   await loadTeamConfig();
   let reviews = [];
-  try {
-    let q = sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(500);
-    if (LOCK_NUMFILTER) {
-      const bn = agendaChannelBusinessNumber() || PANEL_BUSINESS_NUMBER;
-      if (bn) q = q.eq('business_number', bn);
-    }
-    const { data } = await q;
-    reviews = data || [];
-  }
+  try { const { data } = await sb.from('reviews').select('*').order('created_at',{ascending:false}).limit(500); reviews = data || []; }
   catch(e){ reviews = []; }
   const submitted = reviews.filter(r => r.status==='submitted');
   const sent = reviews.filter(r => r.status==='sent' || r.status==='submitted');
