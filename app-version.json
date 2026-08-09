@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-05-panel-fotos-p02-local-validado",
+  "version": "2026-08-08-panel-fotos-fallback-operativo",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-05T00:00:00Z",
-  "summary": "P02 queda cerrada solo en local: politica de vistas separada de permisos, fallback seguro en setView, data-official-only y data-bridge-only conservan su semantica, lockNumFilter sigue fijo en qr, deploy_fotos_panel publica index+encuesta+config+version, y satisfaccion filtra reviews por business_number solo donde el esquema demostrado lo soporta. Sin despliegue ni cambios remotos."
+  "released_at": "2026-08-09T03:15:00Z",
+  "summary": "CRM Fotos/WhatsApp publicado por su URL operativa de GitHub Pages mientras el DNS de fotos.dcarelacompufoto.com permanece sin configurar. Conserva el filtro fijo del segundo numero y sus funciones de bridge."
 }
