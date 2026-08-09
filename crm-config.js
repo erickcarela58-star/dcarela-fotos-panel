@@ -26,8 +26,11 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   appVersionUrl: "./app-version.json",
   // Opcional: completar cuando se vincule el número físico. Mientras esté vacío,
   // la agenda lo infiere de la primera conversación recibida por el puente.
-  bridgeBusinessNumber: "",
-  bridgeBusinessDisplayNumber: "",
+  // Numero confirmado por el puente activo. Tambien se usa para recuperar
+  // conversaciones antiguas del mismo dispositivo aunque una fila haya
+  // quedado sin la marca source=whatsapp_qr.
+  bridgeBusinessNumber: "18094785620",
+  bridgeBusinessDisplayNumber: "809-478-5620",
 
   publicPortfolioUrl: "https://dcarelacompufoto.com/portafolio.html",
   publicCatalogUrl: "https://dcarelacompufoto.com/combos.html",
