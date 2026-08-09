@@ -41,6 +41,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
 
   businessNumber: "18495245620",
   businessDisplayNumber: "849-524-5620",
+  defaultView: "conversations",
   showAllViews: true,
   enabledViews: [
     "dashboard",
