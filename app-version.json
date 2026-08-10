@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-09-whatsapp-full-history-v10",
+  "version": "2026-08-10-whatsapp-recovery-v15",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-09T15:30:00Z",
-  "summary": "Extraccion de chats y nombres LID/PN, historial remoto automatico en bloques de 50 y CRM Fotos sin filtros que oculten datos."
+  "released_at": "2026-08-10T04:05:00Z",
+  "summary": "Seis contactos identificados desde la sesion vinculada, historial FULL/paginado y diagnostico de revinculacion Desktop cuando WhatsApp bloquea una sesion antigua."
 }
