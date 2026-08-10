@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-10-photo-bot-rebuild-v16",
+  "version": "2026-08-10-visible-photo-bot-v17",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-10T15:30:00Z",
-  "summary": "Bot de precalificacion exclusivo para Fotos, reconstruccion segura del vinculo Desktop e importacion inicial completa sin borrar chats."
+  "released_at": "2026-08-10T05:51:04Z",
+  "summary": "Interruptor global visible del Bot Fotos en todas las vistas, conectado al estado real del puente y con etiquetas operativas ACTIVO o INACTIVO."
 }
