@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-10-whatsapp-recovery-v15",
+  "version": "2026-08-10-photo-bot-rebuild-v16",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-10T04:05:00Z",
-  "summary": "Seis contactos identificados desde la sesion vinculada, historial FULL/paginado y diagnostico de revinculacion Desktop cuando WhatsApp bloquea una sesion antigua."
+  "released_at": "2026-08-10T15:30:00Z",
+  "summary": "Bot de precalificacion exclusivo para Fotos, reconstruccion segura del vinculo Desktop e importacion inicial completa sin borrar chats."
 }
