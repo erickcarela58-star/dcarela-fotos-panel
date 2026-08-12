@@ -53,6 +53,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
     "bridge",
     "funnel",
     "prospecting",
+    "poscustomers",
     "satisfaccion",
     "plantillas",
     "estados",
