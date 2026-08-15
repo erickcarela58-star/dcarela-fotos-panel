@@ -35,6 +35,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   publicPortfolioUrl: "https://dcarelacompufoto.com/portafolio.html",
   publicCatalogUrl: "https://dcarelacompufoto.com/combos.html",
   publicGalleryUrl: "https://dcarelacompufoto.com/portafolio.html",
+  publicWeddingUrl: "https://dcarelacompufoto.com/boda.html",
 
   metaPixelId: "1377359270081777",
   privateCombosMessage: "Te comparto los combos por aqui. Antes de confirmar disponibilidad necesito saber categoria, fecha tentativa y nombre.",
