@@ -50,6 +50,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   enabledViews: [
     "dashboard",
     "planning",
+    "ads",
     "conversations",
     "bridge",
     "funnel",
