@@ -51,6 +51,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
     "dashboard",
     "planning",
     "ads",
+    "marketing",
     "conversations",
     "bridge",
     "funnel",
