@@ -6,7 +6,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   brandName: "D'Carela Compufoto",
   productName: "CRM WhatsApp Web",
   appTitle: "D'Carela · CRM WhatsApp Web",
-  subtitle: "Panel separado · sesiones fotográficas · 2do número",
+  subtitle: "Fotos · remarketing y campañas · atención humana por defecto",
   logoText: "DC",
   logoUrl: "https://dcarelacompufoto.com/img/logo.webp",
   // Misma estética monocromática del CRM; la cinta de canal identifica esta réplica.
@@ -18,6 +18,7 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
 
   // clave de notificaciones/almacenamiento PROPIA (no se pisa con el panel principal)
   notificationTag: "dcarela-fotos",
+  historyRecoveryOnly: true,
   // arranca y se queda FIJO en el 2do número: solo atiende esos clientes
   defaultNumFilter: "qr",
   lockNumFilter: true,
