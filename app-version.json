@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-25-crm-history-v33.1",
+  "version": "2026-08-26-crm-firebase-transport-v34",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-26T04:00:00Z",
-  "summary": "Fotos orientado a remarketing y campañas, bot apagado, nuevos chats humanos y activación explícita sin reactivar conversaciones en bloque."
+  "released_at": "2026-08-26T17:00:00Z",
+  "summary": "Transporte Firebase preparado y Fotos conservado en atención humana por defecto, sin activar el bot."
 }
