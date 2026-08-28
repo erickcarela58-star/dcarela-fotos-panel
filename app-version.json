@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-plantillas-broadcast-v37",
+  "version": "2026-08-28-crm-envios-seguimientos-v38",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T11:20:00Z",
-  "summary": "Plantillas y difusion migradas a Firebase. El bot, las campanas y la cola saliente de Fotos siguen pausados."
+  "released_at": "2026-08-28T10:23:01Z",
+  "summary": "El panel compartido incorpora los envios de seguimiento y recordatorios por Firebase. El bot, las campanas y la cola saliente de Fotos siguen pausados."
 }
