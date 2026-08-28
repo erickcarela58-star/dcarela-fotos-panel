@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-chat-en-vivo-v42",
+  "version": "2026-08-28-crm-desinteres-v43",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T18:40:00Z",
-  "summary": "Chat en vivo por escucha de Firestore con repliegue a sondeo. El bot, las campanas y la cola saliente de Fotos siguen pausados."
+  "released_at": "2026-08-28T19:20:00Z",
+  "summary": "Norma de desinteres: dos seguimientos seguidos sin respuesta y el contacto pasa a la nueva etapa desinteresado con marketing, seguimientos y auto-plantillas apagados. Boton por chat y revision en lote de candidatos. El historial se conserva y se puede seguir escribiendo a mano."
 }
