@@ -13,9 +13,6 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   accent: "#fafafa",
   accent2: "#737373",
 
-  supabaseUrl: "https://rdmhyhsrewvrpqygtufa.supabase.co",
-  supabaseAnonKey: "sb_publishable_XgucPR_5tPklv6sdUFAhDQ_6NbSf8fQ",
-
   // clave de notificaciones/almacenamiento PROPIA (no se pisa con el panel principal)
   notificationTag: "dcarela-fotos",
   firebaseFunctionsBase: "https://us-central1-erikccarela.cloudfunctions.net",
