@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-firebase-completo-v40",
+  "version": "2026-08-28-crm-firebase-completo-v41",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T17:34:24Z",
+  "released_at": "2026-08-28T17:36:40Z",
   "summary": "Panel Fotos migrado a Firebase con historial, cola y campañas listas; las salidas continúan bloqueadas por seguridad mientras el transporte esté en reconnect_only."
 }
