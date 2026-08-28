@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-firebase-completo-v41",
+  "version": "2026-08-28-crm-chat-en-vivo-v42",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T17:36:40Z",
-  "summary": "Panel Fotos migrado a Firebase con historial, cola y campañas listas; las salidas continúan bloqueadas por seguridad mientras el transporte esté en reconnect_only."
+  "released_at": "2026-08-28T18:40:00Z",
+  "summary": "Chat en vivo por escucha de Firestore con repliegue a sondeo. El bot, las campanas y la cola saliente de Fotos siguen pausados."
 }
