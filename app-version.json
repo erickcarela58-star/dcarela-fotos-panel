@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-live-reconnect-v35",
+  "version": "2026-08-28-crm-firebase-users-ia-v36",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T06:15:00Z",
-  "summary": "Fotos reconectado por Firebase en modo seguro: heartbeat e historial activos; bot, campañas y cola saliente pausados."
+  "released_at": "2026-08-28T08:10:00Z",
+  "summary": "Cuentas del panel y planificador de IA migrados a Firebase. El bot, las campanas y la cola saliente de Fotos siguen pausados."
 }
