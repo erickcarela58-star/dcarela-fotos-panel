@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-26-crm-firebase-transport-v34",
+  "version": "2026-08-28-crm-live-reconnect-v35",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-26T17:00:00Z",
-  "summary": "Transporte Firebase preparado y Fotos conservado en atención humana por defecto, sin activar el bot."
+  "released_at": "2026-08-28T06:15:00Z",
+  "summary": "Fotos reconectado por Firebase en modo seguro: heartbeat e historial activos; bot, campañas y cola saliente pausados."
 }
