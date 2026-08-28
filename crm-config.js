@@ -16,6 +16,8 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   // clave de notificaciones/almacenamiento PROPIA (no se pisa con el panel principal)
   notificationTag: "dcarela-fotos",
   firebaseFunctionsBase: "https://us-central1-erikccarela.cloudfunctions.net",
+  firebaseAgendaUrl: "https://crmagenda-o2uqjp6fra-uc.a.run.app",
+  firebaseReviewsUrl: "https://crmreviews-o2uqjp6fra-uc.a.run.app",
   firebaseTransportEnabled: true,
   historyRecoveryOnly: true,
   // arranca y se queda FIJO en el 2do número: solo atiende esos clientes
