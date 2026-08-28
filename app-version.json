@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-firebase-users-ia-v36",
+  "version": "2026-08-28-crm-plantillas-broadcast-v37",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-28T08:10:00Z",
-  "summary": "Cuentas del panel y planificador de IA migrados a Firebase. El bot, las campanas y la cola saliente de Fotos siguen pausados."
+  "released_at": "2026-08-28T11:20:00Z",
+  "summary": "Plantillas y difusion migradas a Firebase. El bot, las campanas y la cola saliente de Fotos siguen pausados."
 }
