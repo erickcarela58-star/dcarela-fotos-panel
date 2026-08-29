@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-28-crm-avisos-v48",
+  "version": "2026-08-29-crm-diagnostico-acceso-v49",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-29T00:40:00Z",
-  "summary": "Los avisos ya no se montan sobre la barra superior ni truncan el mensaje de error. Activar el bot vuelve a funcionar y el informe de IA explica por que falla cuando falla."
+  "released_at": "2026-08-29T01:20:00Z",
+  "summary": "El panel deja de tapar el motivo real cuando el servidor rechaza un cambio: consulta whoami y dice si la cuenta no tiene ficha, esta inactiva, no pertenece al negocio o su rol no alcanza."
 }
