@@ -1,6 +1,6 @@
 {
-  "version": "2026-08-29-crm-diagnostico-acceso-v49",
+  "version": "2026-08-30-crm-fotos-v2-completo-v50",
   "channel": "whatsapp-web",
-  "released_at": "2026-08-29T01:20:00Z",
-  "summary": "El panel deja de tapar el motivo real cuando el servidor rechaza un cambio: consulta whoami y dice si la cuenta no tiene ficha, esta inactiva, no pertenece al negocio o su rol no alcanza."
+  "released_at": "2026-08-30T12:00:00Z",
+  "summary": "CRM Fotos v2: conversaciones del segundo numero separadas, bot por canal, agenda, configuracion, plantillas, herramientas y contexto para remarketing."
 }
