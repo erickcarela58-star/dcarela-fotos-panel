@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>D'Carela CRM</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>💬</text></svg>">
 <script src="./crm-config.js"></script>
@@ -191,9 +194,10 @@ body.menu-abierto .nav .secundarias{display:block}
    tener que abrir el chat, que es cuando importa saberlo. */
 .avwrap{position:relative;flex:0 0 auto;line-height:0}
 img.av{object-fit:cover}
-.canalpin{position:absolute;top:-2px;right:-3px;width:16px;height:16px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:8px;line-height:1;
+.canalpin{position:absolute;top:-2px;right:-3px;width:17px;height:17px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;line-height:1;color:#fff;
   border:2px solid var(--panel)}
+.canalpin svg{width:10px;height:10px;display:block}
 /* La casilla solo aparece al pasar por encima o si ya hay algo seleccionado: en reposo
    la lista se lee limpia y no parece un formulario. */
 .marcar{width:17px;height:17px;flex:0 0 auto;border:1.5px solid var(--line2);border-radius:5px;
@@ -212,6 +216,7 @@ img.av{object-fit:cover}
 .canal{max-width:760px;margin-bottom:12px;border:1px solid var(--line);border-radius:var(--r2);
   background:var(--panel);overflow:hidden}
 .cabecera-canal{display:flex;align-items:center;gap:12px;padding:14px 16px}
+.clogo svg{width:20px;height:20px}
 .clogo{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;
   justify-content:center;font-size:18px;flex:0 0 auto}
 .cinfo{flex:1;min-width:0}
@@ -329,6 +334,30 @@ video.mmedia{cursor:default}
 .marchivo span{font-size:11px;color:var(--meta)}
 .marchivo a{margin-top:4px;font-size:12px;font-weight:650;color:inherit}
 .mpie{margin-top:3px;white-space:pre-wrap;word-break:break-word}
+/* Botones de accion tal como los ve el cliente: separados del texto por una linea y
+   repartidos en filas. No son pulsables desde aqui -- los pulsa el, no nosotros. */
+/* Previo de plantilla: se pinta como un globo de WhatsApp a proposito. Lo que hay que
+   juzgar antes de enviar no es una ficha tecnica, es el mensaje tal como le va a llegar. */
+.tplprevio{margin:2px 0 14px;padding:10px 12px;border-radius:10px;background:var(--out);
+  color:#111b21;font-size:13.5px;line-height:1.45;white-space:pre-wrap;word-break:break-word;
+  border:1px solid rgba(0,0,0,.06)}
+.tplprevio .hueco{background:rgba(176,0,0,.14);color:#8a1a1a;border-radius:3px;padding:0 3px;
+  font-weight:600}
+.tplprevio-t{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  color:var(--mut);margin:10px 0 5px}
+.mbotones{margin:6px -9px -6px;display:flex;flex-wrap:wrap}
+.mbotones span{flex:1 1 100%;text-align:center;padding:8px 6px;font-size:13.5px;
+  color:var(--mut);border-top:1px solid var(--line2)}
+/* Aviso de ventana de 24 h. Va pegado al compositor porque es donde se decide escribir.
+   El ambar se fija en rgba y no en una ficha de color: tiene que leerse igual en claro y
+   en oscuro, y es el unico aviso del panel que avisa de algo que aun se puede evitar. */
+.ventana24{margin:0 12px 6px;padding:9px 12px;border-radius:var(--r);display:flex;gap:10px;
+  align-items:flex-start;background:rgba(255,180,84,.14);border:1px solid rgba(255,180,84,.45);
+  color:var(--fg);font-size:12.5px;line-height:1.45}
+.ventana24 b{display:block;margin-bottom:2px;font-size:13px;color:var(--warn)}
+.ventana24 button{margin-left:auto;flex:none;align-self:center;background:var(--ink);
+  color:var(--on-ink);border:0;border-radius:6px;padding:7px 12px;font:inherit;
+  font-weight:600;cursor:pointer;white-space:nowrap}
 /* El boton de opciones solo aparece al pasar por encima: en reposo el hilo se lee
    limpio, como WhatsApp. En tactil no hay hover, asi que ahi se deja siempre. */
 .gaccion{position:absolute;top:2px;right:3px;width:20px;height:18px;border-radius:4px;
@@ -360,9 +389,29 @@ video.mmedia{cursor:default}
 #lupa.on{display:flex}
 #lupa img{max-width:100%;max-height:100%;border-radius:6px}
 
-.escribir{display:flex;align-items:flex-end;gap:9px;padding:10px 14px;
+/* El compositor se envuelve cuando no cabe. Con siete botones de adjuntar en una fila
+   rigida y la ventana estrecha, la caja de texto se quedaba con cuarenta pixeles y
+   escribia una letra por linea: seguia funcionando, pero era inservible. */
+/* Una linea, no una tarjeta. .pie button lleva borde y radio, y gana en especificidad
+   a una regla de una sola clase: el numero de version salia dentro de un recuadro como
+   si fuera un boton mas del menu. */
+/* Buscador de prospectos. Se envuelve: son dos campos y un boton, y en pantalla estrecha
+   quedaban aplastados igual que le paso al compositor. */
+.buscaprospectos{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;max-width:760px}
+.buscaprospectos input{flex:1 1 200px;min-width:150px;padding:10px 13px;border:1px solid var(--line2);
+  border-radius:var(--r);background:var(--bg);color:var(--fg);font:inherit;outline:0}
+.buscaprospectos input:focus{border-color:var(--ink)}
+.buscaprospectos button{flex:0 0 auto}
+.pie .version{display:block;width:100%;text-align:left;padding:6px 0 0;border:0;
+  border-radius:0;background:none;font:inherit;font-size:10px;line-height:1.35;
+  color:var(--mut);cursor:default;opacity:.72;letter-spacing:.1px}
+.pie .version:hover{background:none}
+.pie .version.hay{color:var(--warn);font-weight:700;opacity:1;cursor:pointer;
+  text-decoration:underline;text-underline-offset:2px}
+.escribir{display:flex;align-items:flex-end;gap:9px;padding:10px 14px;flex-wrap:wrap;
   background:var(--panel);border-top:1px solid var(--line)}
-.escribir textarea{flex:1;min-height:40px;max-height:150px;padding:10px 14px;resize:none;
+.escribir textarea{flex:1 1 180px;min-width:150px;min-height:40px;max-height:150px;
+  padding:10px 14px;resize:none;
   border:1px solid var(--line);border-radius:var(--r2);background:var(--bg);color:var(--fg);outline:0}
 .escribir textarea:focus{border-color:var(--line2)}
 .enviar{width:41px;height:41px;border-radius:50%;flex:0 0 auto;background:var(--ink);
@@ -491,30 +540,117 @@ video.mmedia{cursor:default}
   padding:13px 22px;border-bottom:1px solid var(--line);background:var(--panel)}
 .acab b{display:block;font-size:14px}
 .acab span{display:block;font-size:11.5px;color:var(--mut);margin-top:1px}
-.ahilo{flex:1;overflow-y:auto;padding:22px 22px 8px;display:flex;flex-direction:column;gap:12px}
-.aturno{display:flex}
+/* El hilo tiene ancho de lectura. Un parrafo de 1200 px obliga a barrer la cabeza de un
+   lado a otro en cada linea y se lee peor que uno de 720. */
+.ahilo{flex:1;overflow-y:auto;padding:26px 22px 10px;display:flex;flex-direction:column;gap:22px}
+.aturno{display:flex;gap:12px;width:100%;max-width:820px;margin:0 auto}
 .aturno.yo{justify-content:flex-end}
-.aburbuja{max-width:min(76%,720px);padding:12px 15px;border-radius:var(--r2);
-  font-size:13.5px;line-height:1.5;white-space:pre-wrap;word-break:break-word}
-.aturno.yo .aburbuja{background:var(--ink);color:var(--on-ink);white-space:pre-wrap}
-.aturno.ia .aburbuja{background:var(--panel);border:1px solid var(--line);white-space:normal}
+/* El turno del asistente NO va en globo: ocupa el ancho de lectura con su avatar al lado,
+   como un chat moderno. Meter un informe de doce parrafos dentro de una burbuja con borde
+   lo hace parecer una alerta del sistema, no una respuesta. */
+.aav{width:28px;height:28px;border-radius:8px;flex:0 0 auto;background:var(--ink);
+  color:var(--on-ink);display:flex;align-items:center;justify-content:center;
+  font-size:10.5px;font-weight:800;letter-spacing:.3px;margin-top:2px}
+.aburbuja{min-width:0;font-size:14px;line-height:1.62;word-break:break-word}
+.aturno.yo .aburbuja{max-width:min(78%,600px);padding:11px 16px;border-radius:18px 18px 4px 18px;
+  background:var(--ink);color:var(--on-ink);white-space:pre-wrap;font-size:13.5px;line-height:1.5}
+.aturno.ia .aburbuja{flex:1;white-space:normal;color:var(--fg)}
 .aimgs{display:block;margin-top:5px;font-size:11px;opacity:.7}
-.afila{margin-bottom:9px}
-.afila:last-child{margin-bottom:0}
-.afila b{display:block;font-size:9.5px;font-weight:800;letter-spacing:.7px;
-  text-transform:uppercase;color:var(--mut);margin-bottom:2px}
-.aacciones{margin-top:12px;padding-top:11px;border-top:1px solid var(--line)}
-.aacciones>b{display:block;font-size:9.5px;font-weight:800;letter-spacing:.7px;
-  text-transform:uppercase;color:var(--mut);margin-bottom:7px}
-.aaccion{padding:9px 11px;border:1px solid var(--line);border-radius:var(--r);margin-bottom:6px}
-.aaccion span{font-weight:600;font-size:13px}
-.aaccion i{display:block;font-style:normal;font-size:12px;color:var(--mut);margin-top:2px}
-.apr{margin-top:10px}
-.ahecho{margin-top:10px;font-size:12.5px;font-weight:650;color:var(--ok)}
+
+/* El titular de la propuesta. Antes el objetivo era una fila mas con su etiqueta en
+   mayusculas diminutas; ahora encabeza la respuesta, que es lo que hace. */
+.aobj{font-size:16.5px;font-weight:650;letter-spacing:-.2px;line-height:1.4;margin:0 0 8px}
+.arat{margin:0 0 4px}
+.asec{display:flex;align-items:center;gap:9px;margin:18px 0 9px;
+  font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--mut)}
+.asec::after{content:"";flex:1;height:1px;background:var(--line)}
+/* Pasos numerados de verdad, con su circulo. "PASO 1" repetido cinco veces en mayusculas
+   ocupaba mas espacio que los propios pasos. */
+.apasos{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.apasos li{display:flex;gap:11px;align-items:flex-start}
+.apasos .n{width:22px;height:22px;border-radius:50%;flex:0 0 auto;background:var(--hover);
+  color:var(--fg);display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;margin-top:1px}
+/* Los riesgos son lo que puede salir mal: se ven distintos del resto o no se leen. */
+.ariesgo{display:flex;gap:10px;padding:10px 13px;border-radius:var(--r);
+  background:rgba(255,180,84,.12);border-left:3px solid var(--warn);margin-bottom:7px;
+  font-size:13px;line-height:1.5}
+.ariesgo::before{content:"!";flex:0 0 auto;width:17px;height:17px;border-radius:50%;
+  background:var(--warn);color:#fff;font-size:11px;font-weight:800;
+  display:flex;align-items:center;justify-content:center;margin-top:2px}
+/* El mensaje que se prepararia se ve como el globo que va a ser, no como una cita. */
+.amsg{position:relative;padding:11px 14px;border-radius:10px;background:var(--out);
+  color:#111b21;font-size:13.5px;line-height:1.5;white-space:pre-wrap;
+  border:1px solid rgba(0,0,0,.06)}
+.acopiar{position:absolute;top:7px;right:7px;padding:3px 9px;border-radius:6px;
+  border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.75);color:#111b21;
+  font-size:11px;font-weight:600;cursor:pointer}
+.acopiar:hover{background:#fff}
+
+/* Lo que se va a ejecutar, como tarjeta cerrada: es lo unico que cambia datos. */
+.aacciones{margin-top:18px;border:1px solid var(--line2);border-radius:var(--r2);
+  overflow:hidden;background:var(--panel)}
+.aacciones>b{display:block;padding:9px 14px;background:var(--hover);
+  font-size:10px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--mut)}
+.aaccion{padding:11px 14px;border-top:1px solid var(--line)}
+.aaccion span{font-weight:650;font-size:13.5px}
+.aaccion i{display:block;font-style:normal;font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.45}
+.apr{margin-top:12px}
+.ahecho{margin-top:12px;font-size:12.5px;font-weight:650;color:var(--ok)}
 .abienvenida{margin:auto;max-width:560px;text-align:center;color:var(--mut)}
 .abienvenida b{display:block;font-size:17px;color:var(--fg);margin-bottom:6px}
 .abienvenida p{margin:0 0 18px;font-size:13px;line-height:1.5}
 .awiz{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+/* Estado vacio: tarjetas con lo que hace cada receta, no pildoras de una linea. Una
+   pildora que dice "Cobrar y confirmar" no explica nada; la tarjeta si. */
+.atarjetas{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:10px;
+  margin-top:20px;text-align:left}
+.atarjeta{padding:13px 15px;border:1px solid var(--line);border-radius:var(--r2);
+  background:var(--panel);cursor:pointer;transition:border-color .15s,transform .15s}
+.atarjeta:hover{border-color:var(--line2);transform:translateY(-2px)}
+.atarjeta b{display:block;font-size:13px;color:var(--fg);margin-bottom:3px}
+.atarjeta span{display:block;font-size:11.5px;color:var(--mut);line-height:1.42}
+
+/* Cada turno entra desde abajo. Solo el ultimo lleva la clase, asi que al repintar el
+   hilo entero no se anima toda la conversacion de golpe. */
+@keyframes aentra{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.aturno.nuevo{animation:aentra .22s ease-out}
+@media (prefers-reduced-motion:reduce){.aturno.nuevo{animation:none}}
+
+/* Puntos de "escribiendo", como en un chat de verdad. El spinner generico del panel se
+   usa en otras doce vistas y no dice que haya alguien redactando. */
+.apuntos{display:inline-flex;gap:4px;align-items:center;height:18px}
+.apuntos i{width:6px;height:6px;border-radius:50%;background:var(--mut);
+  animation:asalto 1.05s ease-in-out infinite}
+.apuntos i:nth-child(2){animation-delay:.16s}
+.apuntos i:nth-child(3){animation-delay:.32s}
+@keyframes asalto{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-4px)}}
+
+/* Menu de herramientas del asistente: la lista de lo que se puede controlar desde aqui. */
+.amas{position:relative}
+.amenu{position:absolute;bottom:calc(100% + 8px);left:0;width:330px;max-height:min(62vh,470px);
+  overflow-y:auto;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r2);
+  box-shadow:var(--sombra);padding:6px;z-index:60;display:none}
+.amenu.on{display:block;animation:aentra .14s ease-out}
+.amenu .grupo{font-size:9.5px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mut);padding:10px 10px 5px}
+.amenu button{display:block;width:100%;text-align:left;padding:8px 10px;border:0;
+  background:none;border-radius:var(--r);cursor:pointer;font:inherit;color:var(--fg)}
+.amenu button:hover{background:var(--hover)}
+.amenu button b{display:block;font-size:13px;font-weight:600}
+.amenu button span{display:block;font-size:11.5px;color:var(--mut);margin-top:1px;line-height:1.4}
+.amenu button.puesto{background:var(--hover)}
+.amenu button.puesto b::after{content:' ✓';color:var(--ok)}
+
+/* Etiqueta del foco activo. Va pegada a la caja de escribir porque cambia lo que pasa al
+   escribir, no es un ajuste de otra pantalla. */
+.afoco{display:flex;align-items:center;gap:8px;margin:0 22px 8px;padding:7px 10px;
+  border:1px solid var(--line2);border-radius:20px;width:fit-content;font-size:12px;
+  background:var(--hover)}
+.afoco b{font-weight:700}
+.afoco button{border:0;background:none;cursor:pointer;font-size:15px;line-height:1;
+  color:var(--mut);padding:0 2px}
+.afoco button:hover{color:var(--fg)}
 .acola{display:flex;flex-wrap:wrap;gap:6px;padding:0 22px 8px}
 .aentrada{display:flex;align-items:flex-end;gap:9px;padding:12px 22px 18px;
   border-top:1px solid var(--line);background:var(--panel)}
@@ -787,6 +923,7 @@ video.mmedia{cursor:default}
     <nav class="nav" id="nav"></nav>
     <div class="pie">
       <div class="estado"><span class="punto" id="punto"></span><span id="estadoTexto">Conectando…</span></div>
+      <button class="version" id="version" hidden></button>
       <button id="btnSalir">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 17l5-5-5-5M21 12H9M13 21H5a2 2 0 01-2-2V5a2 2 0 012-2h8"/></svg>
         Salir
@@ -886,6 +1023,7 @@ const VISTAS = [
   { id:'poscustomers',  nombre:'Clientes de caja', icono:ico('<path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/>') },
   { id:'satisfaccion',  nombre:'Satisfacción',  icono:ico('<path d="M12 17.3l-5.5 3 1-6.1L3 9.8l6.1-.9L12 3.3l2.9 5.6 6.1.9-4.5 4.4 1 6.1z"/>') },
   { id:'limpieza',      nombre:'Limpieza',       icono:ico('<path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/>') },
+  { id:'anuncios',      nombre:'Anuncios',       icono:ico('<path d="M3 11v2a2 2 0 002 2h2l4 4V5L7 9H5a2 2 0 00-2 2z"/><path d="M15 9a4 4 0 010 6"/>') },
   { id:'campanas',      nombre:'Campañas',      icono:ico('<path d="M3 11l18-8-7 18-2-8-9-2z"/>') },
   { id:'plantillas',    nombre:'Plantillas',    icono:ico('<rect x="5" y="5" width="14" height="16" rx="2"/><path d="M9 11h6M9 15h4"/>') },
   { id:'reminders',     nombre:'Recordatorios', icono:ico('<path d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13 21a2 2 0 01-4 0"/>') },
@@ -956,11 +1094,23 @@ const callFn = cuerpo => llama(cuerpo);
 let CONVS = [], MSGS = [], sel = null, paraMsgs = null;
 
 function nombreDe(c){
-  return c.customer_name || c.contact_name || ('+' + (c.wa_phone || ''));
+  if (c.customer_name || c.contact_name) return c.customer_name || c.contact_name;
+  // Instagram y Messenger no traen telefono. Sin este respaldo salia un '+' suelto, IGUAL
+  // en todas, y diez conversaciones distintas se veian como diez filas identicas. Se
+  // ensenan los ultimos digitos del id para poder distinguirlas mientras no haya nombre.
+  if (c.wa_phone) return '+' + c.wa_phone;
+  const id = String(c.social_id || '');
+  return id ? 'Sin nombre · ' + id.slice(-6) : 'Sin nombre';
 }
-// Foto de perfil si el canal la trae; si no, las iniciales. Se pide con referrerpolicy
-// no-referrer porque los CDN de Meta rechazan la peticion si ven el origen, y sin eso
-// saldria un hueco roto en vez de las iniciales.
+// Foto de perfil si el canal la trae; si no, las iniciales.
+//
+// Hoy sale SIEMPRE la inicial, y no es un fallo del pintado: la API de WhatsApp Cloud no
+// manda la foto del cliente en el webhook, asi que no hay de donde sacarla. Se deja
+// leyendo profile_pic_url porque Instagram y Messenger SI la exponen: cuando esos
+// canales entren, la foto aparece sola sin tocar nada aqui.
+//
+// referrerpolicy no-referrer porque los CDN de Meta rechazan la peticion si ven el
+// origen, y sin eso saldria un hueco roto en vez de las iniciales.
 function avatarDe(c, n){
   const url = c?.profile_pic_url || c?.avatar_url || c?.metadata?.profile_pic_url || '';
   if (url) return '<img class="av" src="' + esc(url) + '" alt="" loading="lazy" '
@@ -1018,6 +1168,37 @@ function escuchaMensajes(idConv){
       + 'No se pudieron cargar los mensajes.<br><b>' + esc(err?.code || 'error') + '</b></div>';
   });
 }
+// Version cargada y aviso de que hay otra publicada.
+//
+// El panel se sirve desde GitHub Pages con Cache-Control: max-age=600, asi que una
+// pestaña abierta puede quedarse horas con el HTML viejo. Desde fuera eso es
+// indistinguible de un despliegue que fallo: el dueño mira, no ve el cambio, y no hay
+// forma de saber cual de las dos cosas paso. Las metaetiquetas del <head> evitan que
+// vuelva a cachearse; esto ademas avisa cuando ya hay algo mas nuevo publicado.
+let VERSION_CARGADA = '';
+async function vigilaVersion(){
+  const e = $('version'); if (!e) return;
+  let publicada = '';
+  try {
+    const r = await fetch('./app-version.json?t=' + Date.now(), { cache:'no-store' });
+    if (r.ok) publicada = String((await r.json()).version || '');
+  } catch (err) { return; }
+  if (!publicada) return;
+  if (!VERSION_CARGADA) VERSION_CARGADA = publicada;
+  e.hidden = false;
+  if (publicada === VERSION_CARGADA) {
+    e.className = 'version';
+    e.textContent = 'v ' + VERSION_CARGADA;
+    e.onclick = null;
+    return;
+  }
+  // Recarga saltandose la cache: sin el parametro, el navegador puede devolver el mismo
+  // HTML viejo y el aviso se quedaria puesto para siempre.
+  e.className = 'version hay';
+  e.textContent = 'Hay una versión nueva · pulsa para actualizar';
+  e.onclick = () => { location.replace(location.pathname + '?v=' + Date.now() + location.hash); };
+}
+
 function marcaEstado(ok, texto){
   $('punto').classList.toggle('mal', !ok);
   $('estadoTexto').textContent = texto;
@@ -1043,6 +1224,7 @@ function monta(id){
   if (id === 'plantillas') return montaPlantillasVista();
   if (id === 'campanas') return montaBroadcast();
   if (id === 'limpieza') return montaLimpieza();
+  if (id === 'anuncios') return montaAnuncios();
   if (id === 'funnel') return montaFunnel();
   if (id === 'dashboard') return montaDashboard();
   if (TABLERO[id]) return montaTablero(id);
@@ -1108,7 +1290,11 @@ function arrastraFiltros(caja){
     if (ev.pointerType === 'touch') return;   // el tactil ya lo hace el navegador
     activo = true; movido = 0;
     inicioX = ev.clientX; inicioScroll = caja.scrollLeft;
-    caja.setPointerCapture(ev.pointerId);
+    // NO se captura el puntero. setPointerCapture redirige el click al contenedor, asi
+    // que el listener delegado recibia ev.target = #filtros, closest('[data-filtro]')
+    // devolvia null y NINGUN filtro se podia pulsar con raton. El arrastre funciona
+    // igual sin capturar: pointermove sigue llegando mientras el boton este pulsado, y
+    // pointerup en window cierra el gesto aunque se suelte fuera de la caja.
   });
   caja.addEventListener('pointermove', ev => {
     if (!activo) return;
@@ -1119,14 +1305,19 @@ function arrastraFiltros(caja){
     if (movido > 4) caja.classList.add('arrastrando');
     caja.scrollLeft = inicioScroll - d;
   });
-  const soltar = ev => {
+  const soltar = () => {
     if (!activo) return;
     activo = false;
-    try { caja.releasePointerCapture(ev.pointerId); } catch (e) {}
     setTimeout(() => caja.classList.remove('arrastrando'), 0);
   };
-  caja.addEventListener('pointerup', soltar);
-  caja.addEventListener('pointercancel', soltar);
+  // En window, no en la caja: si se suelta el raton fuera de los filtros, sin esto el
+  // gesto se quedaria pegado y la lista seguiria arrastrandose sola.
+  window.addEventListener('pointerup', soltar);
+  window.addEventListener('pointercancel', soltar);
+  // Un arrastre de verdad no debe contar tambien como click en el filtro que quedo debajo.
+  caja.addEventListener('click', ev => {
+    if (movido > 4) { ev.stopPropagation(); ev.preventDefault(); }
+  }, true);
   // La rueda vertical desplaza en horizontal: es lo que espera cualquiera con raton.
   caja.addEventListener('wheel', ev => {
     if (Math.abs(ev.deltaY) <= Math.abs(ev.deltaX)) return;
@@ -1135,9 +1326,30 @@ function arrastraFiltros(caja){
   }, { passive:false });
 }
 
+// Estado del puente de WhatsApp Web. null = todavia no se sabe. Se consulta una vez al
+// arrancar, y hasta que conteste no se esconde nada: esconder por defecto seria peor
+// error que enseñar de mas.
+let PUENTE_ON = null;
+async function cargaEstadoPuente(){
+  try {
+    const r = await llama({ action:'bridgeStatus' });
+    const p = r.ok ? (r.bridge || r) : {};
+    PUENTE_ON = p.connected === true || p.state === 'connected' || p.status === 'connected';
+  } catch (e) { PUENTE_ON = null; }
+  if (vistaActual === 'conversations') pintaChats();
+}
+// Una conversacion del segundo numero con el puente desconectado esta muerta: por ahi no
+// entra ni sale nada, y dejarla en la lista invita a escribirle a alguien que no va a
+// recibirlo. Se esconde, pero NO se borra: el filtro del canal la sigue trayendo, y en
+// cuanto el puente se reconecte reaparece sola.
+function puenteApagado(c){
+  return PUENTE_ON === false && canalDe(c) === 'whatsapp_qr';
+}
+
 function filtradas(){
   const t = ($('buscaChat')?.value || '').trim().toLowerCase();
   return CONVS.filter(c => {
+    if (puenteApagado(c) && filtro !== 'can:whatsapp_qr') return false;
     if (filtro === 'sinleer' && !(Number(c.unread || 0) > 0)) return false;
     if (filtro === 'humano' && !(c.mode === 'human' || c.human_handoff_required)) return false;
     if (filtro === 'bot' && c.mode !== 'bot') return false;
@@ -1149,23 +1361,37 @@ function filtradas(){
 }
 function pintaChats(){
   const cont = $('chats'); if (!cont) return;
-  const cuenta = f => CONVS.filter(c =>
+  // Las cuentas cuentan lo MISMO que se ve. Un filtro que dice 12 y abre 8 se lee como
+  // que el panel perdio cuatro conversaciones.
+  const cuenta = f => CONVS.filter(c => !puenteApagado(c)).filter(c =>
     f === 'todos' ? true
     : f === 'sinleer' ? Number(c.unread||0) > 0
     : f === 'humano' ? (c.mode === 'human' || c.human_handoff_required)
     : c.mode === 'bot').length;
   // Las etiquetas se añaden como filtros detras de los fijos: son las que el equipo
   // inventa, y sin poder filtrar por ellas no sirven para nada.
-  const porEtiqueta = etiquetasEnUso().map(e => ['etq:' + e, e]);
+  // Antes entraban TODAS, y con el etiquetado automatico son decenas: la fila de filtros
+  // se volvia un scroll interminable donde no se encontraba nada. Se aplica aqui la misma
+  // regla que ya rige para los canales, dos lineas mas abajo: una etiqueta que solo marca
+  // una conversacion no es un filtro, es ruido. Las raras siguen viendose y poniendose en
+  // la ficha del lead; lo que no hacen es competir por el sitio de las que se usan.
+  // Si el negocio eligio cuales quiere en la barra, mandan esas y en el orden que las
+  // eligio. El automatico solo entra cuando no ha elegido ninguna: acierta a menudo, pero
+  // la etiqueta que importa esta semana no tiene por que ser la mas usada del historico.
+  const elegidas = etiquetasElegidas();
+  const porEtiqueta = elegidas.length
+    ? elegidas.map(e => ['etq:' + e, e])
+    : etiquetasContadas().filter(([, n]) => n >= 2).slice(0, 8).map(([e]) => ['etq:' + e, e]);
   // Solo se ofrecen los canales que de verdad tienen conversaciones: un filtro que
   // siempre devuelve cero es ruido.
   const porCanal = Object.keys(CANALES)
     .filter(k => CONVS.some(c => canalDe(c) === k))
-    .map(k => ['can:' + k, CANALES[k].logo + ' ' + CANALES[k].corto]);
+    .map(k => ['can:' + k,
+      k === 'whatsapp_qr' && PUENTE_ON === false ? 'WA Web · inactivo' : CANALES[k].corto]);
   $('filtros').innerHTML = [['todos','Todos'],['sinleer','Sin leer'],['humano','Humano'],['bot','Bot'],
       ...porCanal, ...porEtiqueta]
     .map(([f,n]) => {
-      const n2 = f.startsWith('etq:') ? CONVS.filter(c => etiquetasDe(c).includes(f.slice(4))).length
+      const n2 = f.startsWith('etq:') ? CONVS.filter(c => !puenteApagado(c) && etiquetasDe(c).includes(f.slice(4))).length
         : f.startsWith('can:') ? CONVS.filter(c => canalDe(c) === f.slice(4)).length
         : cuenta(f);
       return '<button class="filtro' + (filtro===f?' on':'') + (f.startsWith('etq:')?' etqf':'')
@@ -1236,6 +1462,7 @@ function abre(c){
     +   '<button data-mas="cerrar">Cerrar conversación</button></div></div>'
     + '</div>'
     + '<div class="mensajes" id="mensajes"></div>'
+    + '<div class="ventana24" id="ventana24" hidden></div>'
     + '<div class="barra-cita" id="barraCita" hidden>'
     +   '<div class="cvertical"></div><div class="ctexto"></div>'
     +   '<button id="citaX" aria-label="Quitar la cita">×</button></div>'
@@ -1340,6 +1567,29 @@ function cableaChat(c){
   env.onclick = async () => {
     const t = caja.value.trim();
     if (!t && !COLA.length) return;
+    // Fuera de la ventana de 24 h el envio no falla aqui: Meta lo acepta y lo rechaza
+    // despues. Preguntar cuesta un clic; no preguntar costo cuatro mensajes que el
+    // dueño creyo enviados. La plantilla es la unica via que si llega.
+    if (canalDe(sel) !== 'whatsapp_qr' && (() => {
+      const u = ultimoDelCliente();
+      return !u || (Date.now() - u) / 3600000 >= 24;
+    })()) {
+      // El aviso tiene que hablar del canal que se esta usando. Decia "WhatsApp" y mandaba
+      // al boton de Plantillas estando en un chat de Instagram, donde las plantillas NO
+      // EXISTEN: son un producto de WhatsApp. Quien lo leia probaba la plantilla, no
+      // funcionaba, y el CRM parecia roto cuando lo que fallaba era el consejo.
+      const nombreRed = redSocial(sel);
+      if (!confirm(nombreRed
+        ? 'Han pasado más de 24 horas desde su último mensaje.'+'\n\n'
+          + 'En ' + nombreRed + ' no hay plantillas. Se intentará por la vía de atención '
+          + 'humana, que Meta permite hasta 7 días; con más tiempo lo va a rechazar.'
+          + '\n\n'+'¿Intentarlo?'
+        : 'Han pasado más de 24 horas desde su último mensaje.'+'\n\n'
+          + 'WhatsApp no le va a entregar esto: saldrá con ⚠. Solo llega una plantilla '
+          + 'aprobada (botón de Plantillas).'+'\n\n'+'¿Enviarlo de todas formas?')) {
+        return;
+      }
+    }
     env.disabled = true;
     let fallo = null;
     // Los nombres de estas claves NO son opcionales: uploadMetaMedia lee media_b64 y
@@ -1381,6 +1631,9 @@ function cableaChat(c){
         action:'send', conversation_id: conv,
         media_kind: a.tipo, media_b64: a.datos, media_filename: a.nombre, media_mime: a.mime,
         body: (t && i === ultimoConPie) ? t : '',
+        // Los botones exigen texto: si el pie fue a otro adjunto, este va sin nada que
+        // decir y Meta rechazaria el mensaje entero. En ese caso se manda sin botones.
+        ...(a.botones && t && i === ultimoConPie ? { botones: a.botones } : {}),
       });
       if (r.ok) enviados++; else fallo = r.error;
     }
@@ -1611,16 +1864,45 @@ async function abreRapidas(){
   if (!filas) return cierraModal();
   const cuerpo = $('modal').querySelector('.mcuerpo');
   const pinta = () => {
-    cuerpo.innerHTML = (filas.length
+    cuerpo.innerHTML = (!filas.length
+        ? '<p class="aviso">Todavía no hay ninguna. Puedes escribir la tuya abajo, o '
+          + '<button class="btn-linea" id="rqSemilla" style="padding:4px 10px;margin-left:4px">'
+          + 'empezar con seis frases habituales</button></p>'
+        : '')
+      + (filas.length
         ? filas.map((q,i) => '<div class="rapida"><button data-usar="' + i + '">'
             + '<b>' + esc(q.title || q.name || 'Sin título') + '</b>'
             + '<span>' + esc(String(q.body || q.text || '').slice(0,110)) + '</span></button>'
             + '<button class="rx" data-borrar="' + i + '" aria-label="Borrar">×</button></div>').join('')
-        : '<p class="aviso">Todavía no hay ninguna. Escribe la primera abajo.</p>')
+        : '')
       + '<div class="seccion" style="margin:16px 0 8px">Añadir una nueva</div>'
       + '<div class="campo"><label>Título</label><input id="rqT" placeholder="Ej. Horario"></div>'
       + '<div class="campo"><label>Texto</label><textarea id="rqB" rows="3"></textarea></div>'
       + '<button class="btn-solido" id="rqAdd">Guardar</button>';
+    // Seis frases que se repiten veinte veces al dia en un estudio fotografico. Son un
+    // punto de partida editable, no una imposicion: se guardan como cualquier otra y se
+    // borran igual.
+    const semilla = $('rqSemilla');
+    if (semilla) semilla.onclick = async () => {
+      semilla.disabled = true;
+      const base = [
+        ['Horario', 'Estamos de lunes a sábado, de 9:00 a 6:00. Los domingos no trabajamos.'],
+        ['Ubicación', (CFG.addressText || '') + ' ' + (CFG.mapsUrl || '')],
+        ['Abono', 'Para apartar la fecha se deja un abono. El resto se paga el día de la sesión.'],
+        ['Pedir comprobante', 'Cuando hagas el abono mándame el comprobante por aquí y el nombre de quien pagó, y te confirmo la fecha.'],
+        ['Entrega', 'Las fotos editadas se entregan en unos días y te aviso por aquí en cuanto estén listas.'],
+        ['Confirmar fecha', 'Déjame revisar la disponibilidad real de ese día y te confirmo enseguida.'],
+      ];
+      for (const [title, body] of base) {
+        await llama({ action:'data', table:'quick_replies', operation:'insert',
+          payload:{ title, body: body.trim(), created_at: new Date().toISOString() } });
+      }
+      RAPIDAS = null;
+      const nuevas = await cargaRapidas(true);
+      filas.length = 0; filas.push(...(nuevas || []));
+      pinta();
+      avisa('Seis respuestas creadas', 'Edítalas o bórralas como quieras.');
+    };
     $('rqAdd').onclick = async () => {
       const title = $('rqT').value.trim(), body = $('rqB').value.trim();
       if (!title || !body) return avisa('Faltan el título o el texto');
@@ -1702,6 +1984,9 @@ async function cargaCombos(forzar){
         items: [...card.querySelectorAll('.cinc li')].map(n => String(n.textContent||'').trim()).filter(Boolean),
         incluyeLabel: String(card.querySelector('.incbox .il')?.textContent || 'Incluye').trim(),
         incluye: String(card.querySelector('.incbox .iv')?.textContent || '').trim(),
+        acento: String(card.dataset.accent || '').trim(),
+        insignia: String(card.querySelector('.badge')?.textContent || '').trim(),
+        nota: String(card.querySelector('.cinc-note')?.textContent || '').trim(),
         imagenCruda: card.querySelector('.ph')?.dataset.bg
           ? new URL(card.querySelector('.ph').dataset.bg, COMBO_PAGINA).href : '',
         tarjeta: COMBO_IMG + combosSlug(cat, nombre) + '.png',
@@ -1711,13 +1996,77 @@ async function cargaCombos(forzar){
   COMBOS = filas;
   return filas;
 }
-function textoDeCombo(c){
-  const l = ['Te comparto el combo ' + c.nombre + (c.precio ? ' (' + c.precio + ')' : '') + '.'];
-  if (c.digital) l.push('', c.digital + '.');
-  if (c.items.length) l.push(...c.items.map(i => '• ' + i));
-  if (c.incluye) l.push('', c.incluyeLabel + ': ' + c.incluye + '.');
-  l.push('', 'Mira todos los combos e imágenes aquí: ' + COMBO_PAGINA);
-  l.push('Si te interesa, dime tu fecha tentativa y te confirmamos disponibilidad.');
+/* ---- Tarjeta del combo y vestidos ---------------------------------------- */
+// La tarjeta NO se dibuja aqui: se extrae de la web, que ya publica una por combo en
+// /combos-img/<slug>.png. Son las buenas -- 1080x1350, con la marca, el ITBIS y el
+// WhatsApp del estudio -- y se publican en el MISMO despliegue que combos.html (ambas
+// con fecha 24 Aug 2026 12:01:15 GMT), asi que no van por detras de los precios de la
+// pagina: salen del mismo dato.
+//
+// Redibujarlas aqui seria mantener un segundo diseño que se separa del real en cuanto
+// alguien toque la web.
+
+// Los vestidos viven en la misma pagina, en .dress-block. Son la pregunta que mas repite
+// una clienta de XV despues de ver el precio, y hasta ahora habia que buscarlos a mano.
+let VESTIDOS = null;
+async function cargaVestidos(forzar){
+  if (VESTIDOS && !forzar) return VESTIDOS;
+  const r = await fetch(COMBO_PAGINA, { cache: forzar ? 'reload' : 'default' });
+  if (!r.ok) throw new Error('catálogo HTTP ' + r.status);
+  const doc = new DOMParser().parseFromString(await r.text(), 'text/html');
+  VESTIDOS = [...doc.querySelectorAll('.dress-block .dcard img')].map(img => ({
+    nombre: String(img.getAttribute('alt') || 'Vestido').trim(),
+    url: new URL(img.getAttribute('src'), COMBO_PAGINA).href,
+  })).filter(v => v.url);
+  return VESTIDOS;
+}
+
+// Adjunta los vestidos como album. Se mandan comprimidos: son siete imagenes y el limite
+// fiable de subida a Meta esta cerca de 5 MB por archivo -- pasarse devuelve el error
+// #131053 despues de haber tardado en subir.
+async function adjuntaVestidos(boton){
+  const antes = boton ? boton.innerHTML : '';
+  if (boton) { boton.disabled = true; boton.textContent = 'Preparando…'; }
+  try {
+    const lista = await cargaVestidos(false);
+    if (!lista.length) throw new Error('el catálogo no trae vestidos');
+    for (const v of lista) {
+      const r = await fetch(v.url, { cache:'no-cache' });
+      if (!r.ok) continue;
+      const blob = await comprimeNormal(new File([await r.blob()], v.nombre + '.webp', { type:'image/webp' }));
+      COLA.push({ tipo:'image', mime: blob.type || 'image/jpeg',
+        nombre: v.nombre + ' - DCarela.jpg', datos: await leeBase64(blob) });
+    }
+    pintaCola();
+    const caja = $('texto');
+    const t = 'Estos son los vestidos disponibles para la sesión. '
+      + 'Dime cuál te gusta y lo reservamos para tu fecha.';
+    caja.value = caja.value.trim() ? caja.value.trim() + '\n\n' + t : t;
+    caja.dispatchEvent(new Event('input'));
+    cierraModal();
+    avisa('Vestidos listos', lista.length + ' imágenes en la cola. Revisa y pulsa enviar.');
+  } catch (e) {
+    if (boton) { boton.disabled = false; boton.innerHTML = antes; }
+    avisa('No se pudieron preparar los vestidos', e?.message || String(e));
+  }
+}
+
+// El pie de la tarjeta. Cuando va la tarjeta, el detalle YA esta dibujado dentro de la
+// imagen: repetirlo aqui le llena la pantalla al cliente con la misma lista dos veces.
+//
+// Y no lleva URL. El dueño lo pidio explicito: si se manda la imagen, no se manda el
+// enlace. Ademas la unica URL que llego a salir por aqui fue una vieja de netlify que el
+// bot copio del historial, asi que cuanto menos enlace suelto ande por los mensajes, mejor.
+function textoDeCombo(c, conTarjeta){
+  const l = ['Te comparto el combo ' + c.nombre + (c.precio ? ' — ' + c.precio : '') + '.'];
+  if (!conTarjeta) {
+    if (c.digital) l.push('', c.digital + '.');
+    if (c.items.length) l.push(...c.items.map(i => '• ' + i));
+    if (c.incluye) l.push('', c.incluyeLabel + ': ' + c.incluye + '.');
+  } else if (c.digital) {
+    l.push('', c.digital + '. Todo el detalle está en la tarjeta.');
+  }
+  l.push('', 'Si te interesa, dime tu fecha tentativa y te confirmamos disponibilidad.');
   return l.join('\n');
 }
 
@@ -1739,6 +2088,8 @@ async function abreCombos(){
     + '<div class="pdfs">' + COMBO_PDFS.map(p =>
         '<button class="tplchip" data-pdf="' + p.cat + '">' + esc(p.label) + ' · ' + p.n + '</button>').join('')
     + '</div>'
+    + '<div class="seccion" style="margin:14px 0 6px">Vestidos</div>'
+    + '<div class="pdfs"><button class="tplchip" data-vestidos>Enviar los vestidos disponibles</button></div>'
     + '<div class="seccion" style="margin:14px 0 6px">Combos con su tarjeta</div><div id="cbLista"></div>';
 
   const pinta = () => {
@@ -1756,6 +2107,8 @@ async function abreCombos(){
   cuerpo.onclick = async ev => {
     const pdf = ev.target.closest('[data-pdf]');
     if (pdf) return adjuntaPdfCombos(pdf.dataset.pdf, pdf);
+    const ves = ev.target.closest('[data-vestidos]');
+    if (ves) return adjuntaVestidos(ves);
     const b = ev.target.closest('[data-combo]');
     if (b) return adjuntaCombo(filas[Number(b.dataset.combo)], b);
   };
@@ -1766,26 +2119,38 @@ async function adjuntaCombo(c, boton){
   const antes = boton.innerHTML;
   boton.disabled = true; boton.textContent = 'Preparando…';
   try {
-    // Primero la tarjeta oficial; si no existe se cae a la imagen de la web. Mandar
-    // el texto sin foto seria peor que no mandar nada: el combo se vende por la imagen.
-    let r = await fetch(c.tarjeta, { cache:'force-cache' });
-    let url = c.tarjeta;
-    if (!r.ok && c.imagenCruda) { r = await fetch(c.imagenCruda, { cache:'force-cache' }); url = c.imagenCruda; }
+    // La tarjeta publicada del combo. Si por lo que sea no esta, se cae a la foto del
+    // catalogo antes que dejar al agente sin nada que mandar -- pero se avisa, porque una
+    // foto suelta no lleva el precio ni lo que incluye.
+    let url = c.tarjeta, r = await fetch(url, { cache:'no-cache' });
+    if (!r.ok && c.imagenCruda) {
+      url = c.imagenCruda; r = await fetch(url, { cache:'no-cache' });
+      if (r.ok) avisa('Sin tarjeta publicada', 'Va la foto del catálogo, sin el detalle del combo.');
+    }
     if (!r.ok) throw new Error('imagen HTTP ' + r.status);
     const blob = await r.blob();
-    const datos = await new Promise((res, rej) => {
-      const l = new FileReader();
-      l.onload = () => res(String(l.result).split(',')[1] || '');
-      // Sin onerror la promesa no se resuelve NUNCA si la lectura falla, y el envio
-      // se queda colgado con el boton deshabilitado y sin decir nada.
-      l.onerror = () => rej(new Error('no se pudo leer el archivo'));
-      l.readAsDataURL(blob);
-    });
-    COLA.push({ tipo:'image', mime: blob.type || 'image/png',
-      nombre: c.nombre + ' - DCarela.' + (url.endsWith('.webp') ? 'webp' : 'png'), datos });
+    const ext = url.split('.').pop().split('?')[0] || 'png';
+    const datos = await leeBase64(blob);
+    // Los combos salen con botones: el cliente toca en vez de escribir, y su respuesta
+    // vuelve identificada -- se sabe QUE combo le intereso, no un "si" suelto que hay
+    // que ir a buscar tres mensajes mas arriba.
+    //
+    // WhatsApp admite TRES botones como maximo, asi que se eligen segun el combo: los
+    // vestidos son de sesiones XV, y ofrecerlos en un combo de graduacion seria prometer
+    // algo que no existe.
+    const esXV = c.cat === 'xv';
+    COLA.push({ tipo:'image', mime: blob.type || 'image/jpeg',
+      nombre: c.nombre + ' - DCarela.' + ext,
+      datos,
+      botones: [
+        { id: 'combo_interesa:' + c.cat, titulo: 'Me interesa' },
+        esXV ? { id: 'combo_vestidos', titulo: 'Ver vestidos' }
+             : { id: 'combo_fecha:' + c.cat, titulo: 'Ver disponibilidad' },
+        { id: 'combo_otros',             titulo: 'Ver otros combos' },
+      ] });
     pintaCola();
     const caja = $('texto');
-    const t = textoDeCombo(c);
+    const t = textoDeCombo(c, true);
     caja.value = caja.value.trim() ? caja.value.trim() + '\n\n' + t : t;
     caja.dispatchEvent(new Event('input'));
     cierraModal();
@@ -1899,10 +2264,33 @@ async function abrePlantillas(){
   };
 }
 
+// Meta entrega la plantilla con los {{1}} {{2}} ya sustituidos, pero el panel los
+// enseñaba en crudo: el agente veia "Hola {{1}}" y tenia que imaginarse el resultado. Y el
+// historial guardaba "[plantilla saludo_corto_dcarela]" en vez del mensaje, asi que
+// despues nadie podia saber que le habia llegado al cliente.
+//
+// La sustitucion es POSICIONAL, igual que la hace Meta: {{1}} es la primera variable.
+function rellenaPlantilla(texto, variables, marcaHuecos){
+  return String(texto || '').replace(/\{\{\s*(\d+)\s*\}\}/g, (m, n) => {
+    const v = variables[Number(n) - 1];
+    if (v) return v;
+    // Un hueco sin rellenar se marca en vez de desaparecer: WhatsApp RECHAZA la plantilla
+    // entera si falta una variable, y un hueco invisible parece un texto correcto.
+    return marcaHuecos ? '\u0001' + n + '\u0002' : m;
+  });
+}
+function previoPlantilla(texto, variables){
+  return esc(rellenaPlantilla(texto, variables, true))
+    .replace(/\u0001(\d+)\u0002/g, (m, n) => '<span class="hueco">falta ' + esc(n) + '</span>');
+}
+
 function pideVariables(t){
   const claves = Array.isArray(t.parameter_keys) ? t.parameter_keys : [];
   // Se rellena de la ficha lo que se pueda: el agente corrige, no teclea de cero.
   const dePrimeras = k => {
+    // Las claves salen de PARAM_KEYS del servidor (templates-core.js) y ahi hay varias que
+    // este mapa no cubria -- 'interes', 'hora', 'impresiones', 'dato', 'pedido' -- asi que
+    // el campo salia vacio y habia que escribirlo a mano cada vez.
     const mapa = {
       nombre: sel.customer_name || sel.contact_name || '',
       cliente: sel.customer_name || sel.contact_name || '',
@@ -1910,13 +2298,18 @@ function pideVariables(t){
       precio: sel.selected_combo_price ? 'RD$' + sel.selected_combo_price : '',
       fecha: sel.tentative_date || '',
       categoria: sel.interested_category || '',
+      interes: sel.interested_category || sel.selected_combo_name || '',
+      hora: sel.tentative_time || '',
+      pedido: sel.selected_combo_name || '',
+      dato: sel.next_step_suggested || '',
     };
     return mapa[String(k).toLowerCase()] || '';
   };
   abreModal('<div class="mtapa"><b>' + esc(t.display_name || t.template_name) + '</b>'
     + '<button class="cerrarm" data-cerrar>×</button></div>'
     + '<div class="mcuerpo">'
-    + (t.preview_text ? '<p class="aviso">' + esc(t.preview_text) + '</p>' : '')
+    + '<div class="tplprevio-t">Así le va a llegar</div>'
+    + '<div class="tplprevio" id="tplPrevio"></div>'
     + (claves.length
         ? claves.map((k,i) => '<div class="campo"><label>' + esc(k) + '</label>'
             + '<input data-var="' + i + '" value="' + esc(dePrimeras(k)) + '"></div>').join('')
@@ -1925,14 +2318,29 @@ function pideVariables(t){
     + '<div class="mpatas"><button class="btn-linea" data-cerrar>Cancelar</button>'
     +   '<button class="btn-solido" id="btnEnviarTpl">Enviar plantilla</button></div>');
   $('modal').querySelectorAll('[data-cerrar]').forEach(b => { b.onclick = cierraModal; });
+
+  const campos = [...$('modal').querySelectorAll('[data-var]')];
+  const repintaPrevio = () => {
+    const caja = $('tplPrevio'); if (!caja) return;
+    if (!t.preview_text) { caja.textContent = 'Meta no devolvió el texto de esta plantilla.'; return; }
+    caja.innerHTML = previoPlantilla(t.preview_text, campos.map(i => i.value.trim()));
+  };
+  campos.forEach(i => i.addEventListener('input', repintaPrevio));
+  repintaPrevio();
+
   $('btnEnviarTpl').onclick = async () => {
-    const variables = [...$('modal').querySelectorAll('[data-var]')].map(i => i.value.trim());
+    const variables = campos.map(i => i.value.trim());
     if (variables.some(v => !v)) return avisa('Faltan variables', 'WhatsApp rechaza la plantilla si alguna va vacía.');
     $('btnEnviarTpl').disabled = true;
     const r = await llama({
       action:'sendTemplate', conversation_id: sel.id || sel._id,
       template_name: t.template_name, language_code: t.language_code || 'es',
       variables,
+      // El texto ya armado viaja para que el historial guarde el MENSAJE, no
+      // "[plantilla nombre]". outboundPayload ignora este campo cuando la accion es
+      // sendTemplate (transport-core.js:73), asi que no altera lo que se le manda a Meta:
+      // solo arregla lo que queda escrito en la conversacion.
+      text: t.preview_text ? rellenaPlantilla(t.preview_text, variables, false) : '',
     });
     $('btnEnviarTpl').disabled = false;
     if (!r.ok) return avisa('No se pudo enviar la plantilla', r.error);
@@ -2329,6 +2737,53 @@ function ondaFalsa(semilla){
   return s;
 }
 
+// La ventana de servicio de 24 h. WhatsApp solo entrega texto libre mientras no hayan
+// pasado 24 h desde el ULTIMO mensaje del cliente. Pasado el plazo, Meta ACEPTA la
+// llamada y devuelve un wamid -- y despues marca el mensaje como fallido por webhook. Por
+// eso el panel decia "enviado" y al cliente no le llegaba nada: el fallo llega tarde y
+// por otra via. Aqui se avisa antes de escribir, que es cuando todavia sirve de algo.
+function ultimoDelCliente(){
+  if (!sel) return null;
+  // La ficha lleva la fecha aunque el mensaje sea viejisimo; MSGS solo trae los ultimos
+  // 400. Se usa la mas reciente de las dos, no una sola.
+  const deLosMsgs = MSGS.filter(m => m.direction === 'in').map(m => m.created_at).sort().pop();
+  const v = [sel.last_customer_reply_at, deLosMsgs].filter(Boolean).sort().pop();
+  const t = v ? Date.parse(v) : NaN;
+  return isNaN(t) ? null : t;
+}
+// Instagram y Messenger comparten la ventana de 24 h con WhatsApp, pero NO su remedio: las
+// plantillas son de WhatsApp. Lo que Meta ofrece ahi es la etiqueta de atencion humana, que
+// amplia el plazo a siete dias, y el servidor ya la intenta solo. Devuelve el nombre que ve
+// el dueno, o null si no es una red social.
+function redSocial(c){
+  const k = canalDe(c);
+  return k === 'instagram' ? 'Instagram' : k === 'facebook' ? 'Messenger' : null;
+}
+function pintaVentana24(){
+  const caja = $('ventana24'); if (!caja) return;
+  // El puente de WhatsApp Web no pasa por el API oficial y no tiene esta limitacion.
+  if (!sel || canalDe(sel) === 'whatsapp_qr') { caja.hidden = true; return; }
+  const t = ultimoDelCliente();
+  const horas = t ? (Date.now() - t) / 3600000 : Infinity;
+  if (horas < 24) { caja.hidden = true; return; }
+  const cuanto = !isFinite(horas) ? 'Nunca ha escrito por este canal'
+    : horas < 48 ? 'Escribió hace ' + Math.round(horas) + ' horas'
+    : 'Escribió hace ' + Math.round(horas / 24) + ' días';
+  caja.hidden = false;
+  const nombreRed = redSocial(sel);
+  if (nombreRed) {
+    // Sin boton de plantilla: ofrecer lo que no existe es peor que no ofrecer nada.
+    caja.innerHTML = '<div><b>Fuera de la ventana de 24 horas</b> ' + esc(cuanto)
+      + '. En ' + nombreRed + ' no hay plantillas. Se intenta por atención humana, que Meta '
+      + 'permite hasta 7 días; con más tiempo solo se reabre si escribe la persona.</div>';
+    return;
+  }
+  caja.innerHTML = '<div><b>Fuera de la ventana de 24 horas</b>' + esc(cuanto)
+    + '. WhatsApp solo le entrega una plantilla aprobada; un mensaje normal sale con ⚠ '
+    + 'y no lo recibe.</div><button id="v24tpl">Usar plantilla</button>';
+  $('v24tpl').onclick = () => $('adjTpl')?.click();
+}
+
 function cuerpoMensaje(m){
   const t = String(m.msg_type || 'text').toLowerCase();
   const a = adjuntoDe(m);
@@ -2338,6 +2793,21 @@ function cuerpoMensaje(m){
   // resuelveMedios() con lo que devuelva crmMedia.
   const medio = (etiqueta, html) => a.url ? html(esc(a.url))
     : id ? html('', true) : tarjetaArchivo(a, etiqueta);
+
+  // Mensaje con botones de accion. El servidor lo guarda como 'interactive', y sin esta
+  // rama caia al final de la funcion -- que solo pinta texto. Resultado: en el historial
+  // el combo aparecia como un parrafo suelto, sin la foto de cabecera y sin rastro de los
+  // botones, aunque el cliente si los hubiera recibido.
+  if (t === 'interactive' || t === 'button') {
+    const btns = (Array.isArray(m.metadata?.botones) ? m.metadata.botones : []).filter(Boolean);
+    const cabeza = (a.url || id)
+      ? medio('Imagen', (src, porId) => '<img class="mmedia" alt="imagen" loading="lazy"'
+          + (porId ? ' data-medio="' + esc(id) + '"' : ' src="' + src + '"') + '>')
+      : '';
+    return cabeza + '<div class="mpie">' + esc(m.body || '') + '</div>'
+      + (btns.length ? '<div class="mbotones">'
+          + btns.map(b => '<span>' + esc(b) + '</span>').join('') + '</div>' : '');
+  }
 
   if (t === 'image') {
     return medio('Imagen', (src, porId) =>
@@ -2420,6 +2890,7 @@ function pintaMensajes(){
   //
   // Se compara el html generado con el anterior; si no cambio, no se toca el DOM. Si
   // cambio, se sustituyen SOLO los globos distintos, y nunca uno con audio sonando.
+  pintaVentana24();
   if (cont.dataset.firma === html) { resuelveMedios(); return; }
   const previo = cont.dataset.firma;
   cont.dataset.firma = html;
@@ -2530,6 +3001,25 @@ function pintaFicha(c){
     +     'audiencia en Campañas.</p>'
     + '</div></details>'
 
+    // Las notas internas las escribe el EQUIPO, no el cliente, y por eso no van en el hilo:
+    // "la mama decide", "pidio factura", "no llamar antes de las 10". Sin esto, ese contexto
+    // vivia en la cabeza de quien atendio y se perdia en cuanto atendia otra persona.
+    + '<details class="grupo" open><summary>Notas internas</summary><div class="dentro">'
+    +   '<div id="notasLista"></div>'
+    +   '<div class="campo" style="margin:8px 0 0">'
+    +     '<textarea id="notaNueva" rows="2" placeholder="Escribe una nota y pulsa Guardar"></textarea>'
+    +   '</div>'
+    +   '<button class="btn-linea" id="notaGuarda" style="margin-top:8px">Guardar nota</button>'
+    +   '<p class="aviso" style="margin:7px 0 0">Solo las ve el equipo. El cliente nunca las recibe.</p>'
+    + '</div></details>'
+
+    // El historial y los archivos estaban solo dentro del hilo, mezclados con la
+    // conversacion. Buscar "la foto del vestido que mando en junio" obligaba a subir por
+    // cuatro meses de mensajes.
+    + '<details class="grupo"><summary>Historial y archivos</summary><div class="dentro">'
+    +   '<div id="fichaHistorial"></div>'
+    + '</div></details>'
+
     + '<details class="grupo" open><summary>Resumen y próximo paso</summary><div class="dentro">'
     +   '<div class="campo"><label>Resumen</label><textarea data-c="conversation_summary" rows="3">' + esc(c.conversation_summary || '') + '</textarea></div>'
     +   '<div class="campo"><label>Próximo paso</label><textarea data-c="next_step_suggested" rows="2">' + esc(c.next_step_suggested || '') + '</textarea></div>'
@@ -2585,6 +3075,8 @@ function pintaFicha(c){
   // Cerrar la ficha tiene que poder deshacerse. En la primera version no habia forma
   // de volver a abrirla sin cambiar de conversacion y regresar.
   cableaEtiquetas(c);
+  cableaNotas(c);
+  cableaHistorial(c);
   $('cerrarFicha').onclick = () => { $('ficha').classList.remove('on'); $('ficha').style.display = 'none'; };
   const ver = $('verFicha');
   if (ver) ver.onclick = () => {
@@ -2640,7 +3132,8 @@ function montaPlantillasVista(){
       + '<p class="bajada">Lo único que WhatsApp entrega cuando han pasado más de 24 horas desde el '
       +   'último mensaje del cliente. Se aprueban en Meta; aquí se sincronizan y se activan.</p>'
       + '<div class="acciones" style="display:flex;gap:9px;margin-bottom:18px">'
-      +   '<button class="btn-solido" id="btnSyncTpl">Sincronizar con Meta</button>'
+      +   '<button class="btn-solido" id="btnNuevaTpl">＋ Crear plantilla</button>'
+      +   '<button class="btn-linea" id="btnSyncTpl">Sincronizar con Meta</button>'
       +   '<button class="btn-linea" id="btnRecargaTpl">Recargar</button></div>'
       + '<div class="seccion">Biblioteca propia · ' + PLANTILLAS_PROPIAS.length + ' eventualidades</div>'
       + '<p class="bajada">Textos base para copiar, adaptar y enviar a revisión en Meta. '
@@ -2663,6 +3156,7 @@ function montaPlantillasVista(){
       pintaTablaTpl(true);
     };
     $('btnRecargaTpl').onclick = () => pintaTablaTpl(true);
+    $('btnNuevaTpl').onclick = abreNuevaPlantilla;
   }
   pintaTablaTpl(!PLANTILLAS);
 }
@@ -2677,6 +3171,63 @@ function pintaPlantillasPropias(){
     const p = PLANTILLAS_PROPIAS[Number(b.dataset.tplPropia)];
     try { await navigator.clipboard.writeText(p[2]); avisa('Plantilla copiada', p[1]); }
     catch (e) { avisa('No se pudo copiar', 'Selecciona el texto manualmente.'); }
+  };
+}
+
+// Crear una plantilla propia. Lo que hay que dejar clarisimo es que NO queda usable al
+// pulsar guardar: se manda a Meta y hay que esperar su revision. Un panel que no lo diga
+// hace que alguien prepare una campaña con una plantilla que todavia no existe.
+function abreNuevaPlantilla(){
+  abreModal('<div class="mtapa"><b>Nueva plantilla</b><button class="cerrarm" data-cerrar>×</button></div>'
+    + '<div class="mcuerpo">'
+    + '<p class="aviso"><b>La revisa Meta antes de poder usarse</b>, y tarda de minutos a horas. '
+    +   'No cuentes con ella para una campaña de hoy.</p>'
+    + '<div class="par">'
+    +   '<div class="campo"><label>Nombre interno</label>'
+    +     '<input id="tpNombre" placeholder="recordatorio_sesion"></div>'
+    +   '<div class="campo"><label>Tipo</label><select id="tpCat">'
+    +     '<option value="UTILITY">Utilidad — avisos de algo que el cliente ya tiene</option>'
+    +     '<option value="MARKETING">Marketing — promociones</option></select></div>'
+    + '</div>'
+    + '<div class="campo"><label>Texto</label>'
+    +   '<textarea id="tpTexto" rows="5" placeholder="Hola {{1}}, te recordamos tu sesión del {{2}}. Cualquier cambio, escríbenos."></textarea>'
+    +   '<p class="aviso" style="margin:6px 0 0">Usa <code>{{1}}</code>, <code>{{2}}</code>… para lo que cambia '
+    +     'en cada envío. Meta exige un ejemplo de cada uno.</p></div>'
+    + '<div class="campo" id="tpEjemplosCampo" hidden><label>Ejemplos (uno por variable, separados por coma)</label>'
+    +   '<input id="tpEjemplos" placeholder="Luisa, 17 de septiembre"></div>'
+    + '<div class="campo"><label>Pie (opcional)</label><input id="tpPie" placeholder="D’Carela Compufoto"></div>'
+    + '<p class="aviso" id="tpAvisoStop" hidden><b>Marketing exige salida de baja.</b> Incluye algo como '
+    +   '«Responde STOP para no recibir más promociones», o Meta la rechaza y además degrada el número.</p>'
+    + '</div>'
+    + '<div class="mpatas"><button class="btn-linea" data-cerrar>Cancelar</button>'
+    +   '<button class="btn-solido" id="tpEnviar">Enviar a Meta</button></div>');
+  $('modal').querySelectorAll('[data-cerrar]').forEach(b => { b.onclick = cierraModal; });
+
+  const revisa = () => {
+    const n = ($('tpTexto').value.match(/\{\{\d+\}\}/g) || []).length;
+    $('tpEjemplosCampo').hidden = n === 0;
+    $('tpAvisoStop').hidden = $('tpCat').value !== 'MARKETING';
+  };
+  $('tpTexto').oninput = revisa;
+  $('tpCat').onchange = revisa;
+  revisa();
+
+  $('tpEnviar').onclick = async () => {
+    const texto = $('tpTexto').value.trim();
+    const huecos = (texto.match(/\{\{\d+\}\}/g) || []).length;
+    const ejemplos = $('tpEjemplos').value.split(',').map(s => s.trim()).filter(Boolean);
+    if (huecos && ejemplos.length !== huecos)
+      return avisa('Faltan ejemplos', 'La plantilla tiene ' + huecos + ' variable(s) y hacen falta ' + huecos + '.');
+    $('tpEnviar').disabled = true;
+    const r = await llama({ action:'templates', operation:'create',
+      template_name: $('tpNombre').value.trim(), body_text: texto,
+      category: $('tpCat').value, footer_text: $('tpPie').value.trim(),
+      language_code: 'es', examples: ejemplos });
+    $('tpEnviar').disabled = false;
+    if (!r.ok) return avisa('Meta la rechazó', r.error);
+    cierraModal();
+    avisa('Enviada a Meta', r.aviso || 'Espera su aprobación antes de usarla.');
+    pintaTablaTpl(true);
   };
 }
 
@@ -2766,7 +3317,13 @@ const TABLERO = {
     bajada: 'Negocios localizados para contactar. Ojo: no te han escrito, así que WhatsApp '
       + 'solo permite llegarles con plantilla aprobada.',
     tabla: 'crm_prospects',
-    queLoLlena: 'Se llena con las búsquedas de prospección, que corren fuera del panel. Si está vacía es que todavía no se ha hecho ninguna búsqueda.',
+    queLoLlena: 'Se llena con el buscador de arriba. Escribe un tipo de negocio y una ciudad — por ejemplo «colegio» en «La Romana» — y los importa desde OpenStreetMap.',
+    // Esta vista era de solo lectura y decia que las busquedas "corren fuera del panel".
+    // Era falso: la accion 'prospect' del servidor busca e importa desde hace tiempo, y lo
+    // que faltaba era el buscador. La tabla salia vacia para siempre y no habia forma de
+    // llenarla desde aqui.
+    buscador: true,
+    prospectos: true,
     orden: [{ field:'created_at', ascending:false }],
     cols: [
       { t:'Negocio', p:(r)=> r.business_name || '—' },
@@ -2832,17 +3389,169 @@ async function pintaScorecard(filas){
     + '</div>';
 }
 
+// La ficha comercial de un prospecto. Se abre pulsando su fila: sin esto la lista solo
+// servia para mirarla, y no habia donde apuntar en que estado esta, cuanto puede valer ni
+// cuando toca volver a llamar.
+const ESTADOS_PROSPECTO = ['nuevo','contactado','interesado','propuesta','ganado','perdido','do_not_contact'];
+
+function cableaProspectos(id){
+  const cal = $('pbCalificar');
+  if (cal) cal.onclick = async () => {
+    const filas = (TABLERO[id]._filas || []);
+    if (!filas.length) return avisa('No hay prospectos', 'Busca negocios primero.');
+    // Se califican de 100 en 100: es el tope que acepta el servidor, y mandarle mas
+    // significaria perder los que sobran sin decirlo.
+    const ids = filas.map(f => f.id).filter(Boolean).slice(0, 100);
+    cal.disabled = true; cal.textContent = 'Calificando…';
+    const r = await llama({ action:'prospect', operation:'qualify', prospect_ids: ids });
+    cal.disabled = false; cal.textContent = 'Calificar los importados';
+    if (!r.ok) return avisa('No se pudo calificar', r.error);
+    const bien = (r.results || []).filter(x => !x.error).length;
+    avisa('Calificados', bien + ' de ' + ids.length + '. Ya salen ordenados por prioridad.'
+      + (filas.length > 100 ? ' Quedan ' + (filas.length - 100) + ' sin calificar: vuelve a pulsar.' : ''));
+    pintaTablero(id);
+  };
+
+  const csv = $('pbCsv');
+  if (csv) csv.onclick = () => {
+    const filas = (TABLERO[id]._filas || []);
+    if (!filas.length) return avisa('No hay nada que exportar');
+    const cols = ['business_name','phone_primary','category','city','sector','status',
+      'qualification_score','qualification_tier','priority','contact_attempts','next_action_at'];
+    // Las comillas dobles se escapan doblandolas: un nombre con comillas rompia el archivo
+    // entero y Excel lo abria descuadrado a partir de esa fila.
+    const escapa = v => '"' + String(v ?? '').replace(/"/g, '""') + '"';
+    const csvTexto = [cols.join(',')]
+      .concat(filas.map(f => cols.map(c => escapa(f[c])).join(','))).join('\n');
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['\ufeff' + csvTexto], { type:'text/csv;charset=utf-8' }));
+    a.download = 'prospectos.csv'; a.click(); URL.revokeObjectURL(a.href);
+  };
+}
+
+async function abreFichaProspecto(id, fila){
+  const c = $('pbFicha'); if (!c) return;
+  const val = (k, d) => esc(fila[k] ?? d ?? '');
+  c.innerHTML = '<div class="cfgc" style="margin-bottom:16px"><h3>' + esc(fila.business_name || 'Prospecto') + '</h3>'
+    + '<p class="cfgnota">' + esc([fila.category, fila.city, fila.phone_primary].filter(Boolean).join(' · ')) + '</p>'
+    + '<div class="par">'
+    +   '<div class="campo"><label>Estado</label><select id="prEstado">'
+    +     ESTADOS_PROSPECTO.map(s => '<option' + (fila.status === s ? ' selected' : '') + '>' + esc(s) + '</option>').join('')
+    +   '</select></div>'
+    +   '<div class="campo"><label>Prioridad</label><select id="prPri">'
+    +     PRIORIDADES.map(s => '<option' + (fila.priority === s ? ' selected' : '') + '>' + esc(s) + '</option>').join('')
+    +   '</select></div>'
+    + '</div>'
+    + '<div class="par">'
+    +   '<div class="campo"><label>Valor estimado (RD$)</label>'
+    +     '<input id="prValor" type="number" min="0" value="' + Math.round(Number(fila.estimated_value_centavos || 0) / 100) + '"></div>'
+    +   '<div class="campo"><label>Próxima acción</label>'
+    +     '<input id="prCuando" type="date" value="' + val('next_action_at').slice(0,10) + '"></div>'
+    + '</div>'
+    + '<div class="campo"><label>Notas</label><textarea id="prNotas" rows="2">' + val('notes') + '</textarea></div>'
+    + '<div class="acciones" style="margin-top:10px">'
+    +   '<button class="btn-solido" id="prGuardar">Guardar ficha</button>'
+    +   '<button class="btn-linea" id="prGuion">Preparar guion con IA</button>'
+    +   '<button class="btn-linea" id="prCerrar">Cerrar</button></div>'
+    + '<div id="prGuionCuerpo"></div></div>';
+
+  $('prCerrar').onclick = () => { c.innerHTML = ''; };
+  $('prGuardar').onclick = async () => {
+    const b = $('prGuardar'); b.disabled = true;
+    const cambios = {
+      status: $('prEstado').value, priority: $('prPri').value,
+      // El servidor guarda centavos. Mandar pesos aqui multiplicaria por cien el valor de
+      // toda la cartera sin que nadie lo notara hasta mirar un total.
+      estimated_value_centavos: Math.round(Number($('prValor').value || 0) * 100),
+      notes: $('prNotas').value,
+    };
+    const cuando = $('prCuando').value;
+    if (cuando) cambios.next_action_at = new Date(cuando + 'T09:00:00').toISOString();
+    const r = await llama({ action:'prospect', operation:'update_prospect', prospect_id: fila.id, changes: cambios });
+    b.disabled = false;
+    if (!r.ok) return avisa('No se pudo guardar', r.error);
+    avisa('Ficha guardada'); pintaTablero(id);
+  };
+  $('prGuion').onclick = async () => {
+    const b = $('prGuion'); b.disabled = true; b.textContent = 'Preparando…';
+    const r = await llama({ action:'prospect', operation:'prepare_playbook', prospect_id: fila.id });
+    b.disabled = false; b.textContent = 'Preparar guion con IA';
+    const g = $('prGuionCuerpo');
+    if (!r.ok) { g.innerHTML = '<p class="bajada">' + esc(r.error || 'No se pudo.') + '</p>'; return; }
+    const pb = r.playbook || r;
+    // El guion NO se envia solo: se ensena para copiarlo. Un prospecto no te ha escrito
+    // nunca, asi que cualquier mensaje suyo sale por plantilla y con cabeza.
+    const trozo = (k, titulo) => pb[k] ? '<div class="dato"><div class="k">' + esc(titulo) + '</div>'
+      + '<div class="v">' + esc(typeof pb[k] === 'string' ? pb[k] : JSON.stringify(pb[k])) + '</div></div>' : '';
+    g.innerHTML = '<div class="seccion" style="margin:14px 0 6px">Guion propuesto · no se envía solo</div>'
+      + trozo('value_angle', 'Por dónde entrar') + trozo('first_message', 'Primer mensaje')
+      + trozo('follow_up_1', 'Seguimiento 1') + trozo('follow_up_2', 'Seguimiento 2')
+      + trozo('call_opener', 'Si llamas') + trozo('best_time', 'Mejor momento')
+      + trozo('next_step', 'Siguiente paso') + trozo('warnings', 'Ojo con');
+  };
+}
+
 async function montaTablero(id){
   const d = TABLERO[id];
   if (!montadas.has(id)) {
     montadas.add(id);
     hueco(id, '<div class="hoja"><h1>' + esc(d.titulo) + '</h1>'
       + '<p class="bajada">' + esc(d.bajada) + '</p>'
-      + '<div class="acciones" style="margin-bottom:16px"><button class="btn-linea" data-recarga>Recargar</button></div>'
+      + (d.buscador
+          ? '<div class="buscaprospectos">'
+            + '<input id="pbQue" placeholder="Qué buscar — colegio, salón, hotel…">'
+            + '<input id="pbDonde" placeholder="Ciudad" value="La Romana">'
+            + '<button class="btn-solido" id="pbIr">Buscar negocios</button>'
+            + '</div>'
+            + '<p class="bajada" id="pbEstado" hidden></p>'
+          : '')
+      + '<div class="acciones" style="margin-bottom:16px"><button class="btn-linea" data-recarga>Recargar</button>'
+      // Prospeccion era una tabla de solo mirar: buscaba, importaba, y ahi se acababa. Sin
+      // calificar no hay por donde empezar --200 negocios sin orden son 200 negocios que
+      // nadie llama-- y sin exportar no se puede trabajar la lista fuera del panel.
+      + (d.prospectos
+          ? '<button class="btn-linea" id="pbCalificar">Calificar los importados</button>'
+            + '<button class="btn-linea" id="pbCsv">Exportar CSV</button>'
+          : '')
+      + '</div>'
+      + (d.prospectos ? '<div id="pbFicha"></div>' : '')
       + '<div id="tb-' + id + '"></div></div>');
     document.querySelector('#vista-' + id + ' [data-recarga]').onclick = () => pintaTablero(id);
+    if (d.prospectos) cableaProspectos(id);
+    if (d.buscador) {
+      const lanzar = () => buscaProspectos(id);
+      $('pbIr').onclick = lanzar;
+      // Enter en cualquiera de los dos campos: escribir la ciudad y tener que ir al raton
+      // para buscar es de las cosas que hacen que una herramienta no se use.
+      ['pbQue', 'pbDonde'].forEach(k => $(k).addEventListener('keydown', e => {
+        if (e.key === 'Enter') { e.preventDefault(); lanzar(); }
+      }));
+    }
   }
   if (!TABLEROS_CARGADOS.has(id)) pintaTablero(id);
+}
+
+// Busca negocios en OpenStreetMap y los importa como prospectos. El servidor ya hacia
+// todo el trabajo -- accion 'prospect' -- y descarta los repetidos por source_external_id,
+// asi que buscar dos veces lo mismo no duplica nada.
+async function buscaProspectos(id){
+  const que = ($('pbQue')?.value || '').trim();
+  const donde = ($('pbDonde')?.value || '').trim();
+  const est = $('pbEstado'), boton = $('pbIr');
+  // El servidor exige cuatro caracteres. Decirlo aqui evita un viaje y un error seco.
+  if (que.length < 4) { est.hidden = false; est.textContent = 'Escribe al menos 4 letras de lo que buscas.'; return; }
+  boton.disabled = true;
+  est.hidden = false;
+  est.innerHTML = '<span class="cargando"></span> Buscando en OpenStreetMap…';
+  const r = await llama({ action:'prospect', query: que, city: donde, category: que, max: 20 });
+  boton.disabled = false;
+  if (!r.ok) { est.textContent = 'No se pudo buscar: ' + (r.error || 'error'); return; }
+  // Se dice cuantos eran repetidos, no solo cuantos entraron: si no, buscar lo mismo dos
+  // veces parece que la segunda no funciono.
+  est.textContent = r.imported + ' negocio(s) importado(s)'
+    + (r.duplicates ? ' · ' + r.duplicates + ' ya estaban' : '')
+    + (r.found === 0 ? ' · OpenStreetMap no encontró nada con esas palabras' : '');
+  pintaTablero(id);
 }
 
 async function pintaTablero(id){
@@ -2859,6 +3568,9 @@ async function pintaTablero(id){
   }
   let filas = r.data || r.rows || [];
   TABLEROS_CARGADOS.add(id);
+  // Se guardan para que las acciones de la barra --calificar, exportar-- trabajen sobre lo
+  // que el dueno esta viendo, y no sobre otra consulta que podria devolver algo distinto.
+  d._filas = filas;
   if (d.soloConRespuesta) filas = filas.filter(f => f.rating_service || f.rating_satisfaction || f.comment);
   if (!filas.length) {
     // Vacio y roto se ven igual si solo se dice "no hay nada". Aqui se explica QUE
@@ -2872,9 +3584,18 @@ async function pintaTablero(id){
     + '<div class="tabla" style="max-width:1000px">'
     + '<div class="fila cabecera" style="grid-template-columns:' + anchos + '">'
     +   d.cols.map(c => '<span>' + esc(c.t) + '</span>').join('') + '</div>'
-    + filas.map(f => '<div class="fila" style="grid-template-columns:' + anchos + '">'
+    + filas.map((f, i) => '<div class="fila"' + (d.prospectos ? ' data-fila="' + i + '" style="cursor:pointer;'
+          : ' style="') + 'grid-template-columns:' + anchos + '">'
         + d.cols.map(c => '<span>' + esc(String(c.p(f))) + '</span>').join('') + '</div>').join('')
-    + '</div><p class="bajada" style="margin-top:12px">' + filas.length + ' registro(s).</p>';
+    + '</div><p class="bajada" style="margin-top:12px">' + filas.length + ' registro(s).'
+    + (d.prospectos ? ' Pulsa uno para abrir su ficha comercial.' : '') + '</p>';
+
+  if (d.prospectos) {
+    cont.onclick = ev => {
+      const fila = ev.target.closest('[data-fila]'); if (!fila) return;
+      abreFichaProspecto(id, filas[Number(fila.dataset.fila)]);
+    };
+  }
 }
 
 /* ---- Recordatorios ------------------------------------------------------- */
@@ -2885,8 +3606,47 @@ function montaRecordatorios(){
     montadas.add('reminders');
     hueco('reminders', '<div class="hoja"><h1>Recordatorios</h1>'
       + '<p class="bajada">Seguimientos con fecha puesta. Los vencidos van primero: son los que '
-      +   'ya deberían haberse hecho.</p><div id="recLista"></div></div>');
+      +   'ya deberían haberse hecho.</p>'
+      // Esta vista solo ENSEÑABA la lista. Sin este boton, promover v2 al panel de
+      // produccion dejaba al negocio sin seguimientos ni recordatorios de sesion: el
+      // servidor sabe mandarlos --action followup, mode scheduled-- pero nadie se lo pedia.
+      + '<div class="filtros" style="padding:0 0 14px">'
+      // id propio: 'recEnviar' YA existe en la barra de grabar audio (linea 1490). Como las
+      // vistas se ocultan pero no se destruyen, $() devolvia siempre el primero: este boton
+      // quedaba muerto y su manejador se lo comia el 'Enviar' de la nota de voz -- que
+      // entonces disparaba un envio masivo en vez de mandar el audio.
+      +   '<button class="btn-solido" id="recProcesar">Procesar los vencidos ahora</button>'
+      + '</div>'
+      + '<p class="aviso" style="margin:0 0 16px">Abrir esta pantalla no envía nada. Al pulsar, '
+      +   'el servidor revisa uno por uno el consentimiento, el canal y la ventana de 24 horas '
+      +   'antes de cada envío, y respeta la norma de los dos intentos.</p>'
+      + '<div id="recLista"></div></div>');
+    $('recProcesar').onclick = procesaRecordatorios;
   }
+  pintaRecordatorios();
+}
+
+// Se piden los numeros y se ensenan TODOS, incluidos los omitidos. Un "listo" a secas
+// esconde lo que no salio, y lo que no salio es justo lo que hay que mirar.
+async function procesaRecordatorios(){
+  if (!confirm('¿Procesar ahora los seguimientos y recordatorios vencidos?\n\n'
+    + 'Dentro de 24 horas se manda texto libre; fuera, solo una plantilla aprobada. '
+    + 'Quien haya pedido la baja no recibe nada.')) return;
+  const b = $('recProcesar'); const antes = b.textContent;
+  b.disabled = true; b.textContent = 'Procesando…';
+  const r = await llama({ action:'followup', mode:'scheduled' });
+  b.disabled = false; b.textContent = antes;
+  if (!r.ok) return avisa('No se pudo procesar', r.error);
+  const partes = [
+    'Seguimientos: ' + (r.followUps || 0),
+    'Recordatorios de sesión: ' + (r.reminders || 0),
+  ];
+  if (r.optOutSkipped) partes.push(r.optOutSkipped + ' omitidos por baja');
+  if (r.humanSkipped) partes.push(r.humanSkipped + ' omitidos por llevarlos una persona');
+  if (r.templateBlocked) partes.push(r.templateBlocked + ' bloqueados: la plantilla no lleva baja/STOP');
+  if (r.errors?.length) partes.push(r.errors.length + ' con error');
+  avisa('Procesado', partes.join('. ') + '.');
+  // La lista se refresca sola: CONVS lo mantiene al dia el escuchador de Firestore.
   pintaRecordatorios();
 }
 function pintaRecordatorios(){
@@ -2901,11 +3661,15 @@ function pintaRecordatorios(){
       + 'Se pone desde la ficha del lead o desde el Planificador.</p>';
     return;
   }
+  // El acercamiento de Limpieza guarda el mensaje personalizado en pending_questions y
+  // promete que "aparecera en Recordatorios para revisarlo antes de enviarlo". No aparecia
+  // en ningun sitio: se escribia y se perdia de vista. Aqui se enseña.
   const vencidos = filas.filter(f => f.cuando <= ahora).length;
   cont.innerHTML = (vencidos
       ? '<p class="bajada"><b>' + vencidos + ' vencido(s)</b> — ya tocaba.</p>' : '')
     + '<div class="tabla" style="max-width:900px">'
-    + '<div class="fila cabecera"><span>Cuándo</span><span>Contacto</span><span>Etapa</span><span>Próximo paso</span></div>'
+    + '<div class="fila cabecera"><span>Cuándo</span><span>Contacto</span><span>Etapa</span>'
+    +   '<span>Mensaje preparado</span></div>'
     + filas.map(({c, cuando, iso}) => {
         const vencido = cuando <= ahora;
         return '<div class="fila">'
@@ -2913,7 +3677,10 @@ function pintaRecordatorios(){
         +   (vencido ? '<small style="color:var(--bad)">vencido</small>' : '<small>pendiente</small>') + '</span>'
         + '<span>' + esc(nombreDe(c)) + '</span>'
         + '<span>' + esc((c.lifecycle_stage || 'nuevo').replace(/_/g,' ')) + '</span>'
-        + '<span>' + esc(String(c.next_step_suggested || '—').slice(0,70)) + '</span>'
+        // El acercamiento de Limpieza guarda aqui el mensaje ya personalizado, y la pantalla
+        // promete que se podra revisar en Recordatorios. No se enseñaba en ninguna parte: se
+        // escribia y se perdia. Si no hay mensaje preparado, se cae al proximo paso.
+        + '<span>' + esc(String(c.pending_questions || c.next_step_suggested || '—').slice(0,90)) + '</span>'
         + '</div>';
       }).join('') + '</div>';
 }
@@ -2930,11 +3697,117 @@ let agFiltro = 'proximas';   // proximas | hoy | pasadas | todas
 let agMes = new Date();      // mes que se esta mirando
 let agDia = null;            // dia seleccionado en el calendario
 
+// La agenda y los recordatorios eran dos listas que no se hablaban: la cita vive en
+// scheduled_at/tentative_date y el seguimiento en follow_up_at, los dos en la MISMA ficha.
+// El resultado era que se podia tener un recordatorio para el martes sin que apareciera en
+// la agenda del martes, y planificar la semana mirando solo la mitad.
+//
+// Ahora los dos entran en la agenda. Se distinguen por tipo, no se mezclan: una sesion es
+// un compromiso con el cliente y un recordatorio es una tarea nuestra.
 function citasDe(){
-  return CONVS
-    .filter(c => c.scheduled_at || c.tentative_date)
-    .map(c => ({ c, iso: String(c.scheduled_at || c.tentative_date), firme: !!c.scheduled_at }))
-    .sort((a,b) => a.iso.localeCompare(b.iso));
+  const filas = [];
+  for (const c of CONVS) {
+    if (c.scheduled_at || c.tentative_date) {
+      filas.push({ c, iso: String(c.scheduled_at || c.tentative_date), firme: !!c.scheduled_at, tipo: 'sesion' });
+    }
+    // Un seguimiento de un contacto ya cerrado o desinteresado no es una tarea pendiente:
+    // se excluye igual que en la vista de Recordatorios, para que las dos cuenten lo mismo.
+    if (c.follow_up_at && !['cerrado', 'perdido', 'desinteresado'].includes(c.lifecycle_stage)) {
+      filas.push({ c, iso: String(c.follow_up_at), firme: false, tipo: 'recordatorio' });
+    }
+  }
+  return filas.sort((a, b) => a.iso.localeCompare(b.iso));
+}
+
+// Exportacion a Recordatorios de Apple.
+//
+// El dueño pidio conectar la agenda con su carpeta de iCloud. Escribir DIRECTAMENTE en
+// iCloud exigiria su contraseña de Apple (CalDAV con clave especifica de aplicacion), y
+// eso no lo toco. Un .ics hace el mismo trabajo sin que nadie tenga que darme una clave:
+// se abre y Recordatorios lo importa.
+//
+// Van como VTODO, no como VEVENT: VEVENT aterriza en Calendario, VTODO en Recordatorios,
+// que es la carpeta que pidio.
+function escapaICS(v){
+  return String(v || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
+}
+function selloICS(iso){
+  const d = new Date(iso);
+  if (isNaN(d)) return null;
+  return d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+}
+// Dos exportaciones, no una sustituyendo a la otra. La de Recordatorios la pidio el dueno
+// asi y se queda intacta: son VTODO y aterrizan en la app Recordatorios. Esta otra son
+// VEVENT --Calendario-- que es donde se mira una agenda de sesiones, con aviso el dia antes.
+// Cambiar la primera por esta habria sido decidir por el en vez de darle las dos.
+function exportaAgendaEventos(){
+  const filas = citasDe().filter(f => f.tipo === 'sesion' && selloICS(f.iso));
+  if (!filas.length) return avisa('No hay sesiones', 'Solo se exportan las sesiones con fecha.');
+  const ahora = selloICS(new Date().toISOString());
+  const lineas = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DCarela CRM//ES', 'CALSCALE:GREGORIAN'];
+  for (const f of filas) {
+    const quien = nombreDe(f.c);
+    const titulo = (f.firme ? 'Sesión · ' : 'Sesión tentativa · ') + quien;
+    const detalle = [
+      f.c.wa_phone ? 'Teléfono: +' + f.c.wa_phone : '',
+      f.c.interested_category ? 'Categoría: ' + f.c.interested_category : '',
+      f.c.selected_combo_name ? 'Combo: ' + f.c.selected_combo_name : '',
+    ].filter(Boolean).join('\n');
+    // Dos horas por defecto: un evento sin duracion se pinta como una raya en el calendario
+    // y no se ve al lado de los demas.
+    const fin = new Date(new Date(f.iso).getTime() + 2 * 3600 * 1000).toISOString();
+    lineas.push('BEGIN:VEVENT',
+      'UID:evento-' + (f.c._id || f.c.id) + '@dcarela',
+      'DTSTAMP:' + ahora,
+      'DTSTART:' + selloICS(f.iso),
+      'DTEND:' + selloICS(fin),
+      'SUMMARY:' + escapaICS(titulo),
+      detalle ? 'DESCRIPTION:' + escapaICS(detalle) : '',
+      'BEGIN:VALARM', 'TRIGGER:-P1D', 'ACTION:DISPLAY',
+      'DESCRIPTION:' + escapaICS('Mañana: ' + titulo), 'END:VALARM',
+      'END:VEVENT');
+  }
+  lineas.push('END:VCALENDAR');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([lineas.filter(Boolean).join('\r\n')],
+    { type:'text/calendar;charset=utf-8' }));
+  a.download = 'agenda-dcarela.ics'; a.click(); URL.revokeObjectURL(a.href);
+  avisa('Agenda exportada', filas.length + ' sesión(es) con aviso el día antes.');
+}
+
+function exportaAgendaICS(){
+  const filas = citasDe().filter(f => selloICS(f.iso));
+  if (!filas.length) return avisa('Nada que exportar', 'No hay sesiones ni recordatorios con fecha.');
+  const ahora = selloICS(new Date().toISOString());
+  const lineas = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//DCarela CRM//ES', 'CALSCALE:GREGORIAN'];
+  for (const f of filas) {
+    const quien = nombreDe(f.c);
+    const titulo = f.tipo === 'sesion'
+      ? (f.firme ? 'Sesión · ' : 'Sesión tentativa · ') + quien
+      : 'Seguimiento · ' + quien;
+    const detalle = [
+      f.c.wa_phone ? 'Teléfono: +' + f.c.wa_phone : '',
+      f.c.interested_category ? 'Categoría: ' + f.c.interested_category : '',
+      f.c.selected_combo_name ? 'Combo: ' + f.c.selected_combo_name : '',
+      f.c.next_step_suggested ? 'Próximo paso: ' + f.c.next_step_suggested : '',
+    ].filter(Boolean).join('\n');
+    lineas.push('BEGIN:VTODO',
+      'UID:' + f.tipo + '-' + (f.c._id || f.c.id) + '@dcarela',
+      'DTSTAMP:' + ahora,
+      'DUE:' + selloICS(f.iso),
+      'SUMMARY:' + escapaICS(titulo),
+      detalle ? 'DESCRIPTION:' + escapaICS(detalle) : '',
+      'END:VTODO');
+  }
+  lineas.push('END:VCALENDAR');
+  const blob = new Blob([lineas.filter(Boolean).join('\r\n')], { type:'text/calendar;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'dcarela-agenda.ics';
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  avisa('Descargado', filas.length + ' tarea(s). Ábrelo y elige tu carpeta de Recordatorios.');
 }
 function mismoDia(iso, d){
   const x = new Date(iso);
@@ -2951,6 +3824,8 @@ function montaAgenda(){
       +   '<div class="agtog"><button data-agv="cal" class="on">Calendario</button>'
       +     '<button data-agv="lista">Lista</button></div>'
       +   '<div class="agfil" id="agFil"></div>'
+      +   '<button class="btn-linea" id="agICS" title="Descarga un .ics para Recordatorios de Apple">Exportar a Recordatorios</button>'
+      +   '<button class="btn-linea" id="agICSCal" title="Descarga un .ics de eventos, con aviso 24 h antes">Exportar a Calendario</button>'
       +   '<button class="btn-solido" id="agNueva">＋ Agendar</button>'
       + '</div>'
       + '<div id="agCuerpo"></div></div>');
@@ -2972,6 +3847,8 @@ function montaAgenda(){
       if (ab) { const cv = CONVS.find(x => x._id === ab.dataset.agconv); if (cv) { abre(cv); ve('conversations'); } }
     });
     $('agNueva').onclick = () => abreAgendar(null);
+    $('agICS').onclick = exportaAgendaICS;
+    $('agICSCal').onclick = exportaAgendaEventos;
   }
   pintaAgenda();
 }
@@ -3144,11 +4021,18 @@ function abreAgendar(c){
 // Cada canal se identifica por como llego la conversacion: el API oficial marca
 // source='whatsapp_cloud', el puente de WhatsApp Web marca source='whatsapp_qr', y las
 // redes traen el suyo. Ese campo ya existe en los datos; lo que faltaba era enseñarlo.
+// Los logos son el glifo REAL de cada plataforma, no circulos de color. Con circulos hay
+// que aprenderse que significa cada uno; con el logo se reconoce sin pensar, que es todo
+// el sentido de ponerlo junto al avatar.
+const LOGO_WA = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.2-1.7-.9-2-1s-.5-.1-.7.1-.7.9-.9 1.1-.3.2-.6.1a8 8 0 01-2.4-1.5 9 9 0 01-1.6-2c-.2-.3 0-.5.1-.6l.5-.5.3-.5v-.5l-1-2.3c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1a11.4 11.4 0 004.4 3.9c.6.2 1.1.4 1.5.5.6.2 1.2.2 1.6.1.5-.1 1.6-.6 1.8-1.3s.2-1.2.2-1.3-.2-.2-.5-.3z"/><path d="M12 2a10 10 0 00-8.5 15.2L2 22l4.9-1.4A10 10 0 1012 2zm0 18.2a8.2 8.2 0 01-4.2-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1112 20.2z"/></svg>';
+const LOGO_IG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>';
+const LOGO_FB = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.4 2 2 6.2 2 11.7c0 3.1 1.4 5.9 3.7 7.7v3.8l3.4-1.9c.9.3 1.9.4 2.9.4 5.6 0 10-4.2 10-9.7S17.6 2 12 2zm1 12.9l-2.5-2.7-4.9 2.7L11 9.1l2.6 2.7 4.8-2.7-5.4 5.8z"/></svg>';
+
 const CANALES = {
-  whatsapp_cloud: { nombre:'WhatsApp oficial (API)', corto:'WhatsApp', logo:'🟢', color:'#25d366' },
-  whatsapp_qr:    { nombre:'WhatsApp Web (2.º número)', corto:'WA Web', logo:'🔵', color:'#128c7e' },
-  instagram:      { nombre:'Instagram Direct', corto:'Instagram', logo:'🟣', color:'#c13584' },
-  facebook:       { nombre:'Facebook Messenger', corto:'Messenger', logo:'🔷', color:'#0084ff' },
+  whatsapp_cloud: { nombre:'WhatsApp oficial (API)',    corto:'WhatsApp',  logo:LOGO_WA, color:'#25d366' },
+  whatsapp_qr:    { nombre:'WhatsApp Web (2.º número)', corto:'WA Web',    logo:LOGO_WA, color:'#0b7f6b' },
+  instagram:      { nombre:'Instagram Direct',          corto:'Instagram', logo:LOGO_IG, color:'#c13584' },
+  facebook:       { nombre:'Facebook Messenger',        corto:'Messenger', logo:LOGO_FB, color:'#0084ff' },
 };
 function canalDe(c){
   const s = String(c?.source || '').toLowerCase();
@@ -3377,10 +4261,42 @@ async function pintaCanales(){
       + '</div>';
   };
 
+  // El estado de una red no es "hay conversaciones": es si la pagina esta suscrita. Sin
+  // suscripcion Meta no manda un solo webhook, y la tarjeta decia "conectado" igual.
+  // El estado viene de socialStatus, que devuelve solo lo que se puede enseñar. Los
+  // tokens de usuario y de pagina se quedan en el servidor: sacarlos por la via generica
+  // de datos habria puesto dos credenciales en el navegador.
+  const est = await llama({ action:'socialStatus' });
+  const redes = est.ok ? (est.redes || {}) : {};
+  const tarjetaRed = (clave, estadoGuardado, detalle) => {
+    const hay = cuenta(clave);
+    const suscrita = estadoGuardado?.suscrita === true;
+    const conectada = estadoGuardado?.conectado === true;
+    const listo = suscrita ? true : (conectada || hay ? false : null);
+    return tarjeta(clave, listo,
+      detalle
+      + (conectada && !suscrita
+          ? '<br><b>Conectado pero sin suscribir:</b> Meta no va a mandar mensajes hasta que '
+            + 'la página quede suscrita. Vuelve a iniciar sesión.'
+          : suscrita
+            ? '<br>Página <b>' + esc(estadoGuardado.page_name || estadoGuardado.page_id || '') + '</b> suscrita.'
+              + (estadoGuardado.ultimo_sync_at
+                  ? ' Último historial importado: ' + esc(String(estadoGuardado.ultimo_sync_at).slice(0,16).replace('T',' ')) + '.'
+                  : ' Todavía no se ha importado el historial.')
+            : ''),
+      '<button class="btn-linea" data-conecta="' + clave + '">'
+      + (conectada ? 'Volver a iniciar sesión' : 'Iniciar sesión y dar permisos') + '</button>'
+      + (conectada ? '<button class="btn-linea" data-sync="' + clave + '">Importar historial</button>' : ''));
+  };
+
   const oficialListo = t.ready === true || t.state === 'ready';
   const estadoPuente = String(p.state || p.status || '').toLowerCase();
   const puenteListo = (p.connected === true || estadoPuente === 'connected' || estadoPuente === 'ready')
     && p.paused !== true && p.host_online !== false;
+  // Esta vista ya sabe si el puente esta vivo: se aprovecha para refrescar el estado que
+  // decide si las conversaciones del segundo numero se ven en la lista. Sin esto, tras
+  // desconectar habia que recargar la pagina para que desaparecieran.
+  if (PUENTE_ON !== puenteListo) { PUENTE_ON = puenteListo; if (vistaActual === 'conversations') pintaChats(); }
 
   cont.innerHTML =
     tarjeta('whatsapp_cloud', oficialListo,
@@ -3398,18 +4314,55 @@ async function pintaCanales(){
           + 'ni difusiones, solo conversación dentro de la ventana normal.',
       bridgeControlsHtml(p))
 
-    + tarjeta('instagram', cuenta('instagram') ? true : null,
+    + tarjetaRed('instagram', redes.instagram,
       'Se conecta iniciando sesión con Facebook y aceptando los permisos de la cuenta: '
       + '<code>instagram_manage_messages</code> y <code>pages_manage_metadata</code>. '
-      + 'La cuenta de Instagram tiene que ser profesional y estar enlazada a la página.',
-      '<button class="btn-linea" data-conecta="instagram">Iniciar sesión y dar permisos</button>')
+      + 'La cuenta de Instagram tiene que ser profesional y estar enlazada a la página.')
 
-    + tarjeta('facebook', cuenta('facebook') ? true : null,
-      'Mismo inicio de sesión que Instagram, con <code>pages_messaging</code>. Al aceptar, la '
-      + 'página queda suscrita y sus mensajes entran aquí como una conversación más.',
-      '<button class="btn-linea" data-conecta="facebook">Iniciar sesión y dar permisos</button>');
+    + tarjetaRed('facebook', redes.facebook,
+      'Mismo inicio de sesión que Instagram, con <code>pages_messaging</code>.');
 
   cont.onclick = async ev => {
+    const sinc = ev.target.closest('[data-sync]');
+    if (sinc) {
+      const antes = sinc.textContent;
+      sinc.disabled = true; sinc.textContent = 'Importando…';
+      const r = await llama({ action:'syncSocial', red: sinc.dataset.sync, paginas: 25 });
+      sinc.disabled = false; sinc.textContent = antes;
+      if (!r.ok) return avisa('No se pudo importar', r.error);
+      // Se dicen los dos numeros: si hay hilos pero cero mensajes nuevos, es que ya
+      // estaban importados, no que la importacion fallara.
+      //
+      // Y se dice lo que NO se pudo traer. El servidor ya lo calculaba --corto, errores,
+      // fallidos-- y el panel lo tiraba: quien importaba 250 de 400 leia "250
+      // conversación(es)" y se quedaba pensando que ya estaban todas. Una importacion
+      // incompleta que se anuncia como completa es peor que una que falla.
+      const pegas = [];
+      if (r.corto) pegas.push('quedaron más sin traer: vuelve a pulsar para seguir');
+      if (r.errores?.length) pegas.push('Meta falló en: ' + r.errores.map(e => e.folder).join(', '));
+      if (r.fallidos) pegas.push(r.fallidos + ' conversación(es) no se pudieron leer');
+      if (r.truncados) pegas.push(r.truncados + ' conversación(es) son tan largas que se '
+        + 'trajeron solo sus últimos mensajes');
+      // Cuando NO falta nada, hay que decirlo con todas las letras. El mensaje anterior
+      // solo daba un numero, y un numero pequeno se lee como fallo: se importaban las 3
+      // conversaciones que Meta expone de Instagram y la conclusion era "el CRM no sube los
+      // mensajes". No lo era -- comprobado contra la API el 04/09/2026: Instagram devuelve 3
+      // hilos y Messenger 47, que es exactamente lo que hay en el CRM. Lo que faltaba era
+      // decir de quien es el limite.
+      const limite = pegas.length ? '' : ' Meta no tiene más que enseñar por su API: esto es '
+        + 'todo lo que deja ver de este canal.'
+        + (sinc.dataset.sync === 'instagram'
+          ? ' Si en el teléfono ves más chats, quien no los comparte es la app de Instagram: '
+            + 'Configuración → Mensajes y respuestas a historias → Herramientas conectadas → '
+            + 'Permitir acceso a los mensajes.'
+          : ' Los chats de Marketplace que vendes desde tu perfil personal no pasan por aquí: '
+            + 'Meta retiró hace años el permiso que los leía. Solo entran los de Marketplace '
+            + 'vendidos desde la página.');
+      avisa(pegas.length ? 'Historial importado a medias' : 'Historial importado',
+        r.hilos + ' conversación(es), ' + r.mensajes + ' mensaje(s) nuevo(s).'
+        + (pegas.length ? ' ' + pegas.join('. ') + '.' : limite));
+      return pintaCanales();
+    }
     const bot = ev.target.closest('[data-canal-bot]');
     if (bot) {
       // El bot se enciende y se apaga POR CANAL. Antes era un interruptor unico: apagarlo
@@ -3419,9 +4372,12 @@ async function pintaCanales(){
       if (!confirm((encendido ? 'Apagar' : 'Encender') + ' el bot SOLO en '
         + (cual === 'official' ? 'WhatsApp oficial' : 'WhatsApp Web') + '.\n\n¿Seguro?')) return;
       bot.disabled = true;
+      // Encender el bot del puente exige la frase exacta (index.js:1710). Sin ella el
+      // interruptor era de una sola direccion: apagaba y no volvia a encender nunca.
       const r = cual === 'official'
         ? await llama({ action:'setOfficialBot', enabled: !encendido })
-        : await llama({ action:'setPhotoBot', enabled: !encendido });
+        : await llama({ action:'setPhotoBot', enabled: !encendido,
+            ...(encendido ? {} : { confirmation: 'ACTIVAR BOT FOTOS' }) });
       bot.disabled = false;
       if (!r.ok) return avisa('No se pudo cambiar', r.error);
       avisa('Bot ' + (encendido ? 'apagado' : 'encendido'),
@@ -3444,11 +4400,55 @@ async function pintaCanales(){
       // a la funcion, que es donde vive el App Secret. La clave nunca pasa por aqui: el
       // panel solo abre la ventana y espera a que la funcion diga que quedo conectado.
       const cual = red.dataset.conecta;
+      // La ventana se abre AQUI MISMO, antes de cualquier await.
+      //
+      // Esto no es un detalle de estilo: el navegador solo deja abrir una ventana mientras
+      // dura el gesto del usuario, y ese permiso se consume en el primer await. Al pedir
+      // el pase primero y abrir despues, Chrome bloqueaba la ventana -- o la abria en
+      // blanco sin navegar nunca. Desde fuera se ve como "se quedó cargando", que es
+      // exactamente lo que paso. La funcion no llego a recibir ni una peticion.
+      // Se intenta la ventana aparte, que es mas comodo: el panel se queda donde estaba.
+      // Pero NO se depende de ella. Si el navegador la bloquea -- y con este flujo la
+      // bloquea a menudo -- se navega la pestaña actual, que no hay bloqueador que lo
+      // impida. Antes ahi terminaba el camino y el dueño se quedaba mirando una ventana
+      // que no iba a cargar nunca.
+      const w = window.open('', 'conectar_' + cual, 'width=620,height=740');
+      // Algo en la ventana mientras se pide el pase: una ventana en blanco es
+      // indistinguible de una que se colgo.
+      if (w) {
+        // Algo en la ventana mientras se pide el pase: una ventana en blanco es
+        // indistinguible de una colgada.
+        try {
+          w.document.write('<!doctype html><meta charset="utf-8">'
+            + '<title>Conectando…</title><body style="margin:0;display:flex;align-items:center;'
+            + 'justify-content:center;height:100vh;font:15px system-ui;color:#111b21">'
+            + 'Abriendo el inicio de sesión de Meta…</body>');
+        } catch (e) { /* si el navegador no deja escribir, la ventana sigue sirviendo */ }
+      }
+
+      // El pase es de un solo uso: crmOauth no arranca sin el, asi que la conexion solo
+      // la puede iniciar alguien con sesion en el panel.
+      const p = await llama({ action:'oauthPase', red: cual });
+      if (!p.ok) { try { if (w) w.close(); } catch (e) {} return avisa('No se pudo iniciar la conexión', p.error); }
       const base = String(CFG.firebaseFunctionsBase || '').replace(/\/$/, '');
-      const url = base + '/crmOauth?red=' + encodeURIComponent(cual);
-      const w = window.open(url, 'conectar_' + cual, 'width=620,height=740');
-      if (!w) return avisa('El navegador bloqueó la ventana', 'Permite las ventanas emergentes para este sitio.');
-      avisa('Inicia sesión en la ventana', 'Acepta los permisos y vuelve aquí.');
+      // 'red' sigue viajando aqui porque esta es NUESTRA url de arranque, no el
+      // redirect_uri que Meta compara. El pase tambien la lleva, por si acaso.
+      const url = base + '/crmOauth?red=' + encodeURIComponent(cual)
+        + '&pase=' + encodeURIComponent(p.pase)
+        // A donde volver cuando Meta termine. Sin esto la persona acaba en una pagina
+        // suelta de Cloud Functions sin forma de regresar al panel.
+        + '&volver=' + encodeURIComponent(location.origin + location.pathname + '#canales');
+      let enVentana = false;
+      if (w) { try { w.location.href = url; enVentana = true; } catch (e) { try { w.close(); } catch (e2) {} } }
+      if (enVentana) {
+        avisa('Inicia sesión en la ventana', 'Acepta los permisos y vuelve aquí.');
+      } else {
+        // Sin ventana: va la pestaña entera. Es menos comodo, pero funciona siempre, y
+        // crmOauth trae de vuelta al panel al terminar.
+        avisa('Abriendo el inicio de sesión de Meta', 'Al aceptar los permisos vuelves aquí solo.');
+        location.href = url;
+        return;
+      }
       // Se refresca al cerrarse la ventana: es cuando el permiso ya esta dado o no.
       const vigila = setInterval(() => {
         if (!w.closed) return;
@@ -3458,13 +4458,36 @@ async function pintaCanales(){
       return;
     }
     if (ev.target.closest('[data-conecta-puente]')) {
-      const r = await llama({ action:'requestBridgePairing' });
+      // El servidor exige el numero (index.js:1680) y solo admite la linea de Fotos. Sin
+      // mandarlo, este boton fallaba SIEMPRE: se podia desconectar el segundo numero y
+      // despues no habia forma de volver a conectarlo desde el panel.
+      const r = await llama({ action:'requestBridgePairing', phone: '18094785620' });
       if (!r.ok) return avisa('No se pudo pedir el código', r.error);
       abreModal('<div class="mtapa"><b>Conectar WhatsApp Web</b><button class="cerrarm" data-cerrar>×</button></div>'
         + '<div class="mcuerpo"><p class="aviso">En el teléfono del segundo número: '
         + 'WhatsApp → Dispositivos vinculados → Vincular con número de teléfono.</p>'
-        + '<div class="codigo">' + esc(r.code || r.pairing_code || '—') + '</div></div>');
+        + '<div class="codigo" id="codPuente"><span class="cargando"></span></div>'
+        + '<p class="cfgnota" id="codNota">Pidiendo el código al puente…</p></div>');
       $('modal').querySelectorAll('[data-cerrar]').forEach(b => { b.onclick = cierraModal; });
+      // El codigo no viene en esta respuesta: el anfitrion lo escribe despues, y llega
+      // anidado en bridge.pairing_code. Se sondea hasta que aparezca en vez de pintar un
+      // guion y quedarse ahi.
+      let intentos = 0;
+      const reloj = setInterval(async () => {
+        if (!document.getElementById('codPuente')) return clearInterval(reloj);
+        const e = await llama({ action:'bridgeStatus' });
+        const cod = e.ok ? (e.bridge?.pairing_code || e.pairing_code) : null;
+        if (cod) {
+          clearInterval(reloj);
+          $('codPuente').textContent = cod;
+          $('codNota').textContent = 'Escríbelo en el teléfono. Caduca en unos minutos.';
+        } else if (++intentos > 40) {
+          clearInterval(reloj);
+          $('codPuente').textContent = '—';
+          $('codNota').textContent = 'El puente no devolvió código. Comprueba que el servicio '
+            + 'del segundo número está corriendo en la máquina del negocio.';
+        }
+      }, 3000);
     }
   };
   renderBridgeControlState(p);
@@ -3507,6 +4530,19 @@ function interruptorCfg(clave, etiqueta, explica, pordefecto){
   return '<label class="cfgsw"><input type="checkbox" data-sw="' + esc(clave) + '"'
     + (on ? ' checked' : '') + '><span><b>' + esc(etiqueta) + '</b>'
     + '<i>' + explica + '</i></span></label>';
+}
+// Se ensena el numero de conversaciones al lado: sin el no hay forma de saber cual de dos
+// etiquetas parecidas es la que se usa de verdad.
+function etiquetasFiltroCfg(){
+  const todas = etiquetasContadas();
+  if (!todas.length) return '<p class="cfgnota">Todavia no hay ninguna etiqueta puesta en ninguna conversacion.</p>';
+  const elegidas = etiquetasElegidas();
+  return '<div class="etiquetas">'
+    + todas.map(([e, n]) => '<label class="etq sug" style="cursor:pointer">'
+        + '<input type="checkbox" data-etqf="' + esc(e) + '"'
+        + (elegidas.includes(e) ? ' checked' : '') + ' style="margin-right:6px;vertical-align:middle">'
+        + esc(e) + ' <b style="opacity:.6">' + n + '</b></label>').join('')
+    + '</div>';
 }
 function campoCfg(clave, etiqueta, marcador){
   return '<div class="campo"><label>' + esc(etiqueta) + '</label>'
@@ -3617,6 +4653,35 @@ async function pintaConfig(){
         dato('Motor', 'Google Gemini 2.5 Flash')
         + '<button class="btn-linea" id="cfgReglas2" style="margin-top:8px">Editar reglas del negocio</button>')
 
+    + tarjetaCfg('Fotógrafos y colaboradores',
+        'Quien no esté aquí no sale en la encuesta, y sus reseñas no cuentan para nadie en el '
+        + 'ranking. Eso no se arregla después: hay que darle de alta antes de que trabaje.',
+        '<div id="cfgEquipo"><p class="cfgnota">Cargando…</p></div>'
+        + '<div class="par" style="margin-top:10px">'
+        +   '<div class="campo"><label>Nombre</label><input id="colNombre" placeholder="Nombre y apellido"></div>'
+        +   '<div class="campo"><label>Puesto (opcional)</label><input id="colPuesto" placeholder="Fotógrafo, maquillaje…"></div>'
+        + '</div><button class="btn-linea" id="colAdd" style="margin-top:8px">Dar de alta</button>')
+
+    + tarjetaCfg('Baja de una lista entera',
+        'Apaga marketing y automatismos a <b>todos</b> los que lleven las etiquetas que escribas. '
+        + 'Se calcula primero a cuántos afecta, sin tocar nada.',
+        '<div class="campo"><label>Etiquetas, separadas por coma</label>'
+        + '<input id="bajaTags" placeholder="no_promocionar, solo_factura"></div>'
+        + '<div class="acciones" style="margin-top:10px">'
+        +   '<button class="btn-linea" id="bajaCalcular">Calcular a cuántos afecta</button>'
+        +   '<button class="btn-solido" id="bajaAplicar" disabled>Dar de baja</button></div>'
+        + '<div id="bajaCuerpo"></div>')
+
+    + tarjetaCfg('Últimos movimientos',
+        'Quién hizo qué y cuándo. Se guarda solo, no hay que activarlo.',
+        '<div id="cfgAuditoria"><p class="cfgnota">Cargando…</p></div>')
+
+    + tarjetaCfg('Etiquetas del buscador',
+        'Marca las que quieres ver en la barra de filtros de Conversaciones. Sin marcar ninguna, '
+        + 'el panel ensena solas las mas usadas. Las que no marques siguen existiendo y '
+        + 'poniendose en la ficha del lead: solo dejan de ocupar sitio en la barra.',
+        etiquetasFiltroCfg())
+
     + tarjetaCfg('Bot de WhatsApp',
         'Encender o apagar el bot por canal se hace en <b>Canales</b>, no aquí: son ajustes de cada '
         + 'conexión y mezclarlos lleva a apagar el que no era.',
@@ -3628,6 +4693,20 @@ async function pintaConfig(){
       const ok = await guardaAjuste(el.dataset.sw, el.checked);
       if (!ok) el.checked = !el.checked;   // si el servidor dijo que no, el interruptor vuelve
       else avisa('Guardado', el.checked ? 'Activado' : 'Desactivado');
+    };
+  });
+  // Se guarda la lista entera en cada cambio, no la etiqueta suelta: asi el orden de la
+  // barra es el orden en que aparecen aqui, y no depende de en que orden se fueron pulsando.
+  g.querySelectorAll('[data-etqf]').forEach(el => {
+    el.onchange = async () => {
+      const marcadas = [...g.querySelectorAll('[data-etqf]')].filter(x => x.checked)
+        .map(x => x.dataset.etqf);
+      const ok = await guardaAjuste('etiquetas_filtro', marcadas.join(','));
+      if (!ok) { el.checked = !el.checked; return; }
+      if (vistaActual === 'conversations') pintaChats();
+      avisa('Guardado', marcadas.length
+        ? marcadas.length + ' etiqueta(s) en la barra'
+        : 'Sin ninguna marcada: vuelve a las mas usadas');
     };
   });
   const gt = $('cfgGuardaTextos');
@@ -3652,6 +4731,12 @@ async function pintaUsuarios(esAdmin){
   const cont = $('cfgUsuarios'); if (!cont) return;
   cont.innerHTML = '<p class="cfgnota"><span class="cargando"></span> Cargando…</p>';
   const r = await llama({ action:'panelUsers', operation:'list' });
+  // La auditoria viaja en la MISMA respuesta que los usuarios. v2 la tiraba: se pedia, el
+  // servidor la mandaba, y nadie la pintaba -- asi que no habia forma de saber quien
+  // desactivo a alguien, quien reparo etapas ni quien lanzo una difusion.
+  pintaAuditoria(r.audit || []);
+  cableaEquipo();
+  cableaBajaLista();
   if (!r.ok) {
     cont.innerHTML = '<p class="cfgnota">' + (String(r.error||'').includes('administrador')
       ? 'Solo un administrador puede ver el equipo.' : esc(r.error || 'No se pudo cargar.')) + '</p>';
@@ -3665,13 +4750,18 @@ async function pintaUsuarios(esAdmin){
     + filas.map((x,i) => '<div class="fila" style="grid-template-columns:minmax(0,2fr) 1fr auto">'
       + '<span><b>' + esc(x.display_name || x.email || '—') + '</b><small>' + esc(x.email || '') + '</small></span>'
       + '<span>' + (esAdmin
-          ? '<select data-rol="' + esc(x.uid || x.id || '') + '">'
+          ? '<select data-rol="' + esc(x.user_id || x.uid || x.id || '') + '">'
             + ['agent','supervisor','admin'].map(rr => '<option value="' + rr + '"'
               + (x.role === rr ? ' selected' : '') + '>' + rr + '</option>').join('') + '</select>'
           : esc(x.role || '—')) + '</span>'
       + '<span><button class="interruptor' + (x.active === false ? '' : ' on') + '"'
-      +   (esAdmin ? ' data-activo="' + esc(x.uid || x.id || '') + '"' : ' disabled')
-      +   '>' + (x.active === false ? 'inactivo' : 'activo') + '</button></span></div>').join('')
+      +   (esAdmin ? ' data-activo="' + esc(x.user_id || x.uid || x.id || '') + '"' : ' disabled')
+      +   '>' + (x.active === false ? 'inactivo' : 'activo') + '</button>'
+      // Sin esto, quien pierde la clave se queda fuera y no habia boton para nada: habia
+      // que entrar a la consola de Firebase, que es justo lo que este panel evita.
+      +   (esAdmin ? '<button class="btn-linea" data-clave="' + esc(x.user_id || x.uid || x.id || '') + '"'
+            + ' style="margin-left:6px">clave</button>' : '')
+      +   '</span></div>').join('')
     + '</div>';
 
   if (!esAdmin) return;
@@ -3681,6 +4771,18 @@ async function pintaUsuarios(esAdmin){
     avisa(r2.ok ? 'Rol cambiado' : 'No se pudo cambiar', r2.ok ? s.value : r2.error);
   };
   cont.onclick = async ev => {
+    const clave = ev.target.closest('[data-clave]');
+    if (clave) {
+      const nueva = prompt('Clave temporal para esa cuenta (mínimo 10 caracteres).\n\n'
+        + 'Tendrá que cambiarla al entrar.');
+      if (nueva === null) return;
+      if (String(nueva).length < 10) return avisa('Clave muy corta', 'Mínimo 10 caracteres.');
+      clave.disabled = true;
+      const r2 = await llama({ action:'panelUsers', operation:'reset_password',
+        user_id: clave.dataset.clave, temporary_password: nueva });
+      clave.disabled = false;
+      return avisa(r2.ok ? 'Clave cambiada' : 'No se pudo cambiar', r2.ok ? 'Pásasela y que la cambie.' : r2.error);
+    }
     const b = ev.target.closest('[data-activo]'); if (!b) return;
     const activar = !b.classList.contains('on');
     // Desactivar a alguien le corta tambien los envios y las automatizaciones, no solo
@@ -3693,6 +4795,91 @@ async function pintaUsuarios(esAdmin){
     b.classList.toggle('on', activar);
     b.textContent = activar ? 'activo' : 'inactivo';
   };
+}
+
+// Quien hizo que y cuando. En un panel donde se puede apagar un bot, difundir a cientos y
+// mover fichas en lote, no poder mirar atras es un agujero: cuando algo sale raro, la
+// primera pregunta es siempre quien lo toco.
+// Alta y baja de colaboradores. v2 solo LEIA la lista para el desplegable de la encuesta:
+// en cuanto entraba alguien nuevo al equipo, sus resenas no contaban para nadie y no habia
+// forma de arreglarlo desde el panel.
+async function cableaEquipo(){
+  const c = $('cfgEquipo'); if (!c) return;
+  const pinta = async () => {
+    COLABORADORES = null;                       // se relee: acabamos de cambiarla
+    const equipo = await cargaColaboradores();
+    c.innerHTML = equipo.length
+      ? equipo.map(e => '<div class="dato"><div class="k">' + esc(e.role || e.puesto || '—') + '</div>'
+          + '<div class="v">' + esc(e.name || e.display_name || e.email || 'sin nombre') + '</div>'
+          + '<button class="btn-linea" data-col-activo="' + esc(e.id) + '">'
+          + (e.active === false ? 'inactivo' : 'activo') + '</button></div>').join('')
+      : '<p class="cfgnota">Todavía no hay nadie dado de alta.</p>';
+  };
+  await pinta();
+  $('colAdd').onclick = async () => {
+    const nombre = ($('colNombre').value || '').trim();
+    if (!nombre) return $('colNombre').focus();
+    const b = $('colAdd'); b.disabled = true;
+    const r = await llama({ action:'data', table:'collaborators', operation:'insert',
+      payload:{ name: nombre, role: ($('colPuesto').value || '').trim() || null, active: true } });
+    b.disabled = false;
+    if (!r.ok) return avisa('No se pudo dar de alta', r.error);
+    $('colNombre').value = ''; $('colPuesto').value = '';
+    await pinta(); avisa('Alta hecha', nombre + ' ya sale en la encuesta.');
+  };
+  c.onclick = async ev => {
+    const b = ev.target.closest('[data-col-activo]'); if (!b) return;
+    const activar = b.textContent.trim() === 'inactivo';
+    b.disabled = true;
+    const r = await llama({ action:'data', table:'collaborators', operation:'update',
+      payload:{ active: activar }, filters:[{ column:'id', operator:'eq', value: b.dataset.colActivo }] });
+    b.disabled = false;
+    if (!r.ok) return avisa('No se pudo cambiar', r.error);
+    await pinta();
+  };
+}
+
+// Dar de baja por etiqueta. Se calcula SIEMPRE antes: esto apaga marketing y automatismos a
+// una lista entera de golpe, y equivocarse de etiqueta se nota semanas despues, cuando
+// alguien pregunta por que dejo de llegarle nada.
+function cableaBajaLista(){
+  const calc = $('bajaCalcular'); if (!calc) return;
+  const etiquetas = () => ($('bajaTags').value || '').trim();
+  calc.onclick = async () => {
+    if (!etiquetas()) return avisa('Escribe al menos una etiqueta');
+    calc.disabled = true;
+    const r = await llama({ action:'communicationPolicyBulk', tags: etiquetas(), dry: true });
+    calc.disabled = false;
+    const c = $('bajaCuerpo');
+    if (!r.ok) { c.innerHTML = '<p class="cfgnota">' + esc(r.error || 'error') + '</p>'; return; }
+    const n = Number(r.matched || 0);
+    c.innerHTML = '<div class="dato"><div class="k">A cuántos afecta</div><div class="v">' + n + '</div></div>'
+      + ((r.sample || []).length ? '<p class="cfgnota">Por ejemplo: ' + esc(r.sample.slice(0,6).join(', ')) + '</p>' : '');
+    $('bajaAplicar').disabled = !n;
+  };
+  $('bajaAplicar').onclick = async () => {
+    // La frase se escribe a mano a proposito, igual que la exige el servidor: un confirm
+    // de si/no se pulsa sin leer, y esto no se puede deshacer con un boton.
+    const frase = prompt('Esto apaga marketing y automatismos a toda la lista.\n\n'
+      + 'Escribe DESACTIVAR LISTA para confirmar:');
+    if (frase !== 'DESACTIVAR LISTA') return;
+    const b = $('bajaAplicar'); b.disabled = true; b.textContent = 'Aplicando…';
+    const r = await llama({ action:'communicationPolicyBulk', tags: etiquetas(), dry: false,
+      confirmation: 'DESACTIVAR LISTA' });
+    b.textContent = 'Dar de baja';
+    if (!r.ok) { b.disabled = false; return avisa('No se pudo', r.error); }
+    avisa('Lista dada de baja', (r.updated || r.matched || 0) + ' contacto(s) fuera de marketing.');
+    $('bajaCalcular').click();
+  };
+}
+
+function pintaAuditoria(filas){
+  const c = $('cfgAuditoria'); if (!c) return;
+  if (!filas.length) { c.innerHTML = '<p class="cfgnota">Todavía no hay movimientos registrados.</p>'; return; }
+  c.innerHTML = filas.slice(0, 25).map(f => '<div class="dato">'
+    + '<div class="k">' + esc(hora(f.created_at)) + '</div>'
+    + '<div class="v">' + esc(f.action || 'acción') + ' · '
+    + esc(f.actor_email || f.actor_role || 'sistema') + '</div></div>').join('');
 }
 
 function cableaUsuarios(){
@@ -4083,6 +5270,83 @@ function pintaMovilizacion(){
   };
 }
 
+/* ---- Anuncios de Meta ---------------------------------------------------- */
+// Las metricas se leen en el servidor: hacen falta el token y el id de la cuenta, y
+// ninguno de los dos puede salir al navegador.
+//
+// Se enseña lo que decide si una campaña merece seguir viva: gasto, conversaciones
+// iniciadas y cuanto cuesta cada una. El alcance y las impresiones van despues porque
+// son las cifras que quedan bonitas y no pagan nada.
+let ADS_RANGO = 'last_7d';
+
+function montaAnuncios(){
+  if (!montadas.has('anuncios')) {
+    montadas.add('anuncios');
+    hueco('anuncios', '<div class="hoja"><h1>Anuncios</h1>'
+      + '<p class="bajada">Lo que están haciendo tus campañas de Meta. Lo que importa es el coste '
+      +   'por conversación: el alcance no paga nada.</p>'
+      + '<div class="filtros" id="adsRango" style="padding:0 0 14px"></div>'
+      + '<div id="adsCuerpo"></div></div>');
+    $('adsRango').onclick = ev => {
+      const b = ev.target.closest('[data-rango]'); if (!b) return;
+      ADS_RANGO = b.dataset.rango; pintaAnuncios();
+    };
+  }
+  pintaAnuncios();
+}
+
+async function pintaAnuncios(){
+  const cont = $('adsCuerpo'); if (!cont) return;
+  $('adsRango').innerHTML = [['today','Hoy'],['yesterday','Ayer'],['last_7d','7 días'],
+      ['last_14d','14 días'],['last_30d','30 días']]
+    .map(([k,n]) => '<button class="filtro' + (ADS_RANGO===k?' on':'') + '" data-rango="' + k + '">'
+      + n + '</button>').join('');
+  cont.innerHTML = '<p class="bajada"><span class="cargando"></span> Preguntando a Meta…</p>';
+
+  const r = await llama({ action:'adsMetricas', rango: ADS_RANGO });
+  if (!r.ok) {
+    cont.innerHTML = '<p class="bajada">' + esc(r.error || 'No se pudo consultar.') + '</p>';
+    return;
+  }
+  const filas = r.campanas || [];
+  const t = r.total || {};
+  const rd = n => 'RD$' + Number(n || 0).toLocaleString('es-DO', { maximumFractionDigits: 0 });
+
+  if (!filas.length) {
+    cont.innerHTML = '<p class="bajada">Sin datos en este periodo. Puede que no haya campañas '
+      + 'activas, o que Meta todavía no haya consolidado las cifras de hoy.</p>';
+    return;
+  }
+
+  const costeMedio = t.conversaciones ? t.gasto / t.conversaciones : 0;
+  cont.innerHTML = '<div class="cifras" style="max-width:940px">'
+    + '<div class="cifra"><b>' + rd(t.gasto) + '</b><span>Gastado</span></div>'
+    + '<div class="cifra ' + (t.conversaciones ? 'bien' : '') + '"><b>' + (t.conversaciones || 0)
+    +   '</b><span>Conversaciones</span><i>iniciadas por el anuncio</i></div>'
+    + '<div class="cifra"><b>' + (costeMedio ? rd(costeMedio) : '—') + '</b>'
+    +   '<span>Coste por conversación</span></div>'
+    + '<div class="cifra"><b>' + Number(t.alcance || 0).toLocaleString('es-DO') + '</b>'
+    +   '<span>Personas alcanzadas</span></div></div>'
+
+    + '<div class="seccion" style="margin:24px 0 8px">Por campaña</div>'
+    + '<div class="tabla" style="max-width:1080px">'
+    + '<div class="fila cabecera" style="grid-template-columns:minmax(0,2fr) 1fr 1fr 1fr 1fr">'
+    +   '<span>Campaña</span><span>Gasto</span><span>Conversaciones</span>'
+    +   '<span>Coste c/u</span><span>Clics</span></div>'
+    // Ordenadas por coste por conversacion: la peor arriba, que es la que hay que mirar.
+    + filas.slice().sort((a,b) => (b.coste_conversacion || 9e9) - (a.coste_conversacion || 9e9))
+      .map(c => '<div class="fila" style="grid-template-columns:minmax(0,2fr) 1fr 1fr 1fr 1fr">'
+        + '<span><b>' + esc(c.campana) + '</b><small>' + Number(c.impresiones||0).toLocaleString('es-DO')
+        +   ' impresiones · CTR ' + Number(c.ctr||0).toFixed(2) + '%</small></span>'
+        + '<span>' + rd(c.gasto) + '</span>'
+        + '<span>' + (c.conversaciones || 0) + '</span>'
+        + '<span>' + (c.coste_conversacion ? rd(c.coste_conversacion) : '—') + '</span>'
+        + '<span>' + (c.clics || 0) + '</span></div>').join('')
+    + '</div>'
+    + '<p class="bajada" style="margin-top:12px">Ordenadas de más cara a más barata por '
+    +   'conversación. Las de arriba son las que hay que revisar.</p>';
+}
+
 /* ---- Limpieza del histórico ---------------------------------------------- */
 // El dueño lo dijo claro: los que escribieron al WhatsApp API llevan MESES sin
 // interes, no deben contar para nada hasta que demuestren lo contrario, y se les hace
@@ -4108,6 +5372,129 @@ function enElOlvido(c){
   return llevaDormido(c) >= DIAS_INACTIVO;
 }
 
+// Las tres herramientas en lote comparten una regla: SIEMPRE se puede simular antes. El
+// panel viejo ya lo hacia asi y no es capricho -- estas tres tocan cientos de fichas de una
+// vez, y una de ellas escribe a clientes reales. Ver el numero antes de pulsar es la
+// diferencia entre una herramienta util y una que da miedo usar.
+function cableaLotes(){
+  const num = v => Number(v || 0);
+  const pintaResumen = (id, r, titulo) => {
+    const c = $(id); if (!c) return;
+    if (!r.ok) { c.innerHTML = '<p class="bajada">' + esc(r.error || 'No se pudo.') + '</p>'; return; }
+    const filas = Object.entries(r).filter(([k, v]) => typeof v === 'number' && v !== 0);
+    c.innerHTML = '<div class="dato"><div class="k">' + esc(titulo) + '</div><div class="v">'
+      + (filas.length ? filas.map(([k, v]) => esc(k) + ': ' + v).join(' · ') : 'Nada que hacer')
+      + '</div></div>'
+      + ((r.errors || []).length ? '<p class="bajada">' + r.errors.length + ' con error.</p>' : '');
+  };
+
+  // --- Auto bot ---
+  const cargaAuto = dry => llama({
+    action:'followup', mode:'smart_templates', dry,
+    purpose: $('atPurpose').value || 'both',
+    min_hours: num($('atMinHoras').value) || 6,
+    repeat_days: num($('atRepetir').value) || 3,
+    stage: $('atEtapa').value || '', category: $('atCat').value || '', priority: $('atPri').value || '',
+  });
+  $('atSimular').onclick = async () => {
+    const b = $('atSimular'); b.disabled = true;
+    pintaResumen('atCuerpo', await cargaAuto(true), 'Simulación · no se envió nada');
+    b.disabled = false;
+  };
+  $('atEnviar').onclick = async () => {
+    // Esto escribe a clientes REALES. Se pregunta, y se dice cuantos antes de mandar.
+    const previo = await cargaAuto(true);
+    if (!previo.ok) return avisa('No se pudo simular', previo.error);
+    const cuantos = num(previo.templateSent) + num(previo.textSent) + num(previo.followUps);
+    if (!cuantos) return avisa('No hay a quién', 'Con esos filtros no entra nadie.');
+    if (!confirm('Se va a escribir a ' + cuantos + ' contacto(s) con plantilla aprobada.\n\n'
+      + 'Quien pidió la baja no recibe nada. ¿Seguimos?')) return;
+    const b = $('atEnviar'); b.disabled = true; b.textContent = 'Enviando…';
+    pintaResumen('atCuerpo', await cargaAuto(false), 'Enviado');
+    b.disabled = false; b.textContent = 'Enviar de verdad';
+  };
+
+  // --- Etiquetas en lote ---
+  const cargaEtq = dry => llama({
+    action:'followup', mode:'sync_tags', dry,
+    limit: Math.min(500, num($('etLimite').value) || 200),
+    use_ai: $('etIa').value !== '0',
+    stage: $('etEtapa').value || '', category: $('etCat').value || '',
+  });
+  $('etSimular').onclick = async () => {
+    const b = $('etSimular'); b.disabled = true;
+    pintaResumen('etCuerpo', await cargaEtq(true), 'Simulación · no se cambió nada');
+    b.disabled = false;
+  };
+  $('etAplicar').onclick = async () => {
+    if (!confirm('¿Aplicar los cambios de etiqueta a las conversaciones que entren en el filtro?')) return;
+    const b = $('etAplicar'); b.disabled = true; b.textContent = 'Aplicando…';
+    pintaResumen('etCuerpo', await cargaEtq(false), 'Aplicado');
+    b.disabled = false; b.textContent = 'Aplicar';
+  };
+
+  // --- Reparar etapas ---
+  $('etpRevisar').onclick = async () => {
+    const b = $('etpRevisar'); b.disabled = true;
+    const r = await llama({ action:'stageRepair', operation:'scan' });
+    b.disabled = false;
+    const c = $('etpCuerpo');
+    if (!r.ok) { c.innerHTML = '<p class="bajada">' + esc(r.error || 'error') + '</p>'; return; }
+    const n = num(r.total) || (r.invalidas || []).length;
+    // Se ensena QUE se va a cambiar y a QUE, no solo cuantas. Mover fichas a "cliente" las
+    // mete en el conteo de ventas: quien pulsa tiene derecho a ver antes si eso cuadra con
+    // lo que recuerda, y a reconocer algunos nombres de la lista.
+    // Cada etapa rota lleva su propio desplegable. La traduccion por defecto acierta con
+    // 'descalificado', pero 'cerrado' NO es obvia: en esta base hay fichas 'cerrado' cuyo
+    // estado sigue siendo requiere_humano o abierto, y darlas por vendidas mete ventas que
+    // no existen. Eso lo decide quien conoce el negocio, no el que escribio el codigo.
+    const porEtapa = Object.entries(r.por_etapa || {})
+      .map(([e, k]) => '<div class="campo"><label>' + k + ' con etapa «' + esc(e) + '» pasan a</label>'
+        + '<select data-etp-destino="' + esc(e) + '">'
+        // Sin traduccion confirmada no se preselecciona nada: una opcion ya elegida se
+        // acepta sin mirar, y aqui hay que mirar. Quien repara tiene que decidirlo.
+        + (((r.traducciones || {})[e]) ? '' : '<option value="">— elige a dónde —</option>')
+        + ETAPAS.map(v => '<option value="' + esc(v) + '"'
+            + (((r.traducciones || {})[e] || '') === v ? ' selected' : '') + '>' + esc(v) + '</option>').join('')
+        + '</select></div>')
+      .join('');
+    const muestra = (r.filas || []).slice(0, 8)
+      .map(f => '<div class="dato"><div class="k">' + esc(hora(f.last_message_at)) + '</div>'
+        + '<div class="v">' + esc(f.name || '') + ' · ' + esc(f.lead_status || 'sin estado') + '</div></div>')
+      .join('');
+    c.innerHTML = '<div class="dato"><div class="k">Fichas con etapa rota</div><div class="v">' + n + '</div></div>'
+      + porEtapa
+      + (muestra ? '<div class="seccion" style="margin:14px 0 6px">Las más recientes</div>' + muestra : '');
+    // El boton solo se enciende si de verdad hay algo que mover: un boton activo que no
+    // hace nada al pulsarlo se lee como que el panel fallo.
+    $('etpAplicar').disabled = !n;
+  };
+  $('etpAplicar').onclick = async () => {
+    const elegido = [...document.querySelectorAll('[data-etp-destino]')]
+      .map(s => s.dataset.etpDestino + ' → ' + s.value).join('\n');
+    if (!confirm('Se van a reparar las fichas así:\n\n' + elegido
+      + '\n\nSe guarda la etapa original por si hay que revisarlo. ¿Seguimos?')) return;
+    const b = $('etpAplicar'); b.disabled = true; b.textContent = 'Moviendo…';
+    // Se manda lo que el dueno dejo elegido en los desplegables, no lo que el servidor
+    // traduciria por su cuenta. Si la vista previa dice una cosa y el envio hace otra, la
+    // vista previa no sirve de nada.
+    const destinos = {};
+    // Una etapa sin destino elegido se queda como esta y se reporta: el servidor la mete en
+    // sin_traduccion y el aviso lo dice. Es preferible a colarla en cualquier sitio.
+    document.querySelectorAll('[data-etp-destino]').forEach(s => {
+      if (s.value) destinos[s.dataset.etpDestino] = s.value;
+    });
+    const r = await llama({ action:'stageRepair', operation:'apply', destinos });
+    b.textContent = 'Mover a cliente';
+    if (!r.ok) { b.disabled = false; return avisa('No se pudo', r.error); }
+    const sobran = (r.sin_traduccion || []).length
+      ? ' Quedaron ' + r.sin_traduccion.length + ' etapa(s) que nadie sabe traducir: ' + r.sin_traduccion.join(', ') + '.'
+      : '';
+    avisa('Etapas reparadas', (r.movidas || 0) + ' ficha(s) reparadas.' + sobran);
+    $('etpRevisar').click();
+  };
+}
+
 function montaLimpieza(){
   if (!montadas.has('limpieza')) {
     montadas.add('limpieza');
@@ -4116,7 +5503,81 @@ function montaLimpieza(){
       +   'Se les hace <b>un solo acercamiento</b>, personalizado y <b>programado para mañana</b>. '
       +   'Quien ya recibió dos seguimientos sin contestar pasa directo a desinteresado. '
       +   'El segundo número queda fuera.</p>'
-      + '<div id="limpiezaCuerpo"></div></div>');
+      + '<div id="limpiezaCuerpo"></div>'
+      + '<div class="seccion" style="margin:30px 0 6px">Reconstruir el historial</div>'
+      + '<p class="bajada">Recorre <b>todas</b> las conversaciones y encuentra a quien ya cumplió la '
+      +   'norma de los dos seguimientos sin contestar pero nunca llegó a marcarse. Es el arrastre '
+      +   'de meses: gente que hoy cuenta en las métricas y no debería.</p>'
+      + '<div class="acciones" style="margin-bottom:14px">'
+      +   '<button class="btn-linea" id="recoEscanear">Buscar candidatos</button></div>'
+      + '<div id="recoCuerpo"></div>'
+
+      // --- Las tres herramientas en lote que el panel viejo si tenia -----------------
+      // Van aqui y no en Campanas a proposito: las tres recorren TODO el historico, que es
+      // de lo que trata esta pantalla. Campanas es para mandar algo concreto a una lista
+      // que tu eliges; esto es para arreglar o mover lo que ya hay.
+
+      + '<div class="seccion" style="margin:30px 0 6px">Auto bot · plantillas en tanda</div>'
+      + '<p class="bajada">Manda la plantilla aprobada a los leads que llevan rato callados. '
+      +   'Siempre se puede <b>simular primero</b>: dice a cuántos alcanzaría sin mandar nada.</p>'
+      + '<div class="par">'
+      +   '<div class="campo"><label>A quién</label><select id="atPurpose">'
+      +     '<option value="both">Seguimientos y recordatorios</option>'
+      +     '<option value="followup">Solo seguimientos</option>'
+      +     '<option value="reminder">Solo recordatorios de sesión</option></select></div>'
+      +   '<div class="campo"><label>Callados desde (horas)</label>'
+      +     '<input id="atMinHoras" type="number" min="1" value="6"></div>'
+      + '</div>'
+      + '<div class="par">'
+      +   '<div class="campo"><label>No repetir antes de (días)</label>'
+      +     '<input id="atRepetir" type="number" min="1" value="3"></div>'
+      +   '<div class="campo"><label>Etapa</label><select id="atEtapa">'
+      +     '<option value="">Todas</option>' + ETAPAS.map(e => '<option>' + esc(e) + '</option>').join('')
+      +     '</select></div>'
+      + '</div>'
+      + '<div class="par">'
+      +   '<div class="campo"><label>Categoría</label><select id="atCat">'
+      +     '<option value="">Todas</option>' + CATEGORIAS.map(e => '<option>' + esc(e) + '</option>').join('')
+      +     '</select></div>'
+      +   '<div class="campo"><label>Prioridad</label><select id="atPri">'
+      +     '<option value="">Todas</option>' + PRIORIDADES.map(e => '<option>' + esc(e) + '</option>').join('')
+      +     '</select></div>'
+      + '</div>'
+      + '<div class="acciones" style="margin:12px 0"><button class="btn-linea" id="atSimular">Simular</button>'
+      +   '<button class="btn-solido" id="atEnviar">Enviar de verdad</button></div>'
+      + '<div id="atCuerpo"></div>'
+
+      + '<div class="seccion" style="margin:30px 0 6px">Etiquetas en lote</div>'
+      + '<p class="bajada">Reclasifica y etiqueta muchas conversaciones de una vez, con reglas y '
+      +   'con IA. Simula primero para ver cuántas cambiarían antes de tocar nada.</p>'
+      + '<div class="par">'
+      +   '<div class="campo"><label>Cuántas como máximo</label>'
+      +     '<input id="etLimite" type="number" min="1" max="500" value="200"></div>'
+      +   '<div class="campo"><label>Cómo</label><select id="etIa">'
+      +     '<option value="1">Reglas + IA</option><option value="0">Solo reglas</option></select></div>'
+      + '</div>'
+      + '<div class="par">'
+      +   '<div class="campo"><label>Etapa</label><select id="etEtapa">'
+      +     '<option value="">Todas</option>' + ETAPAS.map(e => '<option>' + esc(e) + '</option>').join('')
+      +     '</select></div>'
+      +   '<div class="campo"><label>Categoría</label><select id="etCat">'
+      +     '<option value="">Todas</option>' + CATEGORIAS.map(e => '<option>' + esc(e) + '</option>').join('')
+      +     '</select></div>'
+      + '</div>'
+      + '<div class="acciones" style="margin:12px 0"><button class="btn-linea" id="etSimular">Simular</button>'
+      +   '<button class="btn-solido" id="etAplicar">Aplicar</button></div>'
+      + '<div id="etCuerpo"></div>'
+
+      + '<div class="seccion" style="margin:30px 0 6px">Reparar etapas rotas</div>'
+      + '<p class="bajada">Durante meses se escribió <b>cerrado</b> como etapa, y esa etapa no '
+      +   'existe en el embudo. Esos leads no salen bien en el Kanban ni cuentan en las cifras.</p>'
+      + '<div class="acciones" style="margin-bottom:14px">'
+      +   '<button class="btn-linea" id="etpRevisar">Revisar etapas</button>'
+      +   '<button class="btn-solido" id="etpAplicar" disabled>Mover a cliente</button></div>'
+      + '<div id="etpCuerpo"></div>'
+      + '</div>');
+    $('recoEscanear').onclick = escaneaDesinteres;
+    cableaLotes();
   }
   pintaLimpieza();
 }
@@ -4175,6 +5636,51 @@ function pintaLimpieza(){
 
   if (aTocar.length) $('limProgramar').onclick = () => programaAcercamiento(aTocar);
   if (aDescartar.length) $('limDescartar').onclick = () => descartaOlvidados(aDescartar);
+}
+
+// El servidor ya tiene la norma implementada y sabe aplicarla en bloque: scan lista sin
+// tocar nada, apply marca todas. Se usa esa, no una copia en el panel: la regla de
+// negocio tiene que vivir en un solo sitio o las dos acaban discrepando.
+async function escaneaDesinteres(){
+  const b = $('recoEscanear');
+  b.disabled = true;
+  $('recoCuerpo').innerHTML = '<p class="bajada"><span class="cargando"></span> Recorriendo el historial…</p>';
+  const r = await llama({ action:'disinterest', operation:'scan' });
+  b.disabled = false;
+  if (!r.ok) { $('recoCuerpo').innerHTML = ''; return avisa('No se pudo escanear', r.error); }
+  // 'candidatas', en femenino y sin traducir. Se leia 'candidates || candidatos || rows' y
+  // NINGUNA existe: filas salia siempre vacia, asi que la herramienta contestaba "el
+  // historial ya esta al dia" aunque el servidor hubiera encontrado ciento ochenta. Un falso
+  // todo-en-orden es peor que un error: el error se investiga, esto se cree.
+  const filas = r.candidatas || [];
+  if (!filas.length) {
+    $('recoCuerpo').innerHTML = '<p class="bajada">Ninguno. El historial ya está al día: nadie '
+      + 'cumple la norma sin estar marcado.</p>';
+    return;
+  }
+  $('recoCuerpo').innerHTML = '<div class="propuesta" style="max-width:900px">'
+    + '<div class="tapa"><b>' + filas.length + ' contacto(s) deberían estar marcados</b></div>'
+    + '<div class="cuerpo"><p class="aviso" style="margin:0 0 10px">Recibieron dos seguimientos y no '
+    +   'contestaron. Marcarlos apaga marketing y seguimientos; pueden seguir escribiendo y se les '
+    +   'puede contestar a mano.</p>'
+    + '<div class="destinos">' + filas.slice(0,80).map(f =>
+        '<span>' + esc(f.customer_name || f.contact_name || f.wa_phone || f.conversation_id) + '</span>').join('')
+    + (filas.length > 80 ? '<span>… y ' + (filas.length-80) + ' más</span>' : '') + '</div></div>'
+    + '<div class="patas"><button class="btn-solido" id="recoAplicar">Marcar los ' + filas.length + '</button>'
+    +   '<button class="btn-linea" id="recoCancelar">Cancelar</button></div></div>';
+  $('recoCancelar').onclick = () => { $('recoCuerpo').innerHTML = ''; };
+  $('recoAplicar').onclick = async () => {
+    if (!confirm('Se marcarán ' + filas.length + ' contactos como desinteresados.\n\n'
+      + 'Dejan de contar en las métricas y de recibir marketing y seguimientos.\n\n¿Continuar?')) return;
+    const ap = $('recoAplicar');
+    ap.disabled = true; ap.textContent = 'Marcando…';
+    const r2 = await llama({ action:'disinterest', operation:'apply' });
+    ap.disabled = false;
+    if (!r2.ok) { ap.textContent = 'Marcar los ' + filas.length; return avisa('No se pudo aplicar', r2.error); }
+    $('recoCuerpo').innerHTML = '<p class="bajada">Historial reconstruido: '
+      + (r2.marcadas ?? filas.length) + ' contacto(s) marcados.</p>';
+    avisa('Historial reconstruido', 'Ya no cuentan en las métricas.');
+  };
 }
 
 async function programaAcercamiento(lista){
@@ -4245,11 +5751,15 @@ function montaBroadcast(){
     +       '<option value="template">Plantilla aprobada (llega aunque lleve días callado)</option>'
     +     '</select></div>'
     +     '<div class="campo"><label>Propósito</label><select id="bcProposito">'
-    +       '<option value="marketing">Marketing</option>'
+    +       '<option value="marketing">Marketing · promoción</option>'
     +       '<option value="followup">Seguimiento</option>'
     +       '<option value="session_reminder">Recordatorio de sesión</option>'
     +     '</select></div>'
     +   '</div>'
+    // El proposito NO es una etiqueta: decide a cuanta gente llega. Marketing exige permiso
+    // EXPRESO y casi nadie lo tiene, asi que una campana de promocion sale a un punado y el
+    // dueno lo descubria simulando, sin entender por que. Aqui se dice antes.
+    +   '<p class="aviso" id="bcAvisoProp" style="margin:0 0 14px"></p>'
     +   '<div id="bcLibre">'
     +     '<div class="campo"><label>Mensaje</label>'
     +       '<textarea id="bcTexto" rows="4" placeholder="Lo que le llegará a cada contacto"></textarea></div>'
@@ -4265,7 +5775,24 @@ function montaBroadcast(){
     +       '<input id="bcCategoria" placeholder="xv, boda, infantil…"></div>'
     +   '</div>'
     +   '<div class="acciones"><button class="btn-solido" id="bcSimular">Simular envío</button></div>'
-    + '</div><div id="bcSalida"></div></div>');
+    + '</div><div id="bcSalida"></div>'
+
+    // Pack de Estados. Todo pasa en el navegador: las fotos NO se suben a ningun sitio, y
+    // eso importa cuando son de una sesion de un cliente que no ha visto todavia.
+    + '<div class="seccion" style="margin:34px 0 6px">Pack de Estados</div>'
+    + '<p class="bajada">Deja las fotos a formato Estado de WhatsApp (1080×1920) con la marca '
+    +   'del estudio, listas para subir. Las fotos <b>no salen de este ordenador</b>.</p>'
+    + '<div class="par">'
+    +   '<div class="campo"><label>Fotos</label><input id="pkFotos" type="file" accept="image/*" multiple></div>'
+    +   '<div class="campo"><label>Encuadre</label><select id="pkModo">'
+    +     '<option value="fit">Foto completa, con fondo difuminado</option>'
+    +     '<option value="fill">Rellenar (puede recortar)</option></select></div>'
+    + '</div>'
+    + '<label class="cfgsw" style="margin:8px 0"><input type="checkbox" id="pkMarca" checked>'
+    +   '<span><b>Poner la marca del estudio</b><i>Nombre y WhatsApp abajo.</i></span></label>'
+    + '<div class="acciones"><button class="btn-solido" id="pkIr">Preparar</button>'
+    +   '<button class="btn-linea" id="pkBajar" disabled>Descargar todas</button></div>'
+    + '<div id="pkSalida"></div></div>');
 
   $('bcModo').onchange = async () => {
     const plantilla = $('bcModo').value === 'template';
@@ -4275,6 +5802,125 @@ function montaBroadcast(){
     if (plantilla) await llenaPlantillasBc();
   };
   $('bcSimular').onclick = simulaBroadcast;
+  const avisoProp = () => {
+    const p = $('bcProposito').value;
+    $('bcAvisoProp').innerHTML = p === 'marketing'
+      ? '<b>Promoción:</b> solo llega a quien dio permiso expreso de marketing. Suelen ser '
+        + 'muy pocos. Para ampliar esa lista se pide el permiso con la plantilla de consentimiento.'
+      : p === 'followup'
+        ? '<b>Seguimiento:</b> llega a todos menos a quien se dio de baja o quedó desinteresado. '
+          + 'Es para retomar una conversación, no para promocionar: usarlo como promoción es '
+          + 'lo que hace que Meta baje la calidad del número.'
+        : '<b>Recordatorio:</b> para avisar de una sesión ya acordada. Llega a todos menos a '
+          + 'quien lo rechazó.';
+  };
+  $('bcProposito').onchange = avisoProp;
+  avisoProp();
+  cableaPackEstados();
+}
+
+// ===== PACK DE ESTADOS =====
+// 1080x1920 es el formato de Estado de WhatsApp. Subir una foto normal la recorta el propio
+// WhatsApp por donde le parece, y suele cortar cabezas: por eso se prepara antes.
+//
+// Todo ocurre en el navegador, con canvas. Las fotos NO se suben a ningun servidor, que es
+// lo que permite usarlo con una sesion que el cliente todavia no ha visto.
+const PK_ANCHO = 1080, PK_ALTO = 1920;
+let PK_HECHAS = [];
+
+function pkCubre(ctx, im, escala){
+  const s = Math.max(PK_ANCHO / im.width, PK_ALTO / im.height) * (escala || 1);
+  const w = im.width * s, h = im.height * s;
+  ctx.drawImage(im, (PK_ANCHO - w) / 2, (PK_ALTO - h) / 2, w, h);
+}
+function pkCabe(ctx, im){
+  const s = Math.min(PK_ANCHO / im.width, PK_ALTO / im.height);
+  const w = im.width * s, h = im.height * s;
+  ctx.drawImage(im, (PK_ANCHO - w) / 2, (PK_ALTO - h) / 2, w, h);
+}
+function pkAbre(archivo){
+  return new Promise((ok, mal) => {
+    const u = URL.createObjectURL(archivo);
+    const im = new Image();
+    im.onload = () => ok({ im, u });
+    im.onerror = () => { URL.revokeObjectURL(u); mal(new Error('no es una imagen')); };
+    im.src = u;
+  });
+}
+async function pkProcesa(archivo, modo, conMarca){
+  const { im, u } = await pkAbre(archivo);
+  const cv = document.createElement('canvas');
+  cv.width = PK_ANCHO; cv.height = PK_ALTO;
+  const ctx = cv.getContext('2d');
+  if (modo === 'fill') {
+    pkCubre(ctx, im, 1);
+  } else {
+    // Fondo difuminado y foto entera encima: asi no se recorta al sujeto, que es el fallo
+    // que tiene subir la foto tal cual.
+    ctx.save(); ctx.filter = 'blur(34px)'; pkCubre(ctx, im, 1.18); ctx.restore();
+    ctx.fillStyle = 'rgba(8,10,16,.46)'; ctx.fillRect(0, 0, PK_ANCHO, PK_ALTO);
+    pkCabe(ctx, im);
+  }
+  if (conMarca) {
+    const nombre = String(CFG.brandName || '');
+    const numero = String(CFG.businessDisplayNumber || CFG.businessNumber || '');
+    // Degradado detras del texto: sobre una foto clara, letras blancas a secas no se leen.
+    const gr = ctx.createLinearGradient(0, PK_ALTO - 300, 0, PK_ALTO);
+    gr.addColorStop(0, 'rgba(0,0,0,0)'); gr.addColorStop(1, 'rgba(0,0,0,.72)');
+    ctx.fillStyle = gr; ctx.fillRect(0, PK_ALTO - 300, PK_ANCHO, 300);
+    ctx.textAlign = 'left'; ctx.textBaseline = 'alphabetic';
+    if (nombre) {
+      ctx.font = '700 46px system-ui,-apple-system,Segoe UI,sans-serif';
+      ctx.fillStyle = '#fff';
+      ctx.fillText(nombre, 58, numero ? PK_ALTO - 96 : PK_ALTO - 66);
+    }
+    if (numero) {
+      ctx.font = '500 34px system-ui,-apple-system,Segoe UI,sans-serif';
+      ctx.fillStyle = 'rgba(255,255,255,.88)';
+      ctx.fillText('WhatsApp ' + numero, 58, PK_ALTO - 48);
+    }
+  }
+  URL.revokeObjectURL(u);
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', 0.9));
+  return { blob, url: URL.createObjectURL(blob) };
+}
+
+function cableaPackEstados(){
+  const ir = $('pkIr'); if (!ir) return;
+  ir.onclick = async () => {
+    const archivos = [...($('pkFotos').files || [])];
+    if (!archivos.length) return avisa('Elige fotos primero');
+    // Los object URL anteriores se sueltan: con veinte fotos por pasada, no hacerlo deja
+    // la memoria del navegador creciendo hasta que se pone lento.
+    PK_HECHAS.forEach(x => URL.revokeObjectURL(x.url));
+    PK_HECHAS = [];
+    ir.disabled = true; ir.textContent = 'Preparando…';
+    const modo = $('pkModo').value, marca = $('pkMarca').checked;
+    const fallos = [];
+    for (const f of archivos) {
+      try { PK_HECHAS.push(await pkProcesa(f, modo, marca)); }
+      catch (e) { fallos.push(f.name); }
+    }
+    ir.disabled = false; ir.textContent = 'Preparar';
+    $('pkBajar').disabled = !PK_HECHAS.length;
+    $('pkSalida').innerHTML = (PK_HECHAS.length
+        ? '<div class="destinos" style="margin-top:10px">'
+          + PK_HECHAS.map((x, i) => '<a href="' + x.url + '" download="estado-' + (i + 1) + '.jpg">'
+            + '<img src="' + x.url + '" style="width:78px;height:139px;object-fit:cover;'
+            + 'border-radius:8px;border:1px solid var(--line2)"></a>').join('')
+          + '</div>'
+        : '')
+      + (fallos.length ? '<p class="bajada">No se pudieron leer: ' + esc(fallos.join(', ')) + '</p>' : '')
+      + (PK_HECHAS.length ? '<p class="bajada">' + PK_HECHAS.length + ' lista(s). Pulsa una para bajarla suelta.</p>' : '');
+  };
+  $('pkBajar').onclick = () => {
+    // Una descarga por foto, separadas en el tiempo: lanzarlas de golpe hace que el
+    // navegador bloquee todas menos la primera y parezca que no funciona.
+    PK_HECHAS.forEach((x, i) => setTimeout(() => {
+      const a = document.createElement('a');
+      a.href = x.url; a.download = 'estado-' + (i + 1) + '.jpg'; a.click();
+    }, i * 350));
+  };
 }
 
 async function llenaPlantillasBc(){
@@ -4345,13 +5991,63 @@ async function simulaBroadcast(){
     + '</div>'
     + (Number(r.found || 0) > 0
       ? '<div class="patas"><button class="btn-solido" id="bcEnviar">Enviar a ' + Number(r.found) + '</button>'
+        // El segundo numero --el puente de WhatsApp Web-- no pasa por la API oficial, asi
+        // que no le aplican ni la ventana de 24 h ni las plantillas: puede mandar texto
+        // libre. Lo que si le aplica, y con mas motivo, es el anti-baneo, porque ahi el
+        // numero es una linea normal y perderla es perder el numero.
+        + '<button class="btn-linea" id="bcPuente" title="Manda por el segundo número, con ritmo y variantes">'
+        + 'Enviar por el 2º número</button>'
         + '<button class="btn-linea" id="bcCancelar">Cancelar</button></div>'
       : '')
     + '</div>';
   if (Number(r.found || 0) > 0) {
     $('bcCancelar').onclick = () => { AUDIENCIA = null; $('bcSalida').innerHTML = ''; };
     $('bcEnviar').onclick = enviaBroadcast;
+    $('bcPuente').onclick = enviaPorPuente;
   }
+}
+
+// Campana por el SEGUNDO numero. v2 solo difundia por el oficial, asi que la linea de Fotos
+// no tenia forma de hacer campanas desde el panel -- que es justo la que mas las hace.
+//
+// Se reutiliza la audiencia ya calculada arriba: volver a pedirla podria devolver otra
+// lista, y entonces el numero que el dueno acaba de leer y a quien de verdad le llega
+// dejarian de ser lo mismo.
+async function enviaPorPuente(){
+  if (!AUDIENCIA) return avisa('Simula primero');
+  const destinos = (AUDIENCIA.targets || [])
+    .filter(t => t.phone)
+    .map(t => ({ id: t.id, name: t.name || '', phone: String(t.phone) }));
+  if (!destinos.length) {
+    return avisa('Sin teléfonos', 'La simulación no devolvió números para el segundo canal.');
+  }
+  if (destinos.length > 5000) return avisa('Demasiados', 'El tope por campaña es 5000.');
+  const texto = ($('bcTexto').value || '').trim();
+  // Por el puente NO hay plantillas: es texto libre siempre. Mandar aqui una plantilla
+  // llegaria con las llaves sin rellenar, y el cliente lo ve.
+  if (!texto) return avisa('Escribe el mensaje', 'El segundo número manda texto libre, no plantillas.');
+
+  const previo = await llama({ action:'bridgeBulk', operation:'preview',
+    template: texto, targets: destinos, purpose: $('bcProposito').value });
+  if (!previo.ok) return avisa('No se pudo preparar', previo.error);
+  // El servidor contesta en espanol: elegibles, saltados, motivos. Leyendo 'eligible' y
+  // 'reasons' caia al respaldo y se confirmaba el total de la AUDIENCIA, no los que de
+  // verdad iban a recibirlo -- y los excluidos no se enseñaban nunca.
+  const entran = Number(previo.elegibles ?? destinos.length);
+  const fuera = Object.entries(previo.motivos || {})
+    .map(([k, v]) => v + ' por ' + k).join(', ');
+  if (!confirm('Se va a mandar por el segundo número a ' + entran + ' contacto(s).\n\n'
+    + (fuera ? 'Quedan fuera: ' + fuera + '.\n\n' : '')
+    + 'Sale con ritmo y con variantes del texto, para no quemar la línea. ¿Seguimos?')) return;
+
+  const b = $('bcPuente'); b.disabled = true; b.textContent = 'Encolando…';
+  const r = await llama({ action:'bridgeBulk', operation:'send',
+    template: texto, targets: destinos, purpose: $('bcProposito').value });
+  b.disabled = false; b.textContent = 'Enviar por el 2º número';
+  if (!r.ok) return avisa('No se pudo encolar', r.error);
+  AUDIENCIA = null; $('bcSalida').innerHTML = '';
+  avisa('Campaña encolada', (r.elegibles ?? entran) + ' mensaje(s) salen por el segundo número, '
+    + 'repartidos en el tiempo. No hace falta dejar el panel abierto.');
 }
 
 // ===== ANTI-BLOQUEO =====
@@ -4514,7 +6210,11 @@ let COLABORADORES = null;
 async function cargaColaboradores(){
   if (COLABORADORES) return COLABORADORES;
   const r = await llama({ action:'data', table:'collaborators', operation:'select', limit:100 });
-  COLABORADORES = r.ok ? (r.data || r.rows || []) : [];
+  // Un fallo de red NO se cachea. Antes se guardaba [] y quedaba fijo toda la sesion: el
+  // panel decia "no hay nadie dado de alta" para siempre, que es indistinguible de la
+  // verdad y hace pensar que el equipo se borro.
+  if (!r.ok) return null;
+  COLABORADORES = r.data || r.rows || [];
   return COLABORADORES;
 }
 
@@ -4642,10 +6342,113 @@ function etiquetasDe(c){
   if (typeof v === 'string' && v.trim()) return v.split(',').map(s => s.trim()).filter(Boolean);
   return [];
 }
+// Por USO, no por alfabeto. El orden alfabetico hacia inservibles las sugerencias de la
+// ficha: solo caben ocho, y siempre salian las mismas ocho del principio del abecedario
+// --24_septiembre, 8_anos, abierto, agosto-- mientras las que el equipo escribe de verdad
+// no aparecian jamas. Se cuentan solo las conversaciones VISIBLES, para que el numero que
+// pinta el filtro sea el mismo que se ve al pulsarlo.
+function etiquetasContadas(){
+  const cuenta = new Map();
+  CONVS.filter(c => !puenteApagado(c))
+    .forEach(c => etiquetasDe(c).forEach(e => cuenta.set(e, (cuenta.get(e) || 0) + 1)));
+  return [...cuenta.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+}
 function etiquetasEnUso(){
-  const set = new Set();
-  CONVS.forEach(c => etiquetasDe(c).forEach(e => set.add(e)));
-  return [...set].sort();
+  return etiquetasContadas().map(([e]) => e);
+}
+// Las de la barra las elige el negocio en Configuracion, y por eso viven en el servidor y
+// no en localStorage: si cada persona tuviera las suyas, dos personas mirando el mismo CRM
+// verian filtros distintos y ninguna sabria por que. Vacio significa automatico.
+function etiquetasElegidas(){
+  return String(AJUSTES.etiquetas_filtro || '').split(',').map(s => s.trim()).filter(Boolean);
+}
+
+// Historial del lead y sus archivos, juntos y fuera del hilo. Los adjuntos salen de los
+// mensajes que ya estan cargados --no hace falta otra consulta-- y los eventos de la tabla
+// que ya los guarda.
+async function cableaHistorial(c){
+  const caja = $('fichaHistorial'); if (!caja) return;
+  const idConv = c.id || c._id;
+  // Se consulta por conversacion en vez de filtrar MSGS. abre() llama a pintaFicha ANTES de
+  // escuchaMensajes, asi que aqui MSGS todavia tiene los mensajes del cliente ANTERIOR: la
+  // ficha de una clienta listaba las fotos y el comprobante de pago de otra, con enlaces que
+  // se abren de verdad. Y en el primer chat tras cargar la pagina, MSGS esta vacio y decia
+  // "no ha mandado archivos" aunque hubiera veinte.
+  let archivos = [];
+  try {
+    const qm = query(collection(db,'crm_messages'), where('business_id','==',NEGOCIO),
+      where('conversation_id','==', idConv), limit(400));
+    const sm = await getDocs(qm);
+    archivos = sm.docs.map(d => d.data())
+      .filter(m => m.media_url || (m.msg_type && m.msg_type !== 'text'))
+      .sort((a,b) => String(b.created_at||'').localeCompare(String(a.created_at||'')));
+  } catch (e) { archivos = null; }
+  let eventos = [];
+  try {
+    const q = query(collection(db,'timeline_events'), where('conversation_id','==', idConv), limit(60));
+    const s = await getDocs(q);
+    eventos = s.docs.map(d => d.data())
+      .sort((a,b) => String(b.created_at||'').localeCompare(String(a.created_at||'')));
+  } catch (e) { /* sin historial se sigue: los archivos si valen por si solos */ }
+
+  // Vacio y roto no se enseñan igual: "no ha mandado archivos" cuando en realidad no se
+  // pudo consultar es la clase de mentira que hace buscar el fallo en otro sitio.
+  const bloqueArchivos = archivos === null
+    ? '<p class="quien">No se pudieron consultar los archivos.</p>'
+    : archivos.length
+      ? archivos.slice(0, 40).map(m => '<div class="dato"><div class="k">' + esc(hora(m.created_at)) + '</div>'
+          + '<div class="v">' + (m.media_url
+              ? '<a href="' + esc(m.media_url) + '" target="_blank" rel="noopener">'
+                + esc(m.msg_type || 'archivo') + '</a>'
+              : esc(m.msg_type || 'archivo') + ' · sin enlace') + '</div></div>').join('')
+      : '<p class="quien">No ha mandado archivos.</p>';
+  const bloqueEventos = eventos.length
+    ? eventos.slice(0, 40).map(e => '<div class="dato"><div class="k">' + esc(hora(e.created_at)) + '</div>'
+        + '<div class="v">' + esc(e.title || e.event_type || 'movimiento') + '</div></div>').join('')
+    : '<p class="quien">Sin movimientos registrados.</p>';
+  caja.innerHTML = '<div class="seccion" style="margin:0 0 6px">Archivos que mandó</div>' + bloqueArchivos
+    + '<div class="seccion" style="margin:14px 0 6px">Movimientos</div>' + bloqueEventos;
+}
+
+// Las notas se leen directas de Firestore, como el resto de v2, y se escriben por el
+// servidor: addNote deja rastro en la auditoria y deleteNote comprueba el permiso. Escribir
+// directo desde el navegador saltaria las dos cosas.
+async function cableaNotas(c){
+  const lista = $('notasLista'); if (!lista) return;
+  const pinta = async () => {
+    lista.innerHTML = '<p class="quien">Cargando…</p>';
+    let notas = [];
+    try {
+      const q = query(collection(db,'crm_notes'), where('business_id','==',NEGOCIO),
+        where('conversation_id','==', c.id || c._id), limit(50));
+      const s = await getDocs(q);
+      notas = s.docs.map(d => ({ ...d.data(), _id: d.id }))
+        .sort((a,b) => String(b.created_at||'').localeCompare(String(a.created_at||'')));
+    } catch (e) { lista.innerHTML = '<p class="quien">No se pudieron leer las notas.</p>'; return; }
+    if (!notas.length) { lista.innerHTML = '<p class="quien">Todavía no hay ninguna.</p>'; return; }
+    lista.innerHTML = notas.map(n => '<div class="dato" data-nota="' + esc(n._id) + '">'
+      + '<div class="k">' + esc(hora(n.created_at)) + '</div>'
+      + '<div class="v">' + esc(n.body || '') + '</div>'
+      + '<button class="nx" data-borra-nota="' + esc(n._id) + '" aria-label="Borrar nota">×</button></div>').join('');
+  };
+  await pinta();
+
+  $('notaGuarda').onclick = async () => {
+    const caja = $('notaNueva'); const texto = (caja.value || '').trim();
+    if (!texto) return;
+    const b = $('notaGuarda'); b.disabled = true;
+    const r = await llama({ action:'addNote', conversation_id: c.id || c._id, body: texto });
+    b.disabled = false;
+    if (!r.ok) return avisa('No se pudo guardar', r.error);
+    caja.value = ''; await pinta();
+  };
+  lista.onclick = async ev => {
+    const b = ev.target.closest('[data-borra-nota]'); if (!b) return;
+    if (!confirm('¿Borrar esta nota? No se puede deshacer.')) return;
+    const r = await llama({ action:'deleteNote', note_id: b.dataset.borraNota });
+    if (!r.ok) return avisa('No se pudo borrar', r.error);
+    await pinta();
+  };
 }
 
 function cableaEtiquetas(c){
@@ -4765,6 +6568,22 @@ const WIZARDS = [
       + 'y no otras.' },
 ];
 
+// Foco activo del asistente. Vacio = contrato completo, como siempre.
+let FOCO = '';
+// Las mismas claves que FOCOS en el servidor (assistant-plan.js). Si aqui se manda una
+// que alli no existe, focoValido la descarta y se cae al contrato completo: se pierde el
+// enfoque, no la peticion.
+const FOCOS_PANEL = [
+  { id:'broadcast',            n:'Envíos masivos',        d:'Segmento, texto personalizado y salida de baja. No mira un chat concreto.' },
+  { id:'contact_report',       n:'Informe del contacto',  d:'Resume la conversación abierta y dice qué falta.' },
+  { id:'create_reservation',   n:'Preparar la reserva',   d:'Deja el lead pendiente de reserva con fecha tentativa.' },
+  { id:'mark_paid',            n:'Cobrar y confirmar',    d:'Marca el pago y pide que una persona valide el comprobante.' },
+  { id:'draft_message',        n:'Redactar un mensaje',   d:'Prepara el texto en el compositor. No lo envía.' },
+  { id:'communication_policy', n:'Bloquear o restaurar',  d:'Cambia los permisos de comunicación del contacto.' },
+  { id:'mark_disinterest',     n:'Marcar desinterés',     d:'Pasa a desinteresado y apaga el marketing.' },
+  { id:'update_lead',          n:'Actualizar la ficha',   d:'Corrige etapa, estado, categoría, fechas.' },
+];
+
 function montaPlanificacion(){
   if (montadas.has('planning')) { pintaContexto(); return; }
   montadas.add('planning');
@@ -4775,8 +6594,14 @@ function montaPlanificacion(){
     +   '<button class="btn-linea" id="btnReglasAbrir">Reglas del negocio</button>'
     + '</div>'
     + '<div class="ahilo" id="ahilo"></div>'
+    + '<div class="afoco" id="planFoco" hidden></div>'
     + '<div class="acola" id="planCola" hidden></div>'
     + '<div class="aentrada">'
+    +   '<div class="amas">'
+    +     '<button class="adj" id="planMas" title="Herramientas" aria-label="Herramientas" aria-expanded="false">'
+    +       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>'
+    +     '<div class="amenu" id="planMenu"></div>'
+    +   '</div>'
     +   '<button class="adj" id="planImg" title="Adjuntar imagen">'
     +     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></button>'
     +   '<input type="file" id="planFile" accept="image/*" multiple hidden>'
@@ -4795,6 +6620,24 @@ function montaPlanificacion(){
   });
   $('btnPedir').onclick = pide;
   pintaContexto();
+  pintaMenuAsistente();
+  pintaFoco();
+
+  // El menu se cierra al pulsar fuera. Sin esto se queda abierto tapando el hilo, que es
+  // justo lo que hay que leer para decidir.
+  $('planMas').onclick = ev => {
+    ev.stopPropagation();
+    const m = $('planMenu');
+    const abierto = m.classList.toggle('on');
+    $('planMas').setAttribute('aria-expanded', abierto ? 'true' : 'false');
+  };
+  document.addEventListener('click', ev => {
+    const m = $('planMenu');
+    if (m && m.classList.contains('on') && !ev.target.closest('.amas')) {
+      m.classList.remove('on');
+      $('planMas')?.setAttribute('aria-expanded', 'false');
+    }
+  });
 
   // Imagenes para el asistente: un comprobante, la foto de un vestido, la captura de
   // otra cotizacion. Son cosas sobre las que hay que decidir, y sin verlas decide a
@@ -4819,6 +6662,60 @@ function montaPlanificacion(){
   cargaHilo();
 }
 
+function pintaMenuAsistente(){
+  const m = $('planMenu'); if (!m) return;
+  m.innerHTML =
+    '<div class="grupo">Enfocar en una herramienta</div>'
+    + FOCOS_PANEL.map(f => '<button data-foco="' + esc(f.id) + '"'
+        + (FOCO === f.id ? ' class="puesto"' : '') + '>'
+        + '<b>' + esc(f.n) + '</b><span>' + esc(f.d) + '</span></button>').join('')
+    + '<div class="grupo">Recetas</div>'
+    + WIZARDS.map((w,i) => '<button data-wiz="' + i + '"><b>' + esc(w.n) + '</b></button>').join('')
+    + '<div class="grupo">Adjuntar</div>'
+    + '<button data-adjunta><b>Imagen</b><span>Un comprobante, un vestido, otra cotización.</span></button>';
+
+  m.onclick = ev => {
+    const f = ev.target.closest('[data-foco]');
+    const w = ev.target.closest('[data-wiz]');
+    const a = ev.target.closest('[data-adjunta]');
+    if (!f && !w && !a) return;
+    m.classList.remove('on');
+    $('planMas')?.setAttribute('aria-expanded', 'false');
+    if (a) return $('planFile').click();
+    if (f) {
+      // Volver a elegir el mismo foco lo quita: es un interruptor, no una via de un solo
+      // sentido. Sin esto habria que buscar la equis para volver al modo normal.
+      FOCO = FOCO === f.dataset.foco ? '' : f.dataset.foco;
+      pintaFoco(); pintaMenuAsistente();
+      $('pedido')?.focus();
+      return;
+    }
+    ponPedido(WIZARDS[Number(w.dataset.wiz)].p);
+  };
+}
+
+function ponPedido(texto){
+  const caja = $('pedido'); if (!caja) return;
+  caja.value = texto;
+  caja.dispatchEvent(new Event('input'));
+  caja.focus();
+}
+
+function pintaFoco(){
+  const c = $('planFoco'); if (!c) return;
+  const f = FOCOS_PANEL.find(x => x.id === FOCO);
+  c.hidden = !f;
+  const caja = $('pedido');
+  if (!f) {
+    if (caja) caja.placeholder = 'Dime qué necesitas…';
+    return;
+  }
+  c.innerHTML = '<span>Enfocado en <b>' + esc(f.n) + '</b></span>'
+    + '<button id="quitaFoco" title="Quitar el enfoque" aria-label="Quitar el enfoque">×</button>';
+  $('quitaFoco').onclick = () => { FOCO = ''; pintaFoco(); pintaMenuAsistente(); };
+  if (caja) caja.placeholder = f.n + ': dime qué necesitas…';
+}
+
 function pintaContexto(){
   const c = $('contexto'); if (!c) return;
   c.textContent = contextoTexto();
@@ -4830,56 +6727,90 @@ function pintaHilo(){
     h.innerHTML = '<div class="abienvenida">'
       + '<b>¿Qué necesitas?</b>'
       + '<p>Leo la conversación que tengas abierta, la ficha del contacto y las reglas del negocio. '
-      +   'Propongo, y no se toca nada hasta que lo apruebes.</p>'
-      + '<div class="awiz">' + WIZARDS.map((w,i) =>
-          '<button class="ejemplo" data-wiz="' + i + '">' + esc(w.n) + '</button>').join('') + '</div>'
-      + '</div>';
-    h.querySelector('.awiz').onclick = ev => {
+      +   'Propongo, y no se toca nada hasta que lo apruebes. Con el <b>+</b> eliges una '
+      +   'herramienta concreta y me centro solo en esa.</p>'
+      + '<div class="atarjetas">' + WIZARDS.map((w,i) =>
+          '<div class="atarjeta" data-wiz="' + i + '"><b>' + esc(w.n) + '</b>'
+          + '<span>' + esc(w.p.slice(0, 96).replace(/\s+\S*$/, '') + '…') + '</span></div>').join('')
+      + '</div></div>';
+    h.querySelector('.atarjetas').onclick = ev => {
       const b = ev.target.closest('[data-wiz]'); if (!b) return;
-      $('pedido').value = WIZARDS[Number(b.dataset.wiz)].p;
-      $('pedido').dispatchEvent(new Event('input'));
-      $('pedido').focus();
+      ponPedido(WIZARDS[Number(b.dataset.wiz)].p);
     };
     return;
   }
+  // Solo el ultimo turno lleva "nuevo": el hilo se repinta entero en cada respuesta, y sin
+  // esa marca se animarian todos los globos a la vez cada vez.
+  const ultimo = HILO.length - 1;
   h.innerHTML = HILO.map((t,i) => t.rol === 'yo'
-    ? '<div class="aturno yo"><div class="aburbuja">' + esc(t.texto)
+    ? '<div class="aturno yo' + (i === ultimo ? ' nuevo' : '') + '"><div class="aburbuja">' + esc(t.texto)
       + (t.imgs ? '<span class="aimgs">' + t.imgs + ' imagen(es)</span>' : '') + '</div></div>'
-    : '<div class="aturno ia"><div class="aburbuja">'
-      + (t.pensando ? '<span class="cargando"></span> Pensando…' : cuerpoDePlan(t.plan, i))
+    : '<div class="aturno ia' + (i === ultimo ? ' nuevo' : '') + '">'
+      + '<div class="aav">' + esc(sigla) + '</div><div class="aburbuja">'
+      + (t.pensando ? '<span class="apuntos"><i></i><i></i><i></i></span>' : cuerpoDePlan(t.plan, i))
       + '</div></div>').join('');
   h.scrollTop = h.scrollHeight;
   HILO.forEach((t,i) => {
     if (t.rol !== 'ia' || t.pensando) return;
     const ap = h.querySelector('[data-aprobar="' + i + '"]');
     if (ap) ap.onclick = () => aplica(i);
+    // Copiar el mensaje propuesto. Es lo que mas se hace con el: llevarselo al chat del
+    // cliente. Seleccionarlo a mano dentro de un globo se lleva media pantalla por delante.
+    const cp = h.querySelector('[data-copiar="' + i + '"]');
+    if (cp) cp.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(t.plan?.message_text || '');
+        cp.textContent = 'Copiado';
+        setTimeout(() => { cp.textContent = 'Copiar'; }, 1600);
+      } catch (e) { avisa('No se pudo copiar', 'Selecciona el texto y cópialo a mano.'); }
+    };
   });
 }
 
 function cuerpoDePlan(p, idx){
   if (!p) return 'No se pudo interpretar la respuesta.';
-  const filas = [];
-  if (p.objective) filas.push(['Objetivo', p.objective]);
-  if (p.rationale) filas.push(['Por qué', p.rationale]);
-  if (p.message_text) filas.push(['Mensaje que se prepararía', p.message_text]);
-  (p.steps || []).forEach((s,i) => filas.push(['Paso ' + (i+1), s]));
-  (p.risks || []).forEach(s => filas.push(['Riesgo', s]));
+  const trozos = [];
+
+  // El objetivo encabeza; el porque es el cuerpo. Antes los dos eran filas iguales con la
+  // etiqueta en mayusculas diminutas encima, y la respuesta entera se leia como un
+  // formulario relleno en vez de como una respuesta.
+  if (p.objective) trozos.push('<div class="aobj">' + esc(p.objective) + '</div>');
+  if (p.rationale) trozos.push('<p class="arat">' + esc(p.rationale) + '</p>');
+
+  if (p.message_text) {
+    trozos.push('<div class="asec">Mensaje que se prepararía</div>'
+      + '<div class="amsg" id="amsg' + idx + '">'
+      + '<button class="acopiar" data-copiar="' + idx + '">Copiar</button>'
+      + esc(p.message_text) + '</div>');
+  }
+
+  const pasos = Array.isArray(p.steps) ? p.steps : [];
+  if (pasos.length) {
+    trozos.push('<div class="asec">Pasos</div><ol class="apasos">'
+      + pasos.map((t, i) => '<li><span class="n">' + (i + 1) + '</span><span>' + esc(t) + '</span></li>').join('')
+      + '</ol>');
+  }
+
+  const riesgos = Array.isArray(p.risks) ? p.risks : [];
+  if (riesgos.length) {
+    trozos.push('<div class="asec">Riesgos</div>'
+      + riesgos.map(t => '<div class="ariesgo"><span>' + esc(t) + '</span></div>').join(''));
+  }
 
   const tools = Array.isArray(p.tools) ? p.tools : [];
-  const bloque = tools.length
-    ? '<div class="aacciones"><b>Se haría esto</b>'
+  if (tools.length) {
+    trozos.push('<div class="aacciones"><b>Se haría esto</b>'
       + tools.map(t => '<div class="aaccion"><span>' + esc(NOMBRE_HERRAMIENTA[t.name] || t.name) + '</span>'
         + (t.preview ? '<i>' + esc(t.preview) + '</i>' : '')
         // Los campos exactos, sin traducir: quien aprueba tiene derecho a ver el cambio
         // literal y no solo el resumen bonito.
         + (t.params?.fields ? '<div class="campos">' + Object.entries(t.params.fields)
-            .map(([k,v]) => '<span>' + esc(k) + ' → ' + esc(String(v)) + '</span>').join('') + '</div>' : '')
+            .map(([k, v]) => '<span>' + esc(k) + ' → ' + esc(String(v)) + '</span>').join('') + '</div>' : '')
         + '</div>').join('')
-      + '</div>'
-    : '';
+      + '</div>');
+  }
 
-  return filas.map(([k,v]) => '<div class="afila"><b>' + esc(k) + '</b>' + esc(v) + '</div>').join('')
-    + bloque
+  return trozos.join('')
     + (p.aplicado
         ? '<div class="ahecho">✓ Aplicado</div>'
         : tools.length ? '<button class="btn-solido apr" data-aprobar="' + idx + '">Aprobar y aplicar</button>' : '');
@@ -4894,6 +6825,15 @@ async function pide(){
   pintaHilo();
 
   const cuerpo = { action:'assistantPlan', instruction:t };
+  if (FOCO) cuerpo.focus = FOCO;
+  // Con foco, el servidor ya manda un contrato que nombra la unica herramienta permitida
+  // (assistant-plan.js, planContractFor). Repetir aqui el catalogo entero solo gasta tope
+  // de contexto -- son 12000 caracteres y se truncan sin avisar.
+  const catalogoNecesario = !FOCO;
+  // Un envio masivo es sobre un SEGMENTO, no sobre un chat: la ficha y los ultimos
+  // cuarenta mensajes de la conversacion abierta no pintan nada ahi, y son lo que mas
+  // ocupa. Esto es lo que el dueño pidio: al etiquetar la herramienta, menos contexto.
+  const contextoDelChat = FOCO !== 'broadcast';
   const contexto = [];
 
   // Las reglas del negocio van SIEMPRE, aunque no haya conversacion abierta: son lo que
@@ -4914,10 +6854,12 @@ async function pide(){
     '- Nada se ejecuta sin que una persona lo apruebe.',
   ].join('\n'));
 
-  contexto.push('Herramientas que puedes proponer, y solo estas:\n'
-    + Object.entries(NOMBRE_HERRAMIENTA).map(([k,v]) => '- ' + k + ': ' + v).join('\n'));
+  if (catalogoNecesario) {
+    contexto.push('Herramientas que puedes proponer, y solo estas:\n'
+      + Object.entries(NOMBRE_HERRAMIENTA).map(([k,v]) => '- ' + k + ': ' + v).join('\n'));
+  }
 
-  if (sel) {
+  if (sel && contextoDelChat) {
     contexto.push('Ficha de este contacto:\n' + [
       ['Nombre', nombreDe(sel)], ['Telefono', sel.wa_phone], ['Etapa', sel.lifecycle_stage],
       ['Estado', sel.lead_status], ['Reserva', sel.reservation_status],
@@ -4936,6 +6878,15 @@ async function pide(){
     contexto.push('No hay ninguna conversacion abierta: la peticion es sobre el negocio en general. '
       + 'Hay ' + CONVS.length + ' conversaciones, de las cuales '
       + CONVS.filter(c => c.lifecycle_stage === 'desinteresado').length + ' desinteresadas.');
+    if (!contextoDelChat) {
+      // Para una difusion lo util es el reparto por etapa y categoria: de ahi sale el
+      // segmento. Es una fraccion de lo que ocupaba el historial de un chat.
+      const cuenta = campo => Object.entries(CONVS.reduce((a,c) => {
+        const k = c[campo] || 'sin dato'; a[k] = (a[k]||0)+1; return a; }, {}))
+        .sort((a,b) => b[1]-a[1]).map(([k,v]) => k + ': ' + v).join(', ');
+      contexto.push('Reparto por etapa -> ' + cuenta('lifecycle_stage')
+        + '\nReparto por categoria -> ' + cuenta('interested_category'));
+    }
   }
 
   // El hilo anterior viaja entero: es lo que permite decir "y ahora el de arriba".
@@ -5129,6 +7080,9 @@ onAuthStateChanged(auth, async u => {
   // El historial se carga solo al entrar. No hay boton de "actualizar": la escucha
   // en vivo trae los cambios sin que nadie tenga que pedirlos.
   escuchaConversaciones();
+  cargaEstadoPuente();
+  vigilaVersion();
+  setInterval(vigilaVersion, 300000);
   ve(location.hash.slice(1) || CFG.defaultView || 'conversations');
 });
 </script>
