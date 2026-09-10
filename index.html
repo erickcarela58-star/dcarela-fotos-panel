@@ -43,6 +43,7 @@
   --warn:#b26a00;
   --bad:#b21a1a;
   --sombra:0 12px 34px rgba(11,20,26,.14);
+  --alto-barra:60px;   /* alto de la barra superior; la ficha se cuelga de el */
   --r:8px;             /* radio base   */
   --r2:12px;           /* radio grande */
 }
@@ -78,7 +79,7 @@ button{cursor:pointer;background:none;border:0;padding:0}
 #app.on{display:grid}
 .lateral{grid-row:1/3;width:250px;display:flex;flex-direction:column;
   background:var(--panel);border-right:1px solid var(--line)}
-.barra{grid-column:2;display:flex;align-items:center;gap:14px;height:60px;padding:0 16px;
+header.barra{grid-column:2;display:flex;align-items:center;gap:14px;height:var(--alto-barra);padding:0 16px;
   background:var(--panel);border-bottom:1px solid var(--line)}
 .lienzo{grid-column:2;min-width:0;min-height:0;overflow:hidden;background:var(--bg)}
 
@@ -105,7 +106,11 @@ button{cursor:pointer;background:none;border:0;padding:0}
    puro, sin depender de que ningun script haya corrido antes: si no hay clase, se
    ven todas. Un menu de mas nunca es tan grave como un menu vacio. */
 .nav .secundarias{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
-body.menu-abierto .nav .secundarias{display:block}
+/* Las secundarias YA NO dependen de que el cajon este abierto. Iban atadas a
+   body.menu-abierto, y como el cajon del movil usa esa misma clase, "ensenar el menu entero"
+   y "tener el cajon abierto" eran la misma cosa: por eso el movil nacia con el cajon abierto
+   y sin forma de cerrarlo. Se ven siempre, que es lo que se queria. */
+.nav .secundarias{display:block}
 .nav .rotulo{padding:10px 12px 5px;font-size:9.5px;font-weight:800;letter-spacing:.9px;
   text-transform:uppercase;color:var(--mut)}
 
@@ -123,10 +128,46 @@ body.menu-abierto .nav .secundarias{display:block}
 /* flex-shrink:0 en el grupo derecho: sin eso "Manual" se recortaba contra el borde
    cuando el titulo era largo. */
 .barra .der{display:flex;align-items:center;gap:9px;flex:0 0 auto}
+/* La hamburguesa NO vuelve al escritorio: alli el menu se ve entero y el boton solo servia
+   para esconderlo, que es por lo que se quito. Aparece solo por debajo de 760px, donde el
+   menu es un cajon que tapa la aplicacion y sin boton no hay manera de cerrarlo. */
+.hamb{display:none;align-items:center;justify-content:center;background:none;
+  border:1px solid var(--line2);border-radius:var(--r);cursor:pointer;
+  color:var(--fg);flex:0 0 auto;width:36px;height:34px;padding:0}
+.hamb:hover{background:var(--hover)}
+.velo{display:none;position:fixed;inset:0;z-index:45;background:rgba(0,0,0,.45)}
+body.menu-abierto .velo{display:block}
 .btn-linea{padding:8px 13px;border:1px solid var(--line2);border-radius:var(--r);
   font-size:12.5px;font-weight:600;color:var(--fg);text-decoration:none;white-space:nowrap;
   flex:0 0 auto}
-.btn-linea:hover{background:var(--hover)}
+.btn-linea:hover:not(:disabled){background:var(--hover)}
+/* .btn-linea era la unica clase de boton sin estado deshabilitado --las otras tres, .enviar,
+   .btn-solido y .tplchip, si lo tenian-- y es justo la de los botones del puente en Canales,
+   que se apagan solos cuando el segundo numero no esta en linea. Se pintaban identicos a uno
+   vivo: el dueno los pulsaba, no pasaba nada, y la lectura era "el panel esta roto". El
+   :hover tambien delataba lo contrario de la verdad, porque seguia iluminando un boton
+   muerto; por eso ahora lleva :not(:disabled). */
+.btn-linea:disabled{opacity:.45;cursor:not-allowed}
+/* El campo del numero a vincular va en la misma fila que los botones del puente, asi que
+   comparte alto y borde con ellos: si no, se ve como un injerto. */
+/* La x aparece al pasar el cursor. Visible siempre ocuparia sitio en una barra que ya va
+   justa, y en tactil no hay hover: por eso en pantallas sin puntero se queda fija. */
+.filtro .quitaetq{display:none;margin-left:6px;font-style:normal;opacity:.55;font-size:13px;
+  line-height:1}
+.filtro:hover .quitaetq,.filtro:focus-within .quitaetq{display:inline}
+.filtro .quitaetq:hover{opacity:1;color:var(--bad)}
+@media(hover:none){.filtro .quitaetq{display:inline}}
+.filtro.masetq{font-weight:700;padding-left:11px;padding-right:11px}
+.etqlista{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:6px;
+  max-height:340px;overflow-y:auto}
+.etqop{display:flex;align-items:center;gap:8px;padding:7px 9px;border:1px solid var(--line);
+  border-radius:var(--r);font-size:12.5px;cursor:pointer}
+.etqop:hover{background:var(--hover)}
+.etqop span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.etqop b{color:var(--mut);font-weight:600}
+.entrada-linea{padding:8px 12px;border:1px solid var(--line2);border-radius:var(--r);
+  background:var(--panel);color:var(--fg);font-size:12.5px;width:150px;flex:0 0 auto}
+.entrada-linea:focus{outline:2px solid var(--ink);outline-offset:-1px}
 .quien{font-size:11.5px;color:var(--mut);max-width:190px;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
 
@@ -141,15 +182,24 @@ body.menu-abierto .nav .secundarias{display:block}
 .agbarra{display:flex;align-items:center;gap:8px;margin:0 0 14px;flex-wrap:wrap}
 .agbarra strong{min-width:180px;text-align:center;text-transform:capitalize;font-size:15px}
 .agbarra .ag-suscribe{margin-left:auto}
-.agscroll{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r2);background:var(--panel)}
-.agcal{min-width:760px;display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+/* Aqui vivia un calendario anterior, y sus restos seguian pesando sobre el de ahora:
+   .agscroll no aparece ni una vez en el marcado --era el contenedor con scroll lateral que
+   justificaba el min-width-- y .agdia hoy significa otra cosa, el grupo de un dia en la
+   lista (linea ~3972), no una celda del mes. Las celdas son .agcel.
+
+   Lo que hacian esos restos:
+     - .agcal{min-width:760px} forzaba el calendario a 760px dentro de una columna de ~343
+       en el telefono. Como ya no habia .agscroll que lo envolviera, se salia por el lado y
+       los nombres de los dias no cuadraban con sus columnas. La Agenda abre en vista
+       calendario por defecto, asi que era lo primero que se veia.
+     - .agdia{min-height:116px;border-right;border-bottom} le ponia 116px de alto minimo y
+       dos bordes sueltos a CADA grupo de dia de la lista, y .agdia:nth-child(7n), .fuera y
+       .hoy no coinciden ya con nada.
+
+   Se quedan .agnum y .agevento, que el marcado de ahora si usa. El tamano del calendario lo
+   fija la regla de mas abajo: repeat(7,1fr) con max-width 820. */
 .agsem{padding:9px 8px;border-bottom:1px solid var(--line);color:var(--mut);font-size:10.5px;
   font-weight:750;text-transform:uppercase;letter-spacing:.5px;text-align:center}
-.agdia{min-height:116px;padding:8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
-  min-width:0;background:var(--panel)}
-.agdia:nth-child(7n){border-right:0}
-.agdia.fuera{background:var(--hover);color:var(--mut)}
-.agdia.hoy{box-shadow:inset 0 0 0 2px var(--ink)}
 .agnum{display:block;margin-bottom:6px;font-size:11.5px;font-weight:700}
 .agevento{display:block;width:100%;padding:5px 6px;margin:0 0 4px;border-radius:6px;text-align:left;
   background:var(--ink);color:var(--on-ink);font-size:10.5px;line-height:1.25;overflow:hidden}
@@ -339,10 +389,15 @@ video.mmedia{cursor:default}
 /* Previo de plantilla: se pinta como un globo de WhatsApp a proposito. Lo que hay que
    juzgar antes de enviar no es una ficha tecnica, es el mensaje tal como le va a llegar. */
 .tplprevio{margin:2px 0 14px;padding:10px 12px;border-radius:10px;background:var(--out);
-  color:#111b21;font-size:13.5px;line-height:1.45;white-space:pre-wrap;word-break:break-word;
+  /* var(--fg), no un negro fijo. Con #111b21 el previo era legible en claro y de 2,19:1 en
+     oscuro --por debajo del minimo incluso para texto grande--, o sea una mancha verde. Y
+     este recuadro es justo el que dice "Asi le va a llegar": es lo unico que hay para revisar
+     el mensaje literal antes de gastar una plantilla en un cliente real. El globo de verdad
+     del chat (.globo.sale) ya heredaba var(--fg); solo estos dos previos clavaban el color. */
+  color:var(--fg);font-size:13.5px;line-height:1.45;white-space:pre-wrap;word-break:break-word;
   border:1px solid rgba(0,0,0,.06)}
-.tplprevio .hueco{background:rgba(176,0,0,.14);color:#8a1a1a;border-radius:3px;padding:0 3px;
-  font-weight:600}
+.tplprevio .hueco{background:color-mix(in srgb,var(--bad) 22%,transparent);color:var(--bad);
+  border-radius:3px;padding:0 3px;font-weight:600}
 .tplprevio-t{font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
   color:var(--mut);margin:10px 0 5px}
 .mbotones{margin:6px -9px -6px;display:flex;flex-wrap:wrap}
@@ -580,7 +635,7 @@ video.mmedia{cursor:default}
   display:flex;align-items:center;justify-content:center;margin-top:2px}
 /* El mensaje que se prepararia se ve como el globo que va a ser, no como una cita. */
 .amsg{position:relative;padding:11px 14px;border-radius:10px;background:var(--out);
-  color:#111b21;font-size:13.5px;line-height:1.5;white-space:pre-wrap;
+  color:var(--fg);font-size:13.5px;line-height:1.5;white-space:pre-wrap;
   border:1px solid rgba(0,0,0,.06)}
 .acopiar{position:absolute;top:7px;right:7px;padding:3px 9px;border-radius:6px;
   border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.75);color:#111b21;
@@ -872,7 +927,10 @@ video.mmedia{cursor:default}
 
 /* --- Estrecho -------------------------------------------------------------- */
 @media(max-width:1080px){
-  .ficha{position:fixed;right:0;top:60px;bottom:0;width:min(330px,92vw);z-index:30;
+  /* La ficha se cuelga de la altura REAL de la barra, no de un 60 escrito a mano. Al
+     hacer que la barra crezca a dos filas en el telefono, este 60px la dejaba metida
+     30px por debajo del borde: la cabecera del contacto quedaba tapada por la barra. */
+  .ficha{position:fixed;right:0;top:var(--alto-barra);bottom:0;width:min(330px,92vw);z-index:30;
     display:none;box-shadow:var(--sombra)}
   .ficha.on{display:flex}
 }
@@ -880,8 +938,26 @@ video.mmedia{cursor:default}
   .lateral{position:fixed;left:0;top:0;bottom:0;z-index:50;transform:translateX(-100%);
     transition:transform .2s;box-shadow:var(--sombra)}
   body.menu-abierto .lateral{transform:none}
+  .hamb{display:flex}
+  /* La barra crece en vez de recortarse. A 375px no caben hamburguesa, titulo, "Modo
+     oscuro" y "Manual" en una fila, y como .der lleva flex:0 0 auto a proposito --para que
+     "Manual" no se recorte cuando el titulo es largo-- lo que sobra no encogia: se salia de
+     la pantalla, y esos dos botones no se podian ni leer ni pulsar. Ya pasaba antes de tocar
+     el menu. */
+  /* 'header.barra', no '.barra' a secas: esa clase la usa TAMBIEN cada barra de nota del
+     panel de colaboradores (v2.html:3551 y 5248, dentro de .barras). Sin acotar, estas
+     reglas les cambiaban el hueco y el relleno, y la de mas abajo les rompia la rejilla
+     de tres columnas. */
+  header.barra{gap:8px;padding:0 10px;min-width:0}
+  header.barra .quien{display:none}
+  header.barra .der{margin-left:auto;min-width:0}
+  /* Estas nueve reglas son el movil de toda la vida: una sola columna, la lista a pantalla
+     completa y el chat encima al abrirlo. Estuvieron un dia dentro del bloque de 430px por
+     una llave que cerre de mas al anadirlo, asi que entre 431 y 760 --tablets pequenas y
+     telefonos grandes en horizontal-- el panel se quedaba con la rejilla de escritorio y
+     abrir un chat no ocultaba la lista. */
   #app.on{grid-template-columns:minmax(0,1fr)}
-  .barra,.lienzo{grid-column:1}
+  header.barra,.lienzo{grid-column:1}
   .lista{width:100%}
   body.chat-abierto .lista{display:none}
   .conversacion,.vacio{display:none}
@@ -889,6 +965,17 @@ video.mmedia{cursor:default}
   .hoja{padding:18px 16px}
   .agbarra strong{order:-1;width:100%;text-align:left}
   .agbarra .ag-suscribe{margin-left:0}
+}
+@media(max-width:430px){
+  /* Solo aqui, y solo la barra. Con grid en vez de flex: envolver con flex no basta porque
+     el titulo lleva flex:1 --base 0-- asi que la suma de las bases siempre cabe y la fila
+     nunca se parte; lo que se salia era el reparto del sobrante, con la fila ya cerrada. En
+     grid la segunda fila esta declarada, no deducida. */
+  /* Dos filas, asi que la barra mide mas: se dice aqui para que la ficha la siga. */
+  :root{--alto-barra:90px}
+  header.barra{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;
+    height:var(--alto-barra);padding:8px 10px;row-gap:8px;column-gap:8px}
+  header.barra .der{grid-column:1/-1;justify-content:flex-end;margin-left:0}
 }
 </style>
 </head>
@@ -933,10 +1020,16 @@ video.mmedia{cursor:default}
 
   <!-- Sin hamburguesa y sin buscador aqui. Habia dos buscadores en pantalla, y el menu
        estaba entero a la vista igualmente: el boton solo servia para esconderlo. -->
+  <div class="velo" id="velo"></div>
+
   <header class="barra">
+    <button class="hamb" id="hamb" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
     <div class="titulo" id="tituloVista"></div>
     <div class="der">
       <span class="quien" id="quien"></span>
+      <button class="btn-linea" id="btnAvisos" hidden>Activar avisos</button>
       <button class="btn-linea" id="btnTema">Modo oscuro</button>
       <a class="btn-linea" href="./manual.html" target="_blank" rel="noopener">Manual</a>
     </div>
@@ -993,19 +1086,33 @@ const sigla = CFG.logoText || 'DC';
 const CANAL_FOTOS = CFG.lockNumFilter === true || CFG.defaultNumFilter === 'qr';
 const soloDigitos = value => String(value || '').replace(/\D/g, '');
 const NUMERO_FOTOS = soloDigitos(CFG.bridgeBusinessNumber || CFG.bridgeBusinessDisplayNumber);
+// El puente admite UNA sola linea, y el servidor lo comprueba: cualquier otro numero se
+// rechaza con "solo puede vincularse la linea Fotos terminada en 5620". Estaba escrito a
+// mano dentro de requestBridgePairing, asi que el panel no podia decir de que numero era el
+// codigo que ensenaba. Aqui arriba se ve, y de aqui sale tambien el aviso.
+const TELEFONO_PUENTE = NUMERO_FOTOS || '18094785620';
+const TELEFONO_PUENTE_BONITO = TELEFONO_PUENTE.replace(/^1(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
 function perteneceAlCanal(c){
   const fuente = String(c?.source || '').toLowerCase();
   const numero = soloDigitos(c?.business_number);
   const esFotos = fuente === 'whatsapp_qr' || fuente === 'photos'
     || (NUMERO_FOTOS && numero === NUMERO_FOTOS);
-  return CANAL_FOTOS ? esFotos : !esFotos;
+  // El panel de Fotos atiende SOLO su linea: ahi el filtro sigue siendo excluyente.
+  //
+  // Este, el comercial, enseña LOS DOS numeros. Antes excluia el del puente, y por eso se
+  // podia vincular y sincronizar el historial desde aqui sin que apareciera un solo mensaje:
+  // la barra llegaba al 100% y la pantalla seguia vacia. El dueño lo quiere en este CRM, con
+  // sus frenos anti-bloqueo, asi que aqui no se esconde nada.
+  return CANAL_FOTOS ? esFotos : true;
 }
 ['sigla','siglaAcceso'].forEach(id => { $(id).textContent = sigla; });
 $('marca').textContent = CFG.productName || 'CRM';
 $('submarca').textContent = CFG.subtitle || '';
 $('marcaAcceso').textContent = CFG.brandName || "D'Carela";
 $('subAcceso').textContent = CFG.subtitle || '';
-document.title = CFG.appTitle || "D'Carela CRM";
+// Se guarda aparte porque pintaCuentas le antepone el numero de conversaciones sin leer.
+const TITULO_BASE = CFG.appTitle || "D'Carela CRM";
+document.title = TITULO_BASE;
 
 /* ---- Menu ---------------------------------------------------------------- */
 // Tres entradas siempre a la vista y el resto tras la hamburguesa. Ojo: quien
@@ -1041,8 +1148,49 @@ function pintaMenu(){
 }
 pintaMenu();
 
-// El menu se ve entero siempre. Ya no hay nada que desplegar.
-document.body.classList.add('menu-abierto');
+// El menu se ve entero siempre: de eso se encarga ahora el CSS de .nav .secundarias, sin
+// depender de ninguna clase. Aqui NO se pone 'menu-abierto', que era el error: esa clase la
+// usa tambien el cajon del movil, asi que ponerla al arrancar dejaba el cajon abierto encima
+// de la aplicacion, y como la hamburguesa se habia quitado no quedaba nada que lo cerrara.
+// En un telefono de 375px el cajon se come 250: de la lista de chats solo asomaba la hora.
+//
+// Ahora 'menu-abierto' significa una sola cosa --el cajon esta abierto-- y solo la mueve la
+// hamburguesa, que el CSS unicamente ensena por debajo de 760px.
+// El navegador NO deja pedir el permiso de notificaciones por las buenas: hace falta que lo
+// pulse una persona. Por eso hay boton, y solo aparece mientras el permiso este sin decidir:
+// si ya esta concedido no estorba, y si esta denegado el boton no serviria de nada --hay que
+// deshacerlo desde el candado de la barra de direcciones--.
+const btnAvisos = $('btnAvisos');
+if (btnAvisos && typeof Notification !== 'undefined') {
+  const pinta = () => { btnAvisos.hidden = Notification.permission !== 'default'; };
+  pinta();
+  btnAvisos.onclick = async () => {
+    try {
+      const r = await Notification.requestPermission();
+      pinta();
+      avisa(r === 'granted' ? 'Avisos activados' : 'Avisos no activados',
+        r === 'granted'
+          ? 'Chrome te avisará cuando escriba un cliente, aunque el CRM esté en otra pestaña.'
+          : 'Sin permiso no se puede avisar. Se puede volver a dar desde el candado de la barra de direcciones.');
+    } catch (error) { avisa('No se pudieron activar', error?.message || 'el navegador lo rechazó'); }
+  };
+}
+
+const velo = $('velo'), hamb = $('hamb');
+const cierraMenu = () => {
+  document.body.classList.remove('menu-abierto');
+  hamb?.setAttribute('aria-expanded', 'false');
+};
+hamb?.addEventListener('click', () => {
+  const abierto = document.body.classList.toggle('menu-abierto');
+  hamb.setAttribute('aria-expanded', abierto ? 'true' : 'false');
+});
+velo?.addEventListener('click', cierraMenu);
+// Al elegir una vista el cajon se cierra solo. Sin esto el dueno toca "Kanban", el cajon se
+// queda encima, y parece que el enlace no ha hecho nada.
+$('nav')?.addEventListener('click', ev => { if (ev.target.closest('a')) cierraMenu(); });
+// Escape cierra, que es lo que espera cualquiera que use teclado.
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape') cierraMenu(); });
 
 /* ---- Enrutado ------------------------------------------------------------ */
 let vistaActual = null;
@@ -1089,6 +1237,9 @@ async function llama(cuerpo){
   } catch (e) { return { ok:false, error: e?.message || String(e) }; }
 }
 const callFn = cuerpo => llama(cuerpo);
+
+// Lo que dejo la ultima importacion de cada red, para que no se pierda con el aviso.
+const ULTIMA_IMPORTACION = {};
 
 /* ---- Datos en vivo ------------------------------------------------------- */
 let CONVS = [], MSGS = [], sel = null, paraMsgs = null;
@@ -1145,6 +1296,7 @@ function escuchaConversaciones(){
     if (vistaActual === 'agenda') pintaAgenda();
     if (vistaActual === 'reminders') pintaRecordatorios();
     pintaCuentas();
+    avisaMensajesNuevos();
   }, err => marcaEstado(false, 'Sin datos en vivo: ' + (err?.code || 'error')));
 }
 function escuchaMensajes(idConv){
@@ -1207,6 +1359,63 @@ function pintaCuentas(){
   const pend = CONVS.filter(c => Number(c.unread || 0) > 0).length;
   const e = document.querySelector('[data-cuenta="conversations"]');
   if (e) { e.textContent = pend; e.hidden = pend === 0; }
+  // Y en el titulo de la pestana. Lo unico que cambiaba al llegar un mensaje era ese globito
+  // del menu lateral: con el panel en otra pestana --que es donde esta casi siempre-- no
+  // habia absolutamente nada que delatara que un cliente habia escrito. En Chrome el titulo
+  // se lee sin cambiar de pestana, asi que es el aviso mas barato que existe.
+  document.title = (pend ? '(' + pend + ') ' : '') + TITULO_BASE;
+}
+
+/* ---- Avisos de mensaje nuevo --------------------------------------------- */
+// Ultima respuesta del cliente ya conocida, por conversacion: es lo que distingue "ha
+// entrado un mensaje" de "la lista se ha repintado", que pasa constantemente.
+const VISTO_ENTRANTE = new Map();
+let primerVistazo = true;
+
+function avisaMensajesNuevos(){
+  const nuevos = [];
+  for (const c of CONVS) {
+    const id = c.id || c._id;
+    const t = String(c.last_customer_reply_at || '');
+    if (!t) continue;
+    const antes = VISTO_ENTRANTE.get(id);
+    VISTO_ENTRANTE.set(id, t);
+    // En el primer vistazo solo se toma nota. Avisar aqui soltaria una notificacion por cada
+    // conversacion pendiente que ya existiera, cada vez que se abre el panel.
+    if (primerVistazo) continue;
+    // Y OJO: 'antes === undefined' significa conversacion NUEVA, no "nada que avisar". Al
+    // saltarla se perdia justo el aviso que mas importa -- el primer mensaje de alguien que
+    // nunca habia escrito, que es un cliente nuevo llamando a la puerta. Solo se salta
+    // cuando ya se conocia y no ha entrado nada mas nuevo.
+    if (antes !== undefined && t <= antes) continue;
+    nuevos.push(c);
+  }
+  primerVistazo = false;
+  if (!nuevos.length) return;
+  if (typeof Notification === 'undefined' || Notification.permission !== 'granted') return;
+  // Del chat que se esta mirando no se avisa: ya se ve.
+  const idSel = sel ? (sel.id || sel._id) : null;
+  for (const c of nuevos.slice(0, 3)) {
+    if (!document.hidden && (c.id || c._id) === idSel) continue;
+    try {
+      const n = new Notification(nombreDe(c), {
+        body: String(c.last_inbound_preview || c.last_message_preview || 'Mensaje nuevo').slice(0, 140),
+        // Una etiqueta por conversacion: si alguien manda cinco mensajes seguidos se
+        // reemplaza el aviso en vez de apilar cinco.
+        tag: 'crm-' + (c.id || c._id),
+      });
+      n.onclick = () => {
+        window.focus();
+        // Primero la vista, despues el chat. abre() toca $('sinChat') y $('conversacion'),
+        // que solo existen con Conversaciones montada: pulsando el aviso desde Kanban, la
+        // Agenda o Configuracion saltaba un TypeError, el chat no se abria, y el mensaje
+        // quedaba marcado como leido sin que nadie lo hubiera visto.
+        if (vistaActual !== 'conversations') ve('conversations');
+        abre(c);
+        n.close();
+      };
+    } catch (error) { /* si el navegador lo bloquea, quedan el titulo y el globito */ }
+  }
 }
 
 /* ---- Vistas: montaje ----------------------------------------------------- */
@@ -1258,7 +1467,28 @@ function montaConversaciones(){
     + '<div class="vacio" id="sinChat">Selecciona una conversación para verla.</div>'
     + '<aside class="ficha" id="ficha" style="display:none"></aside>');
   $('buscaChat').addEventListener('input', pintaChats);
-  $('filtros').addEventListener('click', ev => {
+  $('filtros').addEventListener('click', async ev => {
+    // La x va ANTES que el filtro: esta dentro del boton, asi que sin cortar aqui quitar una
+    // etiqueta la seleccionaria de paso, y la barra se repintaria con el filtro puesto en una
+    // etiqueta que acaba de desaparecer.
+    const x = ev.target.closest('[data-quitaetq]');
+    if (x) {
+      ev.stopPropagation();
+      const fuera = x.dataset.quitaetq;
+      // En automatico no hay lista guardada: se fija la que se esta viendo, menos la quitada.
+      // Sin esto, quitar una en automatico no guardaria nada y volveria a salir al repintar.
+      const quedan = etiquetasEnLaBarra().filter(e => e !== fuera);
+      // Si era la ultima, la lista queda vacia y eso significa "automatico", no "ninguna".
+      // Se dice, porque volver al automatico no es lo mismo que quedarse sin barra.
+      if (!await guardaAjuste('etiquetas_filtro', quedan.join(','))) return;
+      if (filtro === 'etq:' + fuera) filtro = 'todos';
+      pintaChats();
+      avisa('Etiqueta quitada de la barra', quedan.length
+        ? 'Sigue en las fichas; solo deja de ocupar sitio arriba.'
+        : 'Sin ninguna elegida, la barra vuelve a enseñar sola las más usadas.');
+      return;
+    }
+    if (ev.target.closest('#masEtq')) { abreEtiquetasBarra(); return; }
     const b = ev.target.closest('[data-filtro]');
     if (!b) return;
     filtro = b.dataset.filtro; pintaChats();
@@ -1378,10 +1608,7 @@ function pintaChats(){
   // Si el negocio eligio cuales quiere en la barra, mandan esas y en el orden que las
   // eligio. El automatico solo entra cuando no ha elegido ninguna: acierta a menudo, pero
   // la etiqueta que importa esta semana no tiene por que ser la mas usada del historico.
-  const elegidas = etiquetasElegidas();
-  const porEtiqueta = elegidas.length
-    ? elegidas.map(e => ['etq:' + e, e])
-    : etiquetasContadas().filter(([, n]) => n >= 2).slice(0, 8).map(([e]) => ['etq:' + e, e]);
+  const porEtiqueta = etiquetasEnLaBarra().map(e => ['etq:' + e, e]);
   // Solo se ofrecen los canales que de verdad tienen conversaciones: un filtro que
   // siempre devuelve cero es ruido.
   const porCanal = Object.keys(CANALES)
@@ -1394,9 +1621,21 @@ function pintaChats(){
       const n2 = f.startsWith('etq:') ? CONVS.filter(c => !puenteApagado(c) && etiquetasDe(c).includes(f.slice(4))).length
         : f.startsWith('can:') ? CONVS.filter(c => canalDe(c) === f.slice(4)).length
         : cuenta(f);
+      // La x va en TODAS las de etiqueta. La primera version solo la ponia cuando ya habia
+      // lista elegida, y como en automatico nunca la hay, no aparecia nunca: el dueno paso el
+      // cursor por encima y no salio nada. Quitar una en automatico deja fijada la lista
+      // actual menos esa, que es exactamente lo que espera quien pulsa la x.
+      const quitable = f.startsWith('etq:');
       return '<button class="filtro' + (filtro===f?' on':'') + (f.startsWith('etq:')?' etqf':'')
-        + '" data-filtro="' + esc(f) + '">' + esc(n) + '<b>' + n2 + '</b></button>';
-    }).join('');
+        + '" data-filtro="' + esc(f) + '">' + esc(n) + '<b>' + n2 + '</b>'
+        + (quitable ? '<i class="quitaetq" data-quitaetq="' + esc(f.slice(4))
+            + '" title="Quitar de la barra" aria-label="Quitar ' + esc(n) + ' de la barra">×</i>' : '')
+        + '</button>';
+    }).join('')
+    // El + va al final, siempre. Elegir que etiquetas se ven estaba solo en Configuracion,
+    // a cuatro clics de donde se usan: quien filtra esta mirando la barra, no los ajustes.
+    + '<button class="filtro masetq" id="masEtq" title="Elegir etiquetas de la barra" '
+    +   'aria-label="Elegir etiquetas de la barra">+</button>';
 
   const filas = filtradas();
   if (!filas.length) {
@@ -1677,8 +1916,12 @@ function traduceErrorMeta(e){
   if (/transport|reconect/i.test(t)) return 'Meta no está conectada al transporte. Mira Canales.';
   if (/canal incorrecto/i.test(t)) return 'Este chat entró por otro canal. Se está enviando por la vía '
     + 'equivocada; mira Canales.';
-  if (/modo seguro|desconectado|pausado/i.test(t)) return 'El segundo WhatsApp no está conectado. '
-    + 'Conéctalo en Canales.';
+  // "Pausado" y "desconectado" NO son lo mismo, y decirlo mal manda a arreglar lo que ya
+  // funciona. Vinculado y en pausa se ve exactamente igual que sin vincular, y la salida es
+  // distinta: uno se reanuda con un boton, el otro hay que volver a vincularlo entero.
+  if (/pausado|modo seguro/i.test(t)) return 'El segundo WhatsApp está vinculado pero con los '
+    + 'envíos en pausa. Pulsa "Reanudar envíos" en Canales.';
+  if (/desconectado/i.test(t)) return 'El segundo WhatsApp no está conectado. Conéctalo en Canales.';
   if (/almacenamiento dedicado|bridge_media/i.test(t)) return 'WhatsApp Web todavía no envía archivos, '
     + 'solo texto.';
   return t;
@@ -2715,9 +2958,20 @@ function pesoLegible(n){
 function tarjetaArchivo(a, etiqueta){
   const nombre = a.nombre || etiqueta;
   const detalle = [a.mime, pesoLegible(a.peso)].filter(Boolean).join(' · ');
-  // Sin url no se inventa un enlace roto: se dice que el archivo no la trae.
-  if (!a.url) return '<div class="marchivo"><b>' + esc(nombre) + '</b>'
-    + '<span>' + esc(detalle || 'sin enlace disponible') + '</span></div>';
+  // Sin url no se inventa un enlace roto, y se dice lo que de verdad pasa. Llegar aqui
+  // significa que el mensaje no trae ni enlace ni id: el archivo no existe en ningun sitio,
+  // no es que no se encuentre. Le pasa a todo lo que entro antes del 09/09/2026 --hasta ese
+  // dia el puente descargaba la foto o la nota de voz y la tiraba, porque el bucket donde
+  // debia guardarla no existia-- y a lo que pase de 8 MB, que el servidor no acepta.
+  // Ya no se separa por canal: desde ese dia los dos numeros guardan igual y el motivo del
+  // hueco es el mismo. Decir que el 2.º número todavía no guarda seria mentira ahora, y
+  // hablar de un enlace que falta se leia como que se habia perdido algo. No se perdio nada:
+  // nunca se guardo.
+  if (!a.url) {
+    return '<div class="marchivo"><b>' + esc(nombre) + '</b>'
+      + '<span>' + esc(detalle ? detalle + ' · ' : '') + 'el archivo no se guardó'
+      + '</span></div>';
+  }
   return '<div class="marchivo"><b>' + esc(nombre) + '</b>'
     + '<span>' + esc(detalle || 'archivo') + '</span>'
     + '<a href="' + esc(a.url) + '" target="_blank" rel="noopener">Abrir</a></div>';
@@ -3363,8 +3617,12 @@ async function pintaScorecard(filas){
     p.suma += media; p.n += 1;
     porPersona.set(id, p);
   }
+  // cargaColaboradores devuelve null cuando la lectura FALLA --distinto de "no hay nadie"--
+  // y aqui se desreferenciaba sin mirar: un 403 por rol o un arranque en frio de la funcion
+  // tiraba un TypeError y la tarjeta entera desaparecia sin decir nada. El ranking se puede
+  // pintar igual: lo unico que falta son los nombres.
   const nombreDe2 = id => {
-    const x = equipo.find(e => String(e.id) === String(id));
+    const x = (equipo || []).find(e => String(e.id) === String(id));
     return x ? (x.name || x.display_name || x.email || 'sin nombre') : 'colaborador ' + String(id).slice(0,6);
   };
   const rank = [...porPersona.entries()]
@@ -3372,6 +3630,7 @@ async function pintaScorecard(filas){
     .sort((a,b) => b.media - a.media);
 
   if (!rank.length && !huerfanas) return '';
+  const sinEquipo = equipo === null;
   return '<div class="pgraf" style="max-width:1000px;margin-bottom:16px">'
     + '<div class="pgcab"><b>Por colaborador</b><span>nota media · nº de opiniones</span></div>'
     + (rank.length
@@ -3386,6 +3645,9 @@ async function pintaScorecard(filas){
     + (huerfanas ? '<p class="cfgnota" style="margin:' + (rank.length ? '12px 0 0' : '0') + '">'
         + huerfanas + ' opinión(es) sin colaborador asignado: no cuentan aquí. '
         + 'Al enviar la encuesta desde el chat, elige quién atendió.</p>' : '')
+    // Sin esto, "colaborador 4f2a1b" en vez de un nombre parece un dato roto en la base.
+    + (sinEquipo ? '<p class="cfgnota" style="margin:12px 0 0">No se pudo leer la lista del '
+        + 'equipo, así que arriba salen códigos en vez de nombres. Las notas sí son correctas.</p>' : '')
     + '</div>';
 }
 
@@ -4064,6 +4326,7 @@ function formatBridgeCode(value){
 async function callBridgeControl(action, payload = {}){
   const actionMap = {
     status:'bridgeStatus', request_pairing:'requestBridgePairing', cancel:'cancelBridgePairing',
+    activate:'activateBridgeTransport',
     pause:'pauseBridge', resume:'resumeBridge', logout:'logoutBridge',
     sync_history:'syncBridgeHistory', rebuild_link:'rebuildBridge',
     enable_photo_bot:'setPhotoBot', disable_photo_bot:'setPhotoBot',
@@ -4080,7 +4343,11 @@ function bridgeControlsHtml(p){
   const botEnabled = p.bot_enabled === true;
   return '<div class="bridge-tools">'
     + '<button class="btn-linea" id="bridgeRefreshBtn">Actualizar estado</button>'
+    + '<input id="bridgePairPhone" class="entrada-linea" inputmode="numeric" '
+    +   'placeholder="18091234567" value="' + esc(TELEFONO_PUENTE) + '" '
+    +   'aria-label="Número a vincular" title="Código de país y solo dígitos">'
     + '<button class="btn-linea" id="bridgePairBtn">Generar código</button>'
+    + '<button class="btn-linea" id="bridgeActivateBtn" hidden>Activar envíos de este número</button>'
     + '<button class="btn-linea" id="bridgePauseBtn">Pausar envíos</button>'
     + '<button class="btn-linea" id="bridgeHistoryBtn">Sincronizar historial</button>'
     + '<button class="btn-linea" id="bridgeRebuildBtn">Reconstruir vínculo e historial</button>'
@@ -4090,6 +4357,11 @@ function bridgeControlsHtml(p){
     +   (botEnabled ? 'encendido' : 'apagado') + '</button>'
     + '<div class="bridge-code-panel" id="bridgeCodePanel">'
     +   '<div class="codigo" id="bridgePairCode">--</div>'
+    // El codigo de vinculacion va atado a UN numero, y el panel no decia a cual. Este puente
+    // solo admite la linea Fotos --el servidor rechaza cualquier otra-- asi que el codigo
+    // salia siempre para ese numero y quien lo metia en otro telefono recibia de WhatsApp un
+    // "no se puede vincular dispositivo" que no explica nada. Ahora se dice antes de teclear.
+    +   '<p class="bridge-meta" id="bridgeCodeFor"></p>'
     +   '<p class="bridge-meta" id="bridgeCodeMeta">Preparando el código seguro…</p>'
     +   '<button class="btn-linea danger" id="bridgeCancelPair">Cancelar</button>'
     + '</div>'
@@ -4101,6 +4373,10 @@ function bridgeControlsHtml(p){
 
 function renderBridgeControlState(state, explicitError = ''){
   bridgeControlState = state || {};
+  // Arranca o para el sondeo segun lo que acabe de llegar. Va aqui y no en el boton porque el
+  // estado tambien cambia al pedir codigo, al sincronizar y al reconstruir.
+  setTimeout(vigilaPuente, 0);
+  setTimeout(continuaHistorialSiFaltan, 0);
   const status = String(bridgeControlState.status || bridgeControlState.state || 'offline').toLowerCase();
   const active = ['requested','generating','code_ready','connecting','rebuild_requested','rebuild_clearing'].includes(status);
   const code = formatBridgeCode(bridgeControlState.pairing_code);
@@ -4117,6 +4393,12 @@ function renderBridgeControlState(state, explicitError = ''){
   if (pair) {
     pair.disabled = !hostOnline || active || connected;
     pair.textContent = active ? 'Procesando…' : (connected ? 'Ya vinculado' : 'Generar código');
+  }
+  const activar = $('bridgeActivateBtn');
+  if (activar) {
+    const bloqueado = String(bridgeControlState.transport_mode || 'reconnect_only') !== 'active';
+    activar.hidden = !(connected && bloqueado);
+    activar.disabled = !hostOnline;
   }
   const pause = $('bridgePauseBtn');
   if (pause) {
@@ -4139,13 +4421,34 @@ function renderBridgeControlState(state, explicitError = ''){
   if ($('bridgeHistoryState')) {
     const imported = Number(bridgeControlState.history_sync_imported || 0);
     const duplicates = Number(bridgeControlState.history_sync_duplicates || 0);
+    // El puente guarda el MOTIVO en history_sync_last_error, y el panel enseñaba solo
+    // "Historial: error." -- una palabra que no se puede investigar. "WhatsApp no esta
+    // conectado" y "se corto a mitad" piden cosas distintas, y aqui se veian igual.
+    const motivo = String(bridgeControlState.history_sync_last_error || '').trim();
     $('bridgeHistoryState').textContent = historyStatus === 'completed'
       ? 'Historial completado: ' + imported + ' nuevos; ' + duplicates + ' duplicados omitidos.'
       : historyActive ? 'Historial en proceso: ' + Number(bridgeControlState.history_sync_progress || 0) + '%.'
-        : 'Historial: ' + historyStatus + '.';
+        // Cualquier estado que no sea 'completed' ni 'idle' lleva motivo, no solo 'error'.
+        // 'unavailable' es el peor de todos para dejarlo en una palabra: significa que esta
+        // vinculacion quedo registrada como NAVEGADOR y WhatsApp no le entrega los bloques
+        // historicos -- y la salida es concreta (cerrar sesion y vincular una vez mas), pero
+        // el panel enseñaba "Historial: unavailable." y ahi se acababa la informacion.
+        : (motivo || historyStatus === 'error')
+          ? 'Historial: ' + (motivo || 'se cortó sin decir por qué')
+            + (imported ? ' Se guardaron ' + imported + ' antes de cortarse.' : '')
+          : 'Historial: ' + historyStatus + '.';
   }
-  if ($('bridgeRebuildState')) $('bridgeRebuildState').textContent =
-    'Reconstruir renueva solo el vínculo local; conserva conversaciones y mensajes del CRM.';
+  // Todo lo de este canal --cerrar sesion, generar codigo, sincronizar-- lo ejecuta el
+  // programa del puente en la PC. El panel solo deja el encargo escrito y espera. Si ese
+  // programa no esta corriendo, no pasa nada de nada: los botones se quedan mudos y no habia
+  // forma de saber por que. Al dueno le parecio que "cerrar sesion no hizo nada", que
+  // "generar codigo se quedaba esperando" y que el historial fallaba -- tres sintomas, una
+  // sola causa, y ninguno lo decia. El panel SABE si el host responde: solo faltaba decirlo.
+  if ($('bridgeRebuildState')) $('bridgeRebuildState').textContent = hostOnline
+    ? 'Reconstruir renueva solo el vínculo local; conserva conversaciones y mensajes del CRM.'
+    : 'El programa del puente no está respondiendo en la PC. Hasta que se abra, lo que pulses '
+      + 'aquí queda anotado pero no lo ejecuta nadie.';
+  if ($('bridgeRebuildState')) $('bridgeRebuildState').classList.toggle('mal', !hostOnline);
   if ($('bridgeError')) $('bridgeError').textContent = explicitError || bridgeControlState.last_error || '';
   const bot = $('photoBotGlobalBtn');
   if (bot) {
@@ -4162,8 +4465,71 @@ async function refreshBridgeStatus(){
   else renderBridgeControlState(bridgeControlState, result.error || 'No se pudo consultar el puente.');
 }
 
+// El puente tarda: el codigo aparece unos segundos despues de pedirlo, y el historial sube de
+// porcentaje durante minutos. Nada de eso se refrescaba solo, asi que habia que recargar la
+// pagina para ver si algo se movia -- y quien no recarga concluye que se ha quedado colgado.
+// Paso de verdad dos veces seguidas: el codigo "no salia" y el historial "se quedo en 0".
+//
+// Se consulta solo MIENTRAS hay algo en marcha, y se para en cuanto termina: un sondeo que no
+// se apaga es una peticion cada pocos segundos para siempre, tambien de madrugada.
+// Una sincronizacion PARCIAL no es un fallo: es progreso a medias. El puente lo dice --"se
+// conservaron N mensajes; vuelve a sincronizar para continuar"-- pero eso deja el trabajo
+// colgando de que alguien se acuerde de pulsar otra vez, y con 182 conversaciones hacen falta
+// varias vueltas. Es el mismo patron que ya se quito de los seguimientos.
+//
+// Se continua solo, con dos frenos: como mucho 3 vueltas seguidas, y solo si la vuelta
+// anterior trajo mensajes NUEVOS. Si deja de avanzar se para, porque insistir sobre algo que
+// no progresa es golpear a WhatsApp sin ganar nada.
+const CONTINUA_MAX = 3;
+let vueltasHistorial = 0;
+let importadosPrevios = -1;
+async function continuaHistorialSiFaltan(){
+  const estado = String(bridgeControlState.history_sync_status || '');
+  const importados = Number(bridgeControlState.history_sync_imported || 0);
+  if (estado !== 'error') { if (estado === 'completed') { vueltasHistorial = 0; importadosPrevios = -1; } return; }
+  // 'error' con cero importados no es parcial: es que no entro nada. Ahi reintentar solo
+  // repite el mismo fallo, y el motivo ya esta escrito en pantalla para poder mirarlo.
+  if (!importados || importados === importadosPrevios || vueltasHistorial >= CONTINUA_MAX) return;
+  importadosPrevios = importados;
+  vueltasHistorial += 1;
+  const nota = $('bridgeHistoryState');
+  if (nota) nota.textContent = 'Historial incompleto: continuando solo (vuelta '
+    + vueltasHistorial + ' de ' + CONTINUA_MAX + '). Se guardaron ' + importados + ' hasta ahora.';
+  await requestBridgeHistorySync();
+}
+
+let relojPuente = null;
+function vigilaPuente(){
+  const estado = String(bridgeControlState.status || '').toLowerCase();
+  const historial = String(bridgeControlState.history_sync_status || 'idle');
+  const enMarcha = ['requested','generating','code_ready','connecting','rebuild_requested','rebuild_clearing'].includes(estado)
+    || ['requested','running','waiting'].includes(historial);
+  if (!enMarcha || relojPuente) { if (!enMarcha && relojPuente) { clearInterval(relojPuente); relojPuente = null; } return; }
+  relojPuente = setInterval(async () => {
+    // Si se cambio de vista, el panel del puente ya no existe: se corta y no se deja el
+    // sondeo huerfano consumiendo peticiones.
+    if (!$('bridgePairBtn')) { clearInterval(relojPuente); relojPuente = null; return; }
+    await refreshBridgeStatus();
+  }, 4000);
+}
+
 async function requestBridgePairing(){
-  const phone = NUMERO_FOTOS || '18094785620';
+  // El numero lo escribe el dueno. Antes estaba fijo en el codigo y el servidor ademas solo
+  // aceptaba uno: no habia donde teclearlo, y el codigo salia siempre para otra linea. Metido
+  // en el telefono equivocado, WhatsApp responde "no se puede vincular dispositivo" y no
+  // explica nada -- ese rato ya se perdio una vez.
+  const campo = $('bridgePairPhone');
+  const phone = soloDigitos(campo ? campo.value : TELEFONO_PUENTE);
+  if (!/^[1-9][0-9]{7,14}$/.test(phone)) {
+    if (campo) campo.focus();
+    return renderBridgeControlState(bridgeControlState,
+      'Escribe el número con código de país y solo dígitos. Por ejemplo 18091234567.');
+  }
+  // Se deja dicho ANTES de que salga el codigo: es lo unico que evita teclearlo donde no va.
+  const bonito = phone.replace(/^1(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
+  const para = $('bridgeCodeFor');
+  if (para) para.innerHTML = '<b>Este código es solo para el ' + esc(bonito) + '</b>'
+    + ' — en cualquier otro teléfono WhatsApp lo rechaza.';
   const result = await callBridgeControl('request_pairing', { phone });
   if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
   else renderBridgeControlState(bridgeControlState, result.error || 'No se pudo pedir el código.');
@@ -4173,6 +4539,21 @@ async function cancelBridgePairing(){
   const result = await callBridgeControl('cancel');
   if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
   else renderBridgeControlState(bridgeControlState, result.error || 'No se pudo cancelar.');
+}
+
+// El transporte del segundo numero nace bloqueado --transport_mode 'reconnect_only'-- y hasta
+// ahora no habia forma de desbloquearlo: "Reanudar envios" contestaba siempre "los envios
+// siguen bloqueados hasta validar la reconexion" y la validacion no existia en ninguna parte.
+// Este es ese paso, y sigue siendo deliberado: hay que confirmarlo escribiendo.
+async function activateBridgeTransport(){
+  if (!window.confirm('Vas a ACTIVAR los envíos por el segundo número.\n\n'
+    + 'A partir de aquí este CRM puede escribir por WhatsApp Web. Los envíos masivos van con '
+    + 'freno (40 a 120 s entre mensajes, pausa de 10 min cada 20, tope de 80 al día), pero es '
+    + 'un número personal: si se abusa, WhatsApp lo bloquea.\n\n¿Continuar?')) return;
+  const result = await callBridgeControl('activate', { confirmation: 'ACTIVAR ENVIOS' });
+  if (result.bridge) renderBridgeControlState(result.bridge, result.ok ? '' : result.error);
+  else renderBridgeControlState(bridgeControlState, result.error || 'No se pudo activar.');
+  if (result.ok) avisa('Envíos activados', 'Ya puedes escribir por el segundo número.');
 }
 
 async function toggleBridgePause(){
@@ -4215,6 +4596,7 @@ function bindBridgeControls(){
   if ($('bridgePairBtn')) $('bridgePairBtn').onclick = requestBridgePairing;
   if ($('bridgeCancelPair')) $('bridgeCancelPair').onclick = cancelBridgePairing;
   if ($('bridgePauseBtn')) $('bridgePauseBtn').onclick = toggleBridgePause;
+  if ($('bridgeActivateBtn')) $('bridgeActivateBtn').onclick = activateBridgeTransport;
   if ($('bridgeRefreshBtn')) $('bridgeRefreshBtn').onclick = refreshBridgeStatus;
   if ($('bridgeHistoryBtn')) $('bridgeHistoryBtn').onclick = requestBridgeHistorySync;
   if ($('bridgeRebuildBtn')) $('bridgeRebuildBtn').onclick = rebuildBridgeLinkAndHistory;
@@ -4246,15 +4628,39 @@ async function pintaCanales(){
   bridgeControlState = p;
 
   const cuenta = clave => CONVS.filter(c => canalDe(c) === clave).length;
-  const tarjeta = (clave, listo, detalle, acciones) => {
+  // "Conectado" no quiere decir que llegue nada. Una red puede estar suscrita, con su token
+  // vivo y su historial importado, y aun asi no entregar un solo mensaje nuevo -- que es
+  // exactamente lo que pasa con Instagram y Messenger mientras la app siga sin publicar en
+  // Meta. La tarjeta se veia en verde igual, y eso hace creer que el canal esta atendiendo
+  // clientes cuando lleva meses mudo.
+  //
+  // La fecha del ultimo mensaje ENTRANTE no se puede discutir ni se queda vieja: si hoy
+  // entra uno, se actualiza sola. Vale para los cuatro canales, no solo para las redes: un
+  // WhatsApp callado tres semanas tambien es algo que hay que ver.
+  const ultimoEntrante = (clave) => {
+    const fechas = CONVS.filter(c => canalDe(c) === clave)
+      .map(c => String(c.last_customer_reply_at || '')).filter(Boolean).sort();
+    const ultima = fechas[fechas.length - 1];
+    if (!ultima) return '';
+    const dias = Math.floor((Date.now() - Date.parse(ultima)) / 86400000);
+    if (!Number.isFinite(dias)) return '';
+    return ' · último recibido ' + (dias <= 0 ? 'hoy' : dias === 1 ? 'ayer' : 'hace ' + dias + ' días');
+  };
+
+  // 'etiqueta' permite un cuarto estado cuando 'conectado / sin conectar / sin usar' no
+  // alcanza. El caso real: vinculado pero en pausa, que salia como "sin conectar" -- y por eso
+  // se volvia a vincular una y otra vez algo que solo necesitaba pulsar Reanudar.
+  const tarjeta = (clave, listo, detalle, acciones, etiqueta) => {
     const d = CANALES[clave];
     return '<div class="canal">'
       + '<div class="cabecera-canal">'
       +   '<span class="clogo" style="background:' + d.color + '22;color:' + d.color + '">' + d.logo + '</span>'
       +   '<div class="cinfo"><b>' + esc(d.nombre) + '</b>'
-      +     '<span>' + cuenta(clave) + ' conversación(es)</span></div>'
-      +   '<i class="chip ' + (listo === true ? 'ok' : listo === false ? 'mal' : 'medio') + '">'
-      +     (listo === true ? 'conectado' : listo === false ? 'sin conectar' : 'sin usar') + '</i>'
+      +     '<span>' + cuenta(clave) + ' conversación(es)' + ultimoEntrante(clave) + '</span></div>'
+      +   '<i class="chip ' + (etiqueta ? etiqueta.clase
+      :     (listo === true ? 'ok' : listo === false ? 'mal' : 'medio')) + '">'
+      +     (etiqueta ? esc(etiqueta.texto)
+      :     (listo === true ? 'conectado' : listo === false ? 'sin conectar' : 'sin usar')) + '</i>'
       + '</div>'
       + '<p class="cdetalle">' + detalle + '</p>'
       + (acciones ? '<div class="cacciones">' + acciones + '</div>' : '')
@@ -4268,6 +4674,13 @@ async function pintaCanales(){
   // de datos habria puesto dos credenciales en el navegador.
   const est = await llama({ action:'socialStatus' });
   const redes = est.ok ? (est.redes || {}) : {};
+  // El resultado de una importacion vivia SOLO en un aviso que se borra a los 4,2 segundos,
+  // y la importacion tarda unos veinte. O sea que quien pulsa el boton, mira a otro lado
+  // mientras espera --que es lo que se hace-- y vuelve, no encuentra el resultado en ninguna
+  // parte. Y si no entro ningun mensaje, la pantalla queda exactamente igual que antes: la
+  // unica lectura posible es "no hizo nada". Paso de verdad, tres veces seguidas.
+  //
+  // Ahora el resultado se queda escrito en la tarjeta del canal hasta la siguiente.
   const tarjetaRed = (clave, estadoGuardado, detalle) => {
     const hay = cuenta(clave);
     const suscrita = estadoGuardado?.suscrita === true;
@@ -4283,6 +4696,7 @@ async function pintaCanales(){
               + (estadoGuardado.ultimo_sync_at
                   ? ' Último historial importado: ' + esc(String(estadoGuardado.ultimo_sync_at).slice(0,16).replace('T',' ')) + '.'
                   : ' Todavía no se ha importado el historial.')
+              + (ULTIMA_IMPORTACION[clave] ? '<br>' + ULTIMA_IMPORTACION[clave] : '')
             : ''),
       '<button class="btn-linea" data-conecta="' + clave + '">'
       + (conectada ? 'Volver a iniciar sesión' : 'Iniciar sesión y dar permisos') + '</button>'
@@ -4291,8 +4705,10 @@ async function pintaCanales(){
 
   const oficialListo = t.ready === true || t.state === 'ready';
   const estadoPuente = String(p.state || p.status || '').toLowerCase();
-  const puenteListo = (p.connected === true || estadoPuente === 'connected' || estadoPuente === 'ready')
-    && p.paused !== true && p.host_online !== false;
+  const puenteVinculado = (p.connected === true || estadoPuente === 'connected' || estadoPuente === 'ready')
+    && p.host_online !== false;
+  const puenteVinculadoEnPausa = puenteVinculado && p.paused === true;
+  const puenteListo = puenteVinculado && p.paused !== true;
   // Esta vista ya sabe si el puente esta vivo: se aprovecha para refrescar el estado que
   // decide si las conversaciones del segundo numero se ven en la lista. Sin esto, tras
   // desconectar habia que recargar la pagina para que desaparecieran.
@@ -4307,12 +4723,32 @@ async function pintaCanales(){
       '<button class="btn-linea" data-canal-bot="official">Bot de este canal: '
         + (estado.bot_enabled ? 'encendido' : 'apagado') + '</button>')
 
+    // Vinculado-pero-en-pausa salia como "sin conectar", igual que sin vincular. El dueno
+    // cerraba sesion y volvia a vincular una y otra vez para arreglar algo que solo necesitaba
+    // un boton. Se distingue.
     + tarjeta('whatsapp_qr', puenteListo ? true : (cuenta('whatsapp_qr') ? false : null),
-      puenteListo
-        ? 'Segundo número conectado por WhatsApp Web. <b>Era el de pruebas</b>: si ya no se usa, desconéctalo.'
-        : 'Sin sesión activa. Este canal usa WhatsApp Web, no el API: no admite plantillas '
-          + 'ni difusiones, solo conversación dentro de la ventana normal.',
-      bridgeControlsHtml(p))
+      (puenteListo
+        ? 'Segundo número conectado por WhatsApp Web. <b>No hay ventana de 24 h ni plantillas</b>: '
+          + 'se escribe como desde el teléfono, a cualquier contacto y en cualquier momento.'
+        : puenteVinculadoEnPausa
+        ? '<b>Vinculado, pero con los envíos en pausa.</b> Se pausan solos al volver a '
+          + 'vincular, para no soltar una tanda antes de comprobar que la sesión aguanta. '
+          + 'Pulsa <b>Reanudar envíos</b> y ya se puede escribir por este número.'
+        // Decia "no admite difusiones, solo conversacion dentro de la ventana normal". Las
+        // dos cosas eran falsas y se contradecian con los frenos de difusion de dos lineas
+        // mas abajo: WhatsApp Web SI hace envios masivos (wa-bridge/src/bulk.js) y NO tiene
+        // ventana de 24 h -- esa es una regla del API oficial, no de WhatsApp Web. Quien lo
+        // leia daba por hecho que no podia escribirle a un cliente de hace un mes.
+        : 'Sin sesión activa. Este canal usa WhatsApp Web, no el API: <b>no hay ventana de '
+          + '24 h ni plantillas</b>, se escribe como desde el teléfono.')
+      // Los frenos no son un detalle: son la diferencia entre una campana y un numero
+      // bloqueado. Se dicen aqui porque es donde se decide usar este canal.
+      + '<br>Sus conversaciones <b>sí</b> se ven aquí, junto a las del número oficial. '
+      + 'En envíos masivos va con freno: <b>40 a 120 s entre mensajes</b>, pausa de '
+      + '<b>10 min cada 20</b>, tope de <b>80 al día</b>, texto variado por destinatario y '
+      + 'solo a quien ya te escribió y no se dio de baja.',
+      bridgeControlsHtml(p),
+      puenteVinculadoEnPausa ? { clase: 'medio', texto: 'en pausa' } : null)
 
     + tarjetaRed('instagram', redes.instagram,
       'Se conecta iniciando sesión con Facebook y aceptando los permisos de la cuenta: '
@@ -4327,7 +4763,14 @@ async function pintaCanales(){
     if (sinc) {
       const antes = sinc.textContent;
       sinc.disabled = true; sinc.textContent = 'Importando…';
+      // Con el contador corriendo se ve que sigue viva. Una importacion de Instagram tarda
+      // unos veinte segundos --Meta responde despacio y hay que reintentar-- y un boton que
+      // dice "Importando…" sin moverse durante ese rato es indistinguible de uno colgado.
+      // Pulsarlo otra vez es lo natural, y es justo lo peor: Meta ya esta limitando.
+      let seg = 0;
+      const reloj = setInterval(() => { seg += 1; sinc.textContent = 'Importando… ' + seg + ' s'; }, 1000);
       const r = await llama({ action:'syncSocial', red: sinc.dataset.sync, paginas: 25 });
+      clearInterval(reloj);
       sinc.disabled = false; sinc.textContent = antes;
       if (!r.ok) return avisa('No se pudo importar', r.error);
       // Se dicen los dos numeros: si hay hilos pero cero mensajes nuevos, es que ya
@@ -4352,12 +4795,32 @@ async function pintaCanales(){
       const limite = pegas.length ? '' : ' Meta no tiene más que enseñar por su API: esto es '
         + 'todo lo que deja ver de este canal.'
         + (sinc.dataset.sync === 'instagram'
+          // La ruta lleva un nivel mas del que se puso al principio: "Controles de mensajes"
+          // va entre medias, y sin ese paso no aparece "Herramientas conectadas". Verificado
+          // contra la ayuda de Meta el 05/09/2026, despues de que el dueno no la encontrara.
           ? ' Si en el teléfono ves más chats, quien no los comparte es la app de Instagram: '
-            + 'Configuración → Mensajes y respuestas a historias → Herramientas conectadas → '
-            + 'Permitir acceso a los mensajes.'
+            + 'Configuración y privacidad → Mensajes y respuestas a historias → Controles de '
+            + 'mensajes → Herramientas conectadas → Permitir acceso a los mensajes. '
+            // Y aunque se active, hay una parte que no volvera nunca: conviene saberlo antes
+            // de dar por hecho que el CRM esta roto.
+            + 'Aun así, los mensajes de la carpeta Solicitudes con más de 30 días Meta no los '
+            + 'devuelve nunca, por mucho que se active el permiso.'
           : ' Los chats de Marketplace que vendes desde tu perfil personal no pasan por aquí: '
             + 'Meta retiró hace años el permiso que los leía. Solo entran los de Marketplace '
             + 'vendidos desde la página.');
+      const red = sinc.dataset.sync;
+      const cuando = new Date().toLocaleTimeString('es-DO', { hour:'2-digit', minute:'2-digit' });
+      // "0 mensajes nuevos" NO es un fallo, y hay que decirlo con esas palabras: significa
+      // que ya estaban todos. Sin eso se lee como que la importacion no funciono.
+      const resumen = r.mensajes === 0
+        ? '<b>' + cuando + ':</b> ' + r.hilos + ' conversación(es), ninguna novedad — ya estaban '
+          + 'todas importadas.'
+        : '<b>' + cuando + ':</b> ' + r.hilos + ' conversación(es), ' + r.mensajes + ' mensaje(s) nuevo(s).';
+      ULTIMA_IMPORTACION[red] = resumen
+        + (pegas.length ? ' ' + esc(pegas.join('. ')) + '.' : '')
+        // El tope de Meta se repite aqui porque es donde se mira despues, no en el aviso.
+        + (!pegas.length && red === 'instagram'
+            ? ' Instagram no expone más: volver a pulsar no va a traer nada.' : '');
       avisa(pegas.length ? 'Historial importado a medias' : 'Historial importado',
         r.hilos + ' conversación(es), ' + r.mensajes + ' mensaje(s) nuevo(s).'
         + (pegas.length ? ' ' + pegas.join('. ') + '.' : limite));
@@ -4550,6 +5013,66 @@ function campoCfg(clave, etiqueta, marcador){
     + '" placeholder="' + esc(marcador || '') + '"></div>';
 }
 
+// El enlace del calendario LLEVA SU LLAVE, y esa es toda la historia de por que la agenda
+// nunca aparecio en Google. crmAgenda exige ?key= y contesta 401 sin ella; el panel ensenaba
+// la URL pelada, se pegaba en Google, Google recibia un 401 y se quedaba callado. Desde
+// fuera: "el calendario no conecta".
+function urlAgenda(){
+  const base = CFG.firebaseAgendaUrl || '';
+  const llave = AJUSTES.agenda_feed_key || '';
+  if (!base || !llave) return '';
+  return base + (base.includes('?') ? '&' : '?') + 'key=' + encodeURIComponent(llave);
+}
+// La llave viaja dentro de una URL que se pega en Google, o sea que no puede ser adivinable:
+// quien la acierte ve la agenda entera --nombre del cliente, telefono y notas--. 32 bytes del
+// generador del navegador, en hexadecimal.
+function nuevaLlaveAgenda(){
+  const bytes = new Uint8Array(32);
+  crypto.getRandomValues(bytes);
+  return [...bytes].map(b => b.toString(16).padStart(2, '0')).join('');
+}
+// Los limites antibloqueo, tal como los devuelve el servidor. null = todavia no se han pedido
+// (o quien mira no es administrador y no puede verlos).
+let LIMITES = null;
+
+function campoLim(clave, etiqueta, nota, editable){
+  const v = LIMITES && LIMITES[clave] != null ? LIMITES[clave] : '';
+  return '<div class="campo"><label>' + esc(etiqueta) + '</label>'
+    + '<input type="number" data-lim="' + esc(clave) + '" value="' + esc(String(v)) + '"'
+    + (editable ? '' : ' disabled') + '>'
+    + '<i class="cfgnota" style="display:block;margin-top:3px">' + esc(nota) + '</i></div>';
+}
+
+function limitesCfg(esAdmin){
+  if (!esAdmin) return '<p class="cfgnota">Solo un administrador puede ver y cambiar estos límites.</p>';
+  if (!LIMITES) return '<p class="cfgnota">No se pudieron cargar los límites.</p>';
+  return '<div class="grupo">'
+    + campoLim('send_min_sec', 'Espera mínima entre envíos (segundos)', 'Entre 10 y 3600.', true)
+    + campoLim('send_max_sec', 'Espera máxima entre envíos (segundos)', 'La espera real se sortea entre la mínima y esta.', true)
+    + campoLim('long_pause_every', 'Pausa larga cada N envíos', 'Imita el descanso de una persona.', true)
+    + campoLim('long_pause_sec', 'Duración de la pausa larga (segundos)', '600 son diez minutos.', true)
+    + campoLim('daily_cap', 'Tope de envíos por día', 'Al llegar aquí, lo que quede se pasa al día siguiente.', true)
+    + campoLim('resume_hour', 'Hora a la que se reanuda', 'De 0 a 23, hora de La Romana.', true)
+    + campoLim('quality_cutoff', 'Fallos seguidos que pausan el puente', 'El freno de emergencia. De 1 a 20; no se puede quitar.', true)
+    + '</div>'
+    + '<button class="btn-linea" id="cfgGuardaLimites" style="margin-top:8px">Guardar límites</button>';
+}
+
+function agendaCfg(){
+  if (!CFG.firebaseAgendaUrl) return '<p class="cfgnota">No hay URL de agenda configurada.</p>';
+  if (!AJUSTES.agenda_feed_key) {
+    return '<p class="cfgnota">Todavía no está activado: falta la llave del enlace.</p>'
+      + '<button class="btn-linea" id="cfgAgendaActivar">Activar el calendario</button>';
+  }
+  return '<div class="dato"><div class="k">Enlace de suscripción</div>'
+    + '<div class="v" style="word-break:break-all;font-size:11.5px">' + esc(urlAgenda()) + '</div></div>'
+    + '<button class="btn-linea" id="cfgAgendaGoogle" style="margin-top:8px">Añadir a Google Calendar</button>'
+    + '<button class="btn-linea" id="cfgCopiaAgenda" style="margin-top:8px">Copiar enlace</button>'
+    // Cambiar la llave es la unica forma de retirar el acceso a quien ya tenga el enlace:
+    // una URL compartida no se puede "desenviar".
+    + '<button class="btn-linea" id="cfgAgendaRota" style="margin-top:8px">Cambiar el enlace</button>';
+}
+
 function montaConfig(){
   if (!montadas.has('config')) {
     montadas.add('config');
@@ -4566,6 +5089,12 @@ async function pintaConfig(){
   await cargaAjustes();
   const quien = await llama({ action:'whoami' });
   const esAdmin = quien.ok && quien.rol_efectivo === 'admin';
+  // Solo se piden si quien mira puede cambiarlos: al resto el servidor le responde 403 y
+  // pintar un error donde no hay ningun problema confunde mas que no ensenar la tarjeta.
+  if (esAdmin) {
+    const rl = await llama({ action:'bridgeLimits', operation:'get' });
+    LIMITES = rl.ok ? rl.limites : null;
+  }
 
   const dato = (k,v) => '<div class="dato"><div class="k">' + esc(k) + '</div><div class="v">'
     + esc(String(v ?? '—')) + '</div></div>';
@@ -4620,15 +5149,19 @@ async function pintaConfig(){
         interruptorCfg('encuesta_auto', 'Pedir la encuesta automáticamente',
           'Solo a quien terminó comprando.', false))
 
-    + tarjetaCfg('Agenda en el teléfono',
-        'La agenda se publica como calendario suscribible. Se añade una vez en el iPhone o en '
-        + 'Google Calendar y se actualiza sola; no hay que volver a importarla.',
-        (CFG.firebaseAgendaUrl
-          ? '<div class="dato"><div class="k">Enlace de suscripción</div>'
-            + '<div class="v" style="word-break:break-all;font-size:11.5px">'
-            + esc(CFG.firebaseAgendaUrl) + '</div></div>'
-            + '<button class="btn-linea" id="cfgCopiaAgenda" style="margin-top:8px">Copiar enlace</button>'
-          : '<p class="cfgnota">No hay URL de agenda configurada.</p>'))
+    + tarjetaCfg('Límites de seguridad del 2.º número',
+        'El 809-478-5620 es un WhatsApp personal, no una API: si WhatsApp lo ve enviar en '
+        + 'ráfaga, lo bloquea sin aviso y sin dónde reclamar. Estos números son lo único que lo '
+        + 'protege. Se pueden ajustar, pero el servidor los recorta a un rango seguro: no hay '
+        + 'forma de dejarlo sin pausa ni sin freno. <b>El puente los aplica sin reiniciarlo.</b>',
+        limitesCfg(esAdmin))
+
+    + tarjetaCfg('Agenda en Google Calendar',
+        'Las sesiones agendadas se publican como un calendario al que Google se suscribe: se '
+        + 'añade una vez y se actualiza solo, sin volver a importar nada. Google no lo refresca '
+        + 'al instante --suele tardar unas horas en recoger un cambio--, así que el sitio donde '
+        + 'se agenda sigue siendo el CRM; el calendario es para verlo desde el teléfono.',
+        agendaCfg())
 
     + tarjetaCfg('Catálogo público',
         'De aquí salen los combos y los precios que se le mandan al cliente. Se lee de la web, '
@@ -4716,10 +5249,55 @@ async function pintaConfig(){
     gt.disabled = false;
     avisa('Mensajes guardados');
   };
+  // Se vuelve a pintar con lo que el servidor DEVUELVE, no con lo que se escribio: si un
+  // valor venia fuera de rango, cleanPacing lo recorta y hay que ver el numero que de verdad
+  // quedo guardado. Creer que se guardo un tope de 500 cuando el servidor puso otro es la
+  // clase de malentendido que solo se descubre con el numero ya bloqueado.
+  const gl = $('cfgGuardaLimites');
+  if (gl) gl.onclick = async () => {
+    const limites = {};
+    g.querySelectorAll('[data-lim]').forEach(el => { limites[el.dataset.lim] = Number(el.value); });
+    gl.disabled = true;
+    const r = await llama({ action:'bridgeLimits', operation:'save', limites });
+    gl.disabled = false;
+    if (!r.ok) return avisa('No se pudieron guardar', r.error);
+    LIMITES = r.limites;
+    avisa('Límites guardados', 'El puente los aplica sin reiniciarlo.');
+    pintaConfig();
+  };
+  // Se copia la URL COMPLETA, con la llave. Copiar la de antes --sin llave-- era copiar algo
+  // que Google rechaza con 401 sin decir nada.
   const ca = $('cfgCopiaAgenda');
   if (ca) ca.onclick = async () => {
-    try { await navigator.clipboard.writeText(CFG.firebaseAgendaUrl); avisa('Enlace copiado'); }
+    try { await navigator.clipboard.writeText(urlAgenda()); avisa('Enlace copiado'); }
     catch (e) { avisa('No se pudo copiar'); }
+  };
+  const aa = $('cfgAgendaActivar');
+  if (aa) aa.onclick = async () => {
+    aa.disabled = true;
+    const ok = await guardaAjuste('agenda_feed_key', nuevaLlaveAgenda());
+    if (!ok) { aa.disabled = false; return; }
+    avisa('Calendario activado', 'Ya se puede añadir a Google Calendar.');
+    pintaConfig();
+  };
+  // Google pide la URL en "Añadir calendario > Desde URL". Este enlace abre esa pantalla con
+  // la direccion ya puesta; si alguna version de Google la pide a mano, esta el boton de
+  // copiar al lado.
+  const ag = $('cfgAgendaGoogle');
+  if (ag) ag.onclick = () => {
+    const u = urlAgenda(); if (!u) return;
+    window.open('https://calendar.google.com/calendar/r?cid=' + encodeURIComponent(u), '_blank', 'noopener');
+  };
+  const ar = $('cfgAgendaRota');
+  if (ar) ar.onclick = async () => {
+    if (!confirm('Se genera un enlace nuevo y el anterior deja de funcionar.\n\n'
+      + 'Los calendarios que ya lo tengan añadido --el tuyo incluido-- dejarán de '
+      + 'actualizarse hasta que se añada el nuevo.\n\n¿Cambiarlo?')) return;
+    ar.disabled = true;
+    const ok = await guardaAjuste('agenda_feed_key', nuevaLlaveAgenda());
+    if (!ok) { ar.disabled = false; return; }
+    avisa('Enlace cambiado', 'Hay que volver a añadirlo en Google Calendar.');
+    pintaConfig();
   };
   const cr = $('cfgReglas2'); if (cr) cr.onclick = abreReglas;
   const ic = $('cfgIrCanales'); if (ic) ic.onclick = () => ve('canales');
@@ -4808,6 +5386,16 @@ async function cableaEquipo(){
   const pinta = async () => {
     COLABORADORES = null;                       // se relee: acabamos de cambiarla
     const equipo = await cargaColaboradores();
+    // null es "no se pudo leer", [] es "no hay nadie". Tratarlos igual decia "Todavia no hay
+    // nadie dado de alta" cuando el equipo estaba entero, y ademas equipo.length sobre null
+    // tiraba una excepcion DENTRO del await de mas abajo: el cableado del boton "Dar de alta"
+    // no llegaba a ejecutarse y quedaba muerto el resto de la sesion.
+    if (equipo === null) {
+      c.innerHTML = '<p class="cfgnota">No se pudo leer el equipo. '
+        + '<button class="btn-linea" id="cfgEquipoReintentar">Reintentar</button></p>';
+      const rp = $('cfgEquipoReintentar'); if (rp) rp.onclick = () => pinta();
+      return;
+    }
     c.innerHTML = equipo.length
       ? equipo.map(e => '<div class="dato"><div class="k">' + esc(e.role || e.puesto || '—') + '</div>'
           + '<div class="v">' + esc(e.name || e.display_name || e.email || 'sin nombre') + '</div>'
@@ -5653,32 +6241,43 @@ async function escaneaDesinteres(){
   // historial ya esta al dia" aunque el servidor hubiera encontrado ciento ochenta. Un falso
   // todo-en-orden es peor que un error: el error se investiga, esto se cree.
   const filas = r.candidatas || [];
+  // El servidor devuelve la lista RECORTADA a 200, pero 'apply' marca TODAS las que
+  // encuentre --barre hasta 2000 conversaciones--. El panel contaba filas.length, asi que con
+  // mas de 200 candidatas leias "Marcar los 200", confirmabas "Se marcaran 200 contactos" y
+  // se marcaban, por ejemplo, 380. A los 180 que nunca viste se les apaga el marketing y los
+  // seguimientos de golpe, y eso no se deshace con un boton.
+  //
+  // El total venia en la respuesta desde el principio; solo habia que mirarlo.
+  const total = Number.isFinite(Number(r.total)) ? Number(r.total) : filas.length;
+  const recortada = total > filas.length;
   if (!filas.length) {
     $('recoCuerpo').innerHTML = '<p class="bajada">Ninguno. El historial ya está al día: nadie '
       + 'cumple la norma sin estar marcado.</p>';
     return;
   }
   $('recoCuerpo').innerHTML = '<div class="propuesta" style="max-width:900px">'
-    + '<div class="tapa"><b>' + filas.length + ' contacto(s) deberían estar marcados</b></div>'
+    + '<div class="tapa"><b>' + total + ' contacto(s) deberían estar marcados</b></div>'
     + '<div class="cuerpo"><p class="aviso" style="margin:0 0 10px">Recibieron dos seguimientos y no '
     +   'contestaron. Marcarlos apaga marketing y seguimientos; pueden seguir escribiendo y se les '
     +   'puede contestar a mano.</p>'
     + '<div class="destinos">' + filas.slice(0,80).map(f =>
         '<span>' + esc(f.customer_name || f.contact_name || f.wa_phone || f.conversation_id) + '</span>').join('')
-    + (filas.length > 80 ? '<span>… y ' + (filas.length-80) + ' más</span>' : '') + '</div></div>'
-    + '<div class="patas"><button class="btn-solido" id="recoAplicar">Marcar los ' + filas.length + '</button>'
+    + (total > 80 ? '<span>… y ' + (total-80) + ' más</span>' : '') + '</div></div>'
+    + (recortada ? '<p class="aviso" style="margin:0 12px 10px">De los ' + total + ' solo se '
+        + 'pueden listar ' + filas.length + ' aquí, pero el botón los marca <b>todos</b>.</p>' : '')
+    + '<div class="patas"><button class="btn-solido" id="recoAplicar">Marcar los ' + total + '</button>'
     +   '<button class="btn-linea" id="recoCancelar">Cancelar</button></div></div>';
   $('recoCancelar').onclick = () => { $('recoCuerpo').innerHTML = ''; };
   $('recoAplicar').onclick = async () => {
-    if (!confirm('Se marcarán ' + filas.length + ' contactos como desinteresados.\n\n'
+    if (!confirm('Se marcarán ' + total + ' contactos como desinteresados.\n\n'
       + 'Dejan de contar en las métricas y de recibir marketing y seguimientos.\n\n¿Continuar?')) return;
     const ap = $('recoAplicar');
     ap.disabled = true; ap.textContent = 'Marcando…';
     const r2 = await llama({ action:'disinterest', operation:'apply' });
     ap.disabled = false;
-    if (!r2.ok) { ap.textContent = 'Marcar los ' + filas.length; return avisa('No se pudo aplicar', r2.error); }
+    if (!r2.ok) { ap.textContent = 'Marcar los ' + total; return avisa('No se pudo aplicar', r2.error); }
     $('recoCuerpo').innerHTML = '<p class="bajada">Historial reconstruido: '
-      + (r2.marcadas ?? filas.length) + ' contacto(s) marcados.</p>';
+      + (r2.marcadas ?? total) + ' contacto(s) marcados.</p>';
     avisa('Historial reconstruido', 'Ya no cuentan en las métricas.');
   };
 }
@@ -6242,6 +6841,14 @@ function abreEncuesta(c){
 
   cargaColaboradores().then(lista => {
     const s = $('encColab'); if (!s) return;
+    // lista.map sobre null reventaba dentro del .then: la promesa quedaba rechazada sin que
+    // nadie la mirara y el desplegable se quedaba con "— sin especificar —" y nada mas. El
+    // agente mandaba la encuesta sin colaborador, y esa opinion no cuenta en el ranking.
+    if (lista === null) {
+      s.innerHTML = '<option value="">— sin especificar —</option>'
+        + '<option disabled>(no se pudo leer el equipo: la nota no se le asignará a nadie)</option>';
+      return;
+    }
     s.innerHTML = '<option value="">— sin especificar —</option>'
       + lista.map(x => '<option value="' + esc(x.id || '') + '">'
         + esc(x.name || x.display_name || x.email || 'sin nombre') + '</option>').join('');
@@ -6361,6 +6968,55 @@ function etiquetasEnUso(){
 // verian filtros distintos y ninguna sabria por que. Vacio significa automatico.
 function etiquetasElegidas(){
   return String(AJUSTES.etiquetas_filtro || '').split(',').map(s => s.trim()).filter(Boolean);
+}
+// Las que la barra enseña AHORA, haya lista elegida o no. La calculaban por separado el
+// pintado y el manejador de la x, en ambitos distintos: el segundo no veia la variable del
+// primero y quitar una etiqueta en modo automatico reventaba. Una sola fuente para los dos.
+function etiquetasEnLaBarra(){
+  const elegidas = etiquetasElegidas();
+  return elegidas.length
+    ? elegidas
+    : etiquetasContadas().filter(([, n]) => n >= 2).slice(0, 8).map(([e]) => e);
+}
+
+// El recuadro del boton +. Elegir que etiquetas se ven estaba solo en Configuracion, a cuatro
+// clics de donde se usan: quien esta filtrando mira la barra, no los ajustes. Es la misma
+// lista y el mismo ajuste del servidor -- no una copia local -- asi que lo que se marque aqui
+// se ve igual en Configuracion y para todo el equipo.
+function abreEtiquetasBarra(){
+  const todas = etiquetasContadas();
+  const elegidas = new Set(etiquetasElegidas());
+  if (!todas.length) {
+    return avisa('Todavía no hay etiquetas', 'Se crean solas al etiquetar conversaciones.');
+  }
+  abreModal('<div class="mtapa"><b>Etiquetas de la barra</b><button class="cerrarm" data-cerrar>×</button></div>'
+    + '<div class="mcuerpo">'
+    + '<p class="aviso">Marca las que quieres ver arriba. El número es en cuántas '
+    +   'conversaciones está cada una. Si no marcas ninguna, la barra enseña sola las más usadas.</p>'
+    + '<div class="etqlista">' + todas.map(([e, n]) =>
+        '<label class="etqop"><input type="checkbox" value="' + esc(e) + '"'
+        + (elegidas.has(e) ? ' checked' : '') + '> <span>' + esc(e) + '</span>'
+        + '<b>' + n + '</b></label>').join('')
+    + '</div></div>'
+    + '<div class="mpatas"><span class="quien" id="etqNota"></span>'
+    +   '<button class="btn-solido" id="etqGuardar">Guardar</button></div>');
+  $('modal').querySelectorAll('[data-cerrar]').forEach(b => { b.onclick = cierraModal; });
+  $('etqGuardar').onclick = async () => {
+    const marcadas = [...$('modal').querySelectorAll('.etqlista input:checked')].map(i => i.value);
+    const boton = $('etqGuardar');
+    boton.disabled = true;
+    const ok = await guardaAjuste('etiquetas_filtro', marcadas.join(','));
+    boton.disabled = false;
+    // Solo se cierra si guardo. Cerrar pase lo que pase es lo que hizo creer que las reglas
+    // del negocio se habian guardado cuando no.
+    if (!ok) return;
+    if (filtro.startsWith('etq:') && marcadas.length && !marcadas.includes(filtro.slice(4))) filtro = 'todos';
+    cierraModal();
+    pintaChats();
+    avisa('Barra actualizada', marcadas.length
+      ? marcadas.length + ' etiqueta(s) en la barra.'
+      : 'Sin ninguna elegida: la barra vuelve a enseñar sola las más usadas.');
+  };
 }
 
 // Historial del lead y sus archivos, juntos y fuera del hilo. Los adjuntos salen de los
@@ -6510,12 +7166,15 @@ function pintaPlanCola(){
 async function cargaReglas(){
   const r = await llama({ action:'data', table:'settings', operation:'select',
     filters:[{ kind:'eq', field:'key', value:'reglas_asistente' }], limit:1 });
-  if (!r.ok) return;
+  // Devuelve si se pudo LEER. Quien abre el dialogo necesita saberlo: guardar sin haber
+  // leido escribe encima de lo que hubiera.
+  if (!r.ok) return false;
   const fila = (r.data || r.rows || [])[0];
   REGLAS = fila?.value || '';
   const caja = $('reglas'); if (caja) caja.value = REGLAS;
   const nota = $('reglasNota');
   if (nota) nota.textContent = REGLAS ? 'Guardadas. Se usan en cada propuesta.' : 'Todavía no hay reglas.';
+  return true;
 }
 async function guardaReglas(){
   const valor = $('reglas').value.trim();
@@ -6524,10 +7183,11 @@ async function guardaReglas(){
     payload:{ id:'reglas_asistente', key:'reglas_asistente', value:valor,
       updated_at:new Date().toISOString() }, on_conflict:'id' });
   $('btnReglas').disabled = false;
-  if (!r.ok) return avisa('No se pudieron guardar', r.error);
+  if (!r.ok) { avisa('No se pudieron guardar', r.error); return false; }
   REGLAS = valor;
   $('reglasNota').textContent = 'Guardadas. Se usan en cada propuesta.';
   avisa('Reglas guardadas', 'El asistente las tendrá en cuenta desde ahora.');
+  return true;
 }
 // ===== ASISTENTE DE PLANIFICACION =====
 // Es un chat, no un formulario. La diferencia no es estetica: en un formulario cada
@@ -6936,18 +7596,42 @@ async function guardaHilo(){
       updated_at:new Date().toISOString() }, on_conflict:'id' });
 }
 
-function abreReglas(){
+// El ejemplo del placeholder NO lleva precios. Llevaba "abono minimo RD$3,000", y esa cifra
+// no es de este negocio: hay combos desde RD$1,700, o sea que el ejemplo pedia un abono mayor
+// que el precio. Peor todavia, se lee como si fuera la regla vigente -- yo mismo la audite
+// como real antes de ver que era el placeholder de un campo vacio.
+const EJEMPLO_REGLAS = '- El abono para apartar la fecha es de RD$…\n'
+  + '- No trabajamos domingos.\n- Nunca prometer una fecha sin confirmarla con el estudio.\n'
+  + '- Tratar de usted a personas mayores.';
+
+// OJO: las reglas se CARGAN aqui, no solo al montar Planificacion. Este dialogo se abre
+// tambien desde Configuracion, y alli esa vista puede no haberse montado nunca: el cuadro
+// salia vacio, con el ejemplo de fondo, y al pulsar Guardar se escribia esa nada ENCIMA de
+// las reglas de verdad. Un borrado silencioso, y desde el boton que dice "Guardar".
+//
+// Hasta que terminan de cargar, el cuadro y el boton estan bloqueados: sin eso, escribir
+// rapido y guardar tendria la misma consecuencia por otra via.
+async function abreReglas(){
   abreModal('<div class="mtapa"><b>Reglas del negocio</b><button class="cerrarm" data-cerrar>×</button></div>'
     + '<div class="mcuerpo">'
     + '<p class="aviso">Esto se le da al asistente en cada propuesta. Sirve para lo que no está en '
     +   'ninguna ficha: cómo se cobra, qué no se promete, qué fechas están cerradas, cómo se habla.</p>'
-    + '<div class="campo"><textarea id="reglas" rows="12" placeholder="- El abono mínimo es de RD$3,000 y no se devuelve.\n'
-    +   '- No trabajamos domingos.\n- Nunca prometer una fecha sin confirmarla con el estudio.\n'
-    +   '- Tratar de usted a personas mayores.">' + esc(REGLAS) + '</textarea></div></div>'
-    + '<div class="mpatas"><span class="quien" id="reglasNota"></span>'
-    +   '<button class="btn-solido" id="btnReglas">Guardar</button></div>');
+    + '<div class="campo"><textarea id="reglas" rows="12" disabled placeholder="' + esc(EJEMPLO_REGLAS) + '">'
+    +   esc(REGLAS) + '</textarea></div></div>'
+    + '<div class="mpatas"><span class="quien" id="reglasNota">Cargando…</span>'
+    +   '<button class="btn-solido" id="btnReglas" disabled>Guardar</button></div>');
   $('modal').querySelectorAll('[data-cerrar]').forEach(b => { b.onclick = cierraModal; });
-  $('btnReglas').onclick = async () => { await guardaReglas(); cierraModal(); };
+  // Solo se cierra si de verdad se guardo. Antes cerraba pase lo que pase, asi que un fallo
+  // se anunciaba en un aviso de 4 segundos y el dialogo desaparecia como si todo fuera bien.
+  $('btnReglas').onclick = async () => { if (await guardaReglas()) cierraModal(); };
+  const ok = await cargaReglas();
+  const caja = $('reglas'); const boton = $('btnReglas');
+  if (!caja || !boton) return;                 // lo cerraron mientras cargaba
+  if (!ok) {
+    $('reglasNota').textContent = 'No se pudieron leer las reglas. No guardes: escribirías encima.';
+    return;
+  }
+  caja.disabled = false; boton.disabled = false;
 }
 
 function contextoTexto(){
