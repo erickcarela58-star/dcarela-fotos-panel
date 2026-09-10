@@ -48,23 +48,13 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
 
   businessNumber: "18495245620",
   businessDisplayNumber: "849-524-5620",
-  defaultView: "conversations",
-  showAllViews: true,
-  enabledViews: [
-    "dashboard",
-    "planning",
-    "ads",
-    "marketing",
-    "conversations",
-    "bridge",
-    "funnel",
-    "prospecting",
-    "poscustomers",
-    "satisfaccion",
-    "plantillas",
-    "estados",
-    "reminders",
-    "manual",
-    "config"
-  ]
+  defaultView: "conversations"
+  // Aqui habia una lista "enabledViews" que decia que vistas debia tener este panel. El codigo
+  // NUNCA la leyo --pintaMenu() pinta VISTAS entera-- asi que describia un reparto que no
+  // existia, y encima nombraba vistas ya desaparecidas (ads, marketing, bridge, estados).
+  //
+  // Se quita en vez de implementarla, y es una decision del dueno (09/09/2026): Fotos tiene
+  // TODAS las vistas. Lo que separa a los dos numeros no es un menu recortado sino lo que el
+  // codigo ya impide por canal --el 2.º numero no manda plantillas de Meta ni entra en las
+  // difusiones-- mas los limites antibloqueo, que ahora se ajustan en Configuracion.
 };
