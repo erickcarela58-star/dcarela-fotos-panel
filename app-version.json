@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-04-crm-fotos-v82",
+  "version": "2026-09-09-crm-fotos-v103",
   "channel": "whatsapp-web",
-  "released_at": "2026-09-04T00:00:00Z",
-  "summary": "CRM Fotos actualizado al panel v82: campañas por el segundo número, recordatorios protegidos, Pack de Estados local, historial completo y atención humana por defecto."
+  "released_at": "2026-09-09T20:30:00Z",
+  "summary": "CRM Fotos al mismo codigo que el panel principal: todas las vistas, archivos del 2.º numero que ya se guardan, limites antibloqueo ajustables y agenda conectable a Google Calendar."
 }
