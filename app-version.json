@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-09-crm-fotos-v104",
+  "version": "2026-09-20-lineas-historial-v109",
   "channel": "whatsapp-web",
-  "released_at": "2026-09-09T22:00:00Z",
-  "summary": "CRM Fotos con el registro de llamadas del 2.º numero en la conversacion, ademas de los archivos, los limites antibloqueo y la agenda conectable a Google Calendar."
+  "released_at": "2026-09-20T02:30:00Z",
+  "summary": "CRM Fotos por linea conectada, chats anteriores recuperables por filtro, pausas explicadas y estado en vivo. Conserva la configuracion del bot y las restricciones de envio."
 }

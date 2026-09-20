@@ -26,13 +26,10 @@ window.CRM_CONFIG = window.DCARELA_CRM_CONFIG = {
   showBridgeSetup: true,
   bridgePairingMode: "phone_code",
   appVersionUrl: "./app-version.json",
-  // Opcional: completar cuando se vincule el número físico. Mientras esté vacío,
-  // la agenda lo infiere de la primera conversación recibida por el puente.
-  // Numero confirmado por el puente activo. Tambien se usa para recuperar
-  // conversaciones antiguas del mismo dispositivo aunque una fila haya
-  // quedado sin la marca source=whatsapp_qr.
-  bridgeBusinessNumber: "18094785620",
-  bridgeBusinessDisplayNumber: "809-478-5620",
+  // La linea actual viene del puente y del espejo crm_channel_state; nunca de una
+  // copia fija de la linea anterior. Sus chats siguen disponibles por su filtro.
+  bridgeBusinessNumber: "",
+  bridgeBusinessDisplayNumber: "",
 
   publicPortfolioUrl: "https://dcarelacompufoto.com/combos.html",
   publicCatalogUrl: "https://dcarelacompufoto.com/combos.html",
