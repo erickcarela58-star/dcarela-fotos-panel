@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-20-lineas-historial-v109",
+  "version": "2026-10-02-cache-aware-sync-v141",
   "channel": "whatsapp-web",
-  "released_at": "2026-09-20T02:30:00Z",
-  "summary": "CRM Fotos por linea conectada, chats anteriores recuperables por filtro, pausas explicadas y estado en vivo. Conserva la configuracion del bot y las restricciones de envio."
+  "released_at": "2026-10-03T00:35:00Z",
+  "summary": "CRM Fotos con el panel v141, misma sincronizacion verificada que Central y configuracion aislada para WhatsApp Web. Los datos locales se identifican como copia y el sondeo sigue hasta confirmar al servidor."
 }
