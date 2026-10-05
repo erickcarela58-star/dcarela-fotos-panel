@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-02-cache-aware-sync-v141",
+  "version": "2026-10-04-portafolio-v142",
   "channel": "whatsapp-web",
-  "released_at": "2026-10-03T00:35:00Z",
-  "summary": "CRM Fotos con el panel v141, misma sincronizacion verificada que Central y configuracion aislada para WhatsApp Web. Los datos locales se identifican como copia y el sondeo sigue hasta confirmar al servidor."
+  "released_at": "2026-10-04T23:30:00Z",
+  "summary": "Configuración → «Portafolio de la web»: sube fotos o una carpeta entera por categoría (XV, cumpleaños, infantiles, graduaciones, embarazadas, bodas); se reducen y convierten a WebP en tu navegador y salen en las galerías de dcarelacompufoto.com. Ocultar quita una foto de la web sin borrarla. CRM Fotos con el panel v141, misma sincronizacion verificada que Central y configuracion aislada para WhatsApp Web. Los datos locales se identifican como copia y el sondeo sigue hasta confirmar al servidor."
 }
