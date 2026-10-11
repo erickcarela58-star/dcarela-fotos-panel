@@ -1,6 +1,6 @@
 {
-  "version": "2026-10-04-portafolio-v142",
+  "version": "2026-10-11-atendido-v143",
   "channel": "whatsapp-web",
-  "released_at": "2026-10-04T23:30:00Z",
-  "summary": "Configuración → «Portafolio de la web»: sube fotos o una carpeta entera por categoría (XV, cumpleaños, infantiles, graduaciones, embarazadas, bodas); se reducen y convierten a WebP en tu navegador y salen en las galerías de dcarelacompufoto.com. Ocultar quita una foto de la web sin borrarla. CRM Fotos con el panel v141, misma sincronizacion verificada que Central y configuracion aislada para WhatsApp Web. Los datos locales se identifican como copia y el sondeo sigue hasta confirmar al servidor."
+  "released_at": "2026-10-11T16:22:09.465Z",
+  "summary": "Chat: botón «Atendido» junto a «Humano atiende». Un toque y ese chat deja de salir como «Sin responder» o «Se enfrían» (si el cliente vuelve a escribir, reaparece solo) y baja el aviso de atención humana. Documentos por el número oficial: ya se pueden enviar de hasta 22 MB (antes 15)."
 }
