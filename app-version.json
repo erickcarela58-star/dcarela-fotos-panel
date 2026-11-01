@@ -1,7 +1,7 @@
 {
-  "version": "2026-10-27-fotos-release-v351",
+  "version": "2026-11-01-fotos-release-v368",
   "channel": "fotos",
-  "released_at": "2026-10-27T06:47:05Z",
-  "summary": "Transferir: al pulsarlo aparece una nota opcional para la sucursal con los detalles del cliente; va en el aviso.",
+  "released_at": "2026-11-01T15:40:22Z",
+  "summary": "Revisión semanal de contenido por formato (aprobar, pedir cambios o enviarla al WhatsApp oficial) y rutina diaria que prepara las historias de toda la semana, un día por tarea.",
   "requiere_puente": "2026-10-26-borra-estados-v55"
 }
