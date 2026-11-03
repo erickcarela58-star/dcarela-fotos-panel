@@ -1,7 +1,7 @@
 {
-  "version": "2026-11-03-fotos-release-v389-integracion",
+  "version": "2026-11-03-fotos-release-v390-birefnet-pc",
   "channel": "fotos",
-  "released_at": "2026-11-03T08:30:00Z",
-  "summary": "Plantilla 07 retirada (el recorte del sujeto no salía limpio) y candado de proporción para escalar el sujeto y las fotos sin deformarlos. Incluye v388.",
-  "requiere_puente": "2026-10-26-borra-estados-v55"
+  "released_at": "2026-11-03T08:28:18.892119+00:00",
+  "summary": "Seleccionar sujeto con BiRefNet en la PC. Conserva el candado de proporcion y la plantilla 07 retirada de v389.",
+  "requiere_puente": "2026-11-03-birefnet-v61"
 }
