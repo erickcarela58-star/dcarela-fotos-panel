@@ -1,7 +1,7 @@
 {
-  "version": "2026-11-05-fotos-release-v401-campana-navidad",
+  "version": "2026-11-06-fotos-release-v404-guia-navidad",
   "channel": "fotos",
-  "released_at": "2026-11-06T03:31:36Z",
-  "summary": "Set navideño privado con flyers en lote, calendario de aprobación y preparación de anuncios pausados para Marketplace.",
-  "requiere_puente": "2026-11-05-redes-estados-v66"
+  "released_at": "2026-11-06T16:14:44Z",
+  "summary": "Guía comercial de Navidad 2026 disponible para abrir en Productos / Combos y adjuntar en el chat.",
+  "requiere_puente": "2026-11-06-vision-navidad-v67"
 }
