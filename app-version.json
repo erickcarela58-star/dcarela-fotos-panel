@@ -1,7 +1,7 @@
 {
-  "version": "2026-11-09-fotos-release-v421-orden-global-capas",
+  "version": "2026-11-09-fotos-release-v423-oferta-navidad-supr",
   "channel": "fotos",
-  "released_at": "2026-11-09T15:59:11.000Z",
-  "summary": "Editor: frente y fondo de fotos, formas y selección múltiple respetan el orden global de capas.",
+  "released_at": "2026-11-09T17:30:00.000Z",
+  "summary": "Estados sin filtros, oferta navideña 15 % en el lote, y Supr borra la capa tras usar controles.",
   "requiere_puente": "2026-11-06-documentos-grandes-v70"
 }
