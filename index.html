@@ -8511,6 +8511,12 @@ function cableaChat(c){
     if (porPuente) {
       const pieEnQr = indiceConPie(COLA);
       let salieronQr = 0, falloQr = null;
+      // 14/11/2026 (dueño: «se dejan de enviar si pongo el crm en segundo plano»): varias imágenes ya preparadas las deja en la cola del puente el
+      // SERVIDOR en pocas peticiones (enviaLotePorPuente); una por una desde el navegador se frenaban con la ventana oculta.
+      if (COLA.length > 1 && COLA.every(a => a.tipo === 'image' && !a.gif && !a.grande && a.datos && !a.error)) {
+        const lote = await enviaLotePorPuente(conv, t, pieEnQr, citando);
+        COLA.splice(0, lote.salieron); falloQr = lote.fallo;
+      }
       for (let i = 0; i < COLA.length && !falloQr; i++) {
         const a = COLA[i];
         a.estado = 'enviando'; pintaCola();
@@ -8984,6 +8990,29 @@ async function subeEnTrozos(a){
   return { ok:true, cuerpo:{ media_upload_id:id, media_chunks:total } };
 }
 // Lo que lleva el envio de un adjunto: el base64 de siempre, o la referencia a la subida por trozos si es grande.
+// Manda varias imágenes ya preparadas por el 5644 sin depender del navegador: el servidor las encola todas (bridgeQueueLote, hasta 8 por petición).
+// Devuelve cuántas quedaron en la cola del puente y, si algo falló, el error (las que salieron NO se repiten).
+async function enviaLotePorPuente(conv, t, pieEnQr, citando){
+  let salieron = 0, fallo = null;
+  for (let desde = 0; desde < COLA.length && !fallo; desde += 8) {
+    const tanda = COLA.slice(desde, desde + 8);
+    tanda.forEach(a => { a.estado = 'enviando'; }); pintaCola();
+    const r = await llama({ action:'bridgeQueueLote', conversation_id: conv,
+      items: tanda.map((a, k) => ({ media_kind:a.tipo, media_b64:a.datos, media_filename:a.nombre, media_mime:a.mime,
+        ...(a.thumb ? { media_thumb_b64:a.thumb } : {}), body: (t && desde + k === pieEnQr) ? t : '' })),
+      ...(citando?.wamid && desde === 0 ? { reply_to_wamid:citando.wamid } : {}) });
+    const hechos = Math.max(0, Math.min(tanda.length, Number(r?.enviados) || 0));
+    for (let k = 0; k < hechos; k++) {
+      const a = tanda[k]; salieron++;
+      apuntaEnviando({ conv, tipo:a.tipo, body: (t && desde + k === pieEnQr) ? t : '', mime:a.mime, datos:a.datos });
+    }
+    if (!r?.ok) {
+      fallo = r?.fallo ? { ok:false, error:r.fallo.error, code:r.fallo.code } : (r?.ok === false ? r : { ok:false, error:r?.error || 'No se pudo enviar el lote.' });
+      if (tanda[hechos]) marcaFalloArchivo(tanda[hechos], fallo);
+    }
+  }
+  return { salieron, fallo };
+}
 async function cuerpoDeAdjunto(a){
   if (a.error) return { ok:false, error:a.error };
   if (!a.grande && !a.datos) return { ok:false, error:'El archivo todavía no está preparado. Vuelve a adjuntarlo.' };
@@ -9920,18 +9949,19 @@ async function adjuntaCombosEnImagenes(cat, boton){
   try {
     const chatId = sel?.id, sucursal = sucursalComboDelChat(sel);
     if (p.sucursal && p.sucursal !== sucursal) throw new Error('Este catálogo corresponde a La Central.');
-    const lista = await llama({ action:'combos', operation:'catalogo_categoria', categoria:cat, sucursal, conversation_id: sel?.id || null, formato:'vista' });
-    if (!lista?.ok || !Array.isArray(lista.combos)) throw new Error(lista?.error || 'no se pudo leer la lista de combos');
-    const combos = lista.combos;
-    if (!combos.length) throw new Error('esa categoría no tiene combos activos');
-    const imagenes = [];
+    // La lista sale de los combos ya cargados del CRM (los mismos del PDF): pedir el catálogo completo solo para saber sus nombres tardaba más de un minuto.
+    const combos = (await cargaCombos(false)).filter(c => c.catalogoCat === cat && c.id && c.precioNumero).sort((a, b) => a.precioNumero - b.precioNumero);
+    if (!combos.length) throw new Error('esa categoría no tiene combos activos con precio');
+    const imagenes = [], fallidos = [];
     for (let i = 0; i < combos.length; i++) {
       boton.textContent = 'Preparando ' + (i + 1) + ' de ' + combos.length + '…';
-      const r = await llama({ action:'combos', operation:'flyer_combo', categoria:cat, ref:combos[i].ref, sucursal, conversation_id: sel?.id || null, formato:'jpg' });
-      if (!r?.ok || !r.imagen_b64) throw new Error('«' + (combos[i].nombre || combos[i].ref) + '»: ' + (r?.error || 'no se pudo preparar la imagen'));
-      imagenes.push({ nombre: r.nombre || ('Combo ' + (combos[i].ref || i + 1) + ' - DCarela.jpg'), datos: r.imagen_b64 });
+      const r = await llama({ action:'combos', operation:'flyer_combo', id:combos[i].id, sucursal, formato:'jpg' });
       if (chatId !== sel?.id) return;                          // cambió de chat mientras se preparaban: no se pega en el equivocado
+      if (!r?.ok || !r.imagen_b64) { fallidos.push((combos[i].nombre || combos[i].ref) + ': ' + (r?.error || 'sin imagen')); continue; }
+      imagenes.push({ nombre: r.nombre || ('Combo ' + (combos[i].ref || i + 1) + ' - DCarela.jpg'), datos: r.imagen_b64 });
     }
+    // Nunca se manda un catálogo con combos de menos sin decirlo: si alguno falló, no se prepara nada.
+    if (fallidos.length) throw new Error('no se pudo preparar ' + fallidos.length + ' de ' + combos.length + ' (' + fallidos[0] + ')');
     for (const x of imagenes) COLA.push({ tipo:'image', mime:'image/jpeg', nombre:x.nombre, datos:x.datos });
     pintaCola();
     const caja = $('texto');
